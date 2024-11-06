@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 07:55:26 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/06 08:34:56 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/06 10:13:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char	*path;
+	// char	*path;
 
 	(void) ac,
 	(void) av;

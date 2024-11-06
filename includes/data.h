@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 07:55:26 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/06 11:13:28 by arabefam         ###   ########.fr       */
+/*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
+/*   Updated: 2024/11/06 11:13:39 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef DATA_H
+# define DATA_H
 
-int	main(int ac, char **av, char **env)
+typedef struct s_env	t_env;
+
+struct s_env
 {
-	t_env	vars;
-	int		i;
+	char	**path;
+};
 
-	(void) ac,
-	(void) av;
-	(void) env;
-	i = -1;
-	vars.path = extract_path_from_env(env);
-	while (vars.path[++i])
-		printf("%s\n", vars.path[i]);
-	i = -1;
-	while (vars.path[++i])
-		free(vars.path[i]);
-	free(vars.path);
-	return (0);
-}
+#endif

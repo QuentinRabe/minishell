@@ -5,26 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 10:17:56 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/08 11:06:54 by arabefam         ###   ########.fr       */
+/*   Created: 2024/11/08 15:22:54 by arabefam          #+#    #+#             */
+/*   Updated: 2024/11/08 16:16:00 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// void	free_tokens()
-
-// void	free_msh(t_msh *msh)
-// {
-
-// }
-
-void	print_tokens(t_token *token, int cmd_id, int token_id)
+int	customed_strlen(char *str, char charset)
 {
-	printf("From cmd [%d] --> Token [%d] is %s\n", cmd_id, token_id, token->value);
+	int	i;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	while (str[i] && str[i] != charset)
+	{
+		i++;
+		counter++;
+	}
+	return (counter);
 }
 
 bool	is_space(char c)
 {
-	return ((c >= 9 && c <= 13) || c == 32);
+	return (c == ' ');
 }

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/08 10:03:51 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/09 11:24:40 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,23 @@ struct s_token
 {
 	t_token_kind	kind;
 	char			*value;
+	struct s_token	*next;
 };
 
 struct s_cmd
 {
-	struct s_token	*tokens;
+	char			*value;
+	struct s_token	*token_lst;
+	struct s_cmd	*next;
 };
 
 struct s_msh
 {
 	char			*cmd;
+	int				*pipe_pos;
+	int				quoted_pipe;
 	struct s_env	env_data;
-	struct s_cmd	*cmd_arr;
+	struct s_cmd	*cmd_lst;
 };
 
 #endif

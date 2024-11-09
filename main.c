@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 07:55:26 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/09 14:49:40 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/09 18:43:11 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ int	main(int ac, char **av, char **env)
 	msh.cmd_lst = NULL;
 	transform_quoted_pipe(msh.cmd, &msh);
 	create_cmd_lst(msh.cmd, &msh);
-	// create_token_list(&msh);
-
+	create_token_list(&msh);
 	while (msh.cmd_lst)
 	{
 		curr = msh.cmd_lst;
 		msh.cmd_lst = curr->next;
-		printf("%s\n", curr->value);
 		free(curr->value);
 		free(curr);
 	}

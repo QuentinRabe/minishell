@@ -6,11 +6,48 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:23:30 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/09 14:34:11 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/09 19:36:02 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static char	find_arrow(char *str)
+{
+	while (*str && *str != ' ')
+	{
+		if (*str == '<' || *str == '>')
+		{
+			return (*str);
+		}
+		str++;
+	}
+	return (0);
+}
+
+static bool	is_there_arrow(char *str)
+{
+	while (*str && *str != ' ')
+	{
+		if (*str == '<' || *str == '>')
+			return (true);
+		str++;
+	}
+	return (false);
+}
+
+static int	count_arrow(char *str, char arrow)
+{
+	int	counter;
+
+	counter = 0;
+	while (*str && *str == arrow)
+	{
+		counter++;
+		str++;
+	}
+	return (counter);
+}
 
 static t_token	*find_last_token(t_token *token_lst)
 {
@@ -24,12 +61,15 @@ static char	*extract_token(char *cmd, int *i, char delimiter)
 	int		length;
 	char	*result;
 
-	length = customed_strlen(&cmd[*i], delimiter);
+	if ((delimiter == '<' || delimiter == '>') && (cmd[*i] == '<' || cmd[*i] == '>'))
+		length = count_arrow(&cmd[*i], delimiter);
+	else
+		length = customed_strlen(&cmd[*i], delimiter);
 	result = ft_substr(cmd, *i, length);
 	if (!result)
 		return (NULL);
 	*i += length;
-	if (cmd[*i] == delimiter)
+	if (cmd[*i] == delimiter && (delimiter != '<' && delimiter != '>'))
 		(*i)++;
 	return (result);
 }
@@ -37,6 +77,7 @@ static char	*extract_token(char *cmd, int *i, char delimiter)
 static char	*get_token(char *cmd, int *i)
 {
 	char	quote;
+	char	arrow;
 
 	while (cmd[*i])
 	{
@@ -49,7 +90,15 @@ static char	*get_token(char *cmd, int *i)
 			return (extract_token(cmd, i, quote));
 		}
 		else if (cmd[*i] && !is_space(cmd[*i]))
-			return (extract_token(cmd, i, ' '));
+		{
+			if (is_there_arrow(&cmd[*i]))
+			{
+				arrow = find_arrow(&cmd[*i]);
+				return (extract_token(cmd, i, arrow));
+			}
+			else
+				return (extract_token(cmd, i, ' '));
+		}
 	}
 	return (NULL);
 }

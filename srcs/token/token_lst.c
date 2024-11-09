@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:23:30 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/08 17:13:31 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/09 14:34:11 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,24 @@ static t_token	*find_last_token(t_token *token_lst)
 	return (token_lst);
 }
 
+static char	*extract_token(char *cmd, int *i, char delimiter)
+{
+	int		length;
+	char	*result;
+
+	length = customed_strlen(&cmd[*i], delimiter);
+	result = ft_substr(cmd, *i, length);
+	if (!result)
+		return (NULL);
+	*i += length;
+	if (cmd[*i] == delimiter)
+		(*i)++;
+	return (result);
+}
+
 static char	*get_token(char *cmd, int *i)
 {
-	char	*result;
 	char	quote;
-	int		length;
 
 	while (cmd[*i])
 	{
@@ -33,18 +46,10 @@ static char	*get_token(char *cmd, int *i)
 		{
 			quote = cmd[*i];
 			*i = *i + 1;
-			length = customed_strlen(&cmd[*i], quote);
-			result = ft_substr(cmd, *i, length);
-			*i = *i + length + 1;
-			return (result);
+			return (extract_token(cmd, i, quote));
 		}
 		else if (cmd[*i] && !is_space(cmd[*i]))
-		{
-			length = customed_strlen(&cmd[*i], ' ');
-			result = ft_substr(cmd, *i, length);
-			*i += length;
-			return (result);
-		}
+			return (extract_token(cmd, i, ' '));
 	}
 	return (NULL);
 }
@@ -59,7 +64,6 @@ static void	turn_cmd_into_tokens(char *cmd, t_token **token_lst)
 	while (cmd[i])
 	{
 		new_token = (t_token *) malloc(sizeof(t_token));
-		//free if failed
 		new_token->next = NULL;
 		new_token->value = get_token(cmd, &i);
 		if (*token_lst == NULL)

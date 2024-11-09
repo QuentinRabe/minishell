@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 09:34:08 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/09 13:41:21 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/09 14:34:47 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	check_for_quoted_pipe(char *str, int *i, int *j, int *pos)
 		result = end_with_quote(&str[*i + 1], quote);
 		if (result == true)
 		{
-		*i += 1;
+			*i += 1;
 			while (str[*i] && str[*i] != quote)
 			{
 				if (str[*i] == '|')
@@ -47,7 +47,6 @@ void	transform_quoted_pipe(char *str, t_msh *msh)
 
 	msh->quoted_pipe = count_quoted_pipe(str);
 	msh->pipe_pos = (int *) malloc(msh->quoted_pipe * sizeof(int));
-	//free if failed
 	i = 0;
 	j = 0;
 	while (str[++i])

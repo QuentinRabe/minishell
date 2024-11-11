@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/09 14:37:37 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/11 10:48:51 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ struct s_env
 
 struct s_token
 {
+	struct s_token	*prev;
 	t_token_kind	kind;
 	char			*value;
 	struct s_token	*next;
@@ -55,6 +56,7 @@ struct s_msh
 	char			*cmd;
 	int				*pipe_pos;
 	int				quoted_pipe;
+	int				i_qut_pipe;
 	struct s_env	env_data;
 	struct s_cmd	*cmd_lst;
 };

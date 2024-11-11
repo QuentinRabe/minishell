@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/09 12:43:24 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/11 10:56:10 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int		count_quoted_pipe(char *str);
 void	count_pipe_in_substr(char *substr, int *counter);
 bool	end_with_quote(char *str, char quote);
 void	transform_quoted_pipe(char *str, t_msh *msh);
+bool	in_pipe_arr(t_msh *msh, int val);
+void	restore_quoted_pipe(t_msh *msh);
 /*==========UTILS==========*/
 bool	is_space(char c);
 int		customed_strlen(char *str, char charset);

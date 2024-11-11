@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:23:30 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/09 19:36:02 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/11 11:16:56 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,12 +115,18 @@ static void	turn_cmd_into_tokens(char *cmd, t_token **token_lst)
 		new_token = (t_token *) malloc(sizeof(t_token));
 		new_token->next = NULL;
 		new_token->value = get_token(cmd, &i);
+		if (!new_token->value)
+			return (free(new_token));
 		if (*token_lst == NULL)
+		{
 			*token_lst = new_token;
+			new_token->prev = NULL;
+		}
 		else
 		{
 			last_token = find_last_token(*token_lst);
 			last_token->next = new_token;
+			new_token->prev = last_token;
 		}
 	}
 }
@@ -143,7 +149,7 @@ void	create_token_list(t_msh *msh)
 		current_token = current_cmd->token_lst;
 		while (current_token)
 		{
-			printf("%s\n", current_token->value);
+			printf("[%s]\n", current_token->value);
 			current_token = current_token->next;
 		}
 		current_cmd = current_cmd->next;

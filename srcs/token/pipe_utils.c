@@ -3,17 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 12:33:47 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/09 13:43:38 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/11 11:27:52 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+bool	in_pipe_arr(t_msh *msh, int val)
+{
+	int	i;
+
+	i = -1;
+	while (++i < msh->quoted_pipe)
+	{
+		if (val == msh->pipe_pos[i])
+			return (true);
+	}
+	return (false);
+}
+
 bool	end_with_quote(char *str, char quote)
 {
+	if (*str == 0)
+		return (false);
 	while (*str && *str != quote)
 		str++;
 	return (*str == quote);

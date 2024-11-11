@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 09:34:08 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/09 14:34:47 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/11 11:26:31 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	restore_quoted_pipe(t_msh *msh)
+{
+	int		i;
+	t_cmd	*curr_cmd;
+
+	curr_cmd = msh->cmd_lst;
+	while (curr_cmd)
+	{
+		i = -1;
+		while (curr_cmd->value[++i])
+		{
+			if (in_pipe_arr(msh, msh->i_qut_pipe))
+				curr_cmd->value[i] = '|';
+			msh->i_qut_pipe += 1;
+		}
+		msh->i_qut_pipe += 1;
+		curr_cmd = curr_cmd->next;
+	}
+}
 
 static void	check_for_quoted_pipe(char *str, int *i, int *j, int *pos)
 {

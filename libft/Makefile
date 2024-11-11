@@ -2,14 +2,16 @@ NAME	=	libft.a
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
 RM		=	rm -f
-SRCS	=	$(wildcard ./*.c)
-OBJS	=	$(SRCS:.c=.o)
+SRCS	=	$(shell find ./ -name '*.c')
+O_DIR	=	objs
+OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
 GREEN	=	\033[0;32m
 RED		=	\033[0;31m
 NC		=	\033[0m # No Color
 
-./%.o	:	./%.c
+$(O_DIR)/%.o	:	%.c
+		@mkdir -p $(dir $@)
 		@echo -n "Compiling $<... "
 		@$(CC) $(CFLAGS) -c $< -o $@ && echo -e "$(GREEN)[OK]$(NC)" || echo -e "$(RED)[FAIL]$(NC)"
 
@@ -21,7 +23,7 @@ $(NAME)	:	$(OBJS)
 
 clean	:
 		@echo "Cleaning object files..."
-		@$(RM) $(OBJS) && echo -e "$(GREEN)Cleaned!$(NC)" || echo -e "$(RED)Clean failed!$(NC)"
+		@$(RM) -r $(O_DIR) && echo -e "$(GREEN)Cleaned!$(NC)" || echo -e "$(RED)Clean failed!$(NC)"
 
 fclean	:	clean
 		@echo "Removing executable..."

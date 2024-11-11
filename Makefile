@@ -2,15 +2,17 @@ NAME	=	minishell
 CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra -I./includes/ -I./libft/
 SRCS	=	$(shell find srcs -name '*.c') main.c
-OBJS	=	$(SRCS:.c=.o)
+O_DIR	=	objs
+OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
 GREEN	=	\033[0;32m
 RED		=	\033[0;31m
 NC		=	\033[0m # No Color
 
-%.o		:	%.c
+$(O_DIR)/%.o		:	%.c
+		@mkdir -p $(dir $@)
 		@echo -n "Compiling $<... "
-		@$(CC) $(CFLAGS) -c -o $@ $< && echo -e "$(GREEN)[OK]$(NC)" || echo -e "$(RED)[FAIL]$(NC)"
+		@$(CC) $(CFLAGS) -c $< -o $@  && echo -e "$(GREEN)[OK]$(NC)" || echo -e "$(RED)[FAIL]$(NC)"
 
 all		:	$(NAME)
 
@@ -25,7 +27,7 @@ $(NAME)	:	$(OBJS)
 clean	:
 		@echo "Cleaning object files..."
 		@make clean -sC ./libft
-		@rm -f $(OBJS) && echo -e "$(GREEN)Cleaned!$(NC)" || echo -e "$(RED)Clean failed!$(NC)"
+		@rm -rf $(O_DIR) && echo -e "$(GREEN)Cleaned!$(NC)" || echo -e "$(RED)Clean failed!$(NC)"
 
 fclean	:	clean
 		@echo "Removing executable..."

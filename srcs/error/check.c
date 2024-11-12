@@ -12,6 +12,30 @@
 
 #include <minishell.h>
 
+void	successive_pipe(char *cmd, char *prompt, t_msh *msh)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '|')
+		{
+			i++;
+			skip_space(cmd, &i);
+			if (cmd[i] == '|')
+			{
+				free(msh->pipe_pos);
+				free(prompt);
+				free(cmd);
+				exit(1);
+			}
+		}
+		else
+			i++;
+	}
+}
+
 void	unclosed_quote(char *cmd, char *prompt)
 {
 	int		i;

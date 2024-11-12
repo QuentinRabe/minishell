@@ -27,6 +27,7 @@ int	main(int ac, char **av, char **env)
 	msh.cmd_lst = NULL;
 	unclosed_quote(msh.cmd, prompt);
 	transform_quoted_pipe(msh.cmd, &msh);
+	successive_pipe(msh.cmd, prompt,  &msh);
 	create_cmd_lst(msh.cmd, &msh);
 	msh.i_qut_pipe = 0;
 	restore_quoted_pipe(&msh);

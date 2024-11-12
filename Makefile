@@ -2,7 +2,7 @@ NAME	=	minishell
 CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra -I./includes/ -I./libft/
 SRCS	=	$(shell find srcs -name '*.c') main.c
-O_DIR	=	objs
+O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
 GREEN	=	\033[0;32m

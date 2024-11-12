@@ -82,7 +82,7 @@ void	type_token(t_msh *msh)
 		curr_token = curr_cmd->token_lst;
 		while (curr_token)
 		{
-			printf("[value %s type %s]\n", curr_token->value, str_type(curr_token->kind));
+			printf("[value %s type %s In double quote = %d]\n", curr_token->value, str_type(curr_token->kind), curr_token->in_d_quote);
 			curr_token = curr_token->next;
 		}
 		curr_cmd = curr_cmd->next;

@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: arabefam <arabefam@student.42antananariv>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/11 06:26:28 by arabefam          #+#    #+#             */
+/*   Updated: 2024/11/12 10:15:48 by arabefam         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_lst.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:23:30 by arabefam          #+#    #+#             */
@@ -56,7 +68,7 @@ static t_token	*find_last_token(t_token *token_lst)
 	return (token_lst);
 }
 
-static char	*extract_token(char *cmd, int *i, char delimiter)
+static char	*extract_token(char *cmd, int *i, char delimiter, t_token *token)
 {
 	int		length;
 	char	*result;
@@ -65,6 +77,10 @@ static char	*extract_token(char *cmd, int *i, char delimiter)
 		length = count_arrow(&cmd[*i], delimiter);
 	else
 		length = customed_strlen(&cmd[*i], delimiter);
+	if (delimiter == '"')
+		token->in_d_quote = true;
+	else
+		token->in_d_quote = false;
 	result = ft_substr(cmd, *i, length);
 	if (!result)
 		return (NULL);
@@ -74,7 +90,7 @@ static char	*extract_token(char *cmd, int *i, char delimiter)
 	return (result);
 }
 
-static char	*get_token(char *cmd, int *i)
+static char	*get_token(char *cmd, int *i, t_token *token)
 {
 	char	quote;
 	char	arrow;
@@ -87,17 +103,17 @@ static char	*get_token(char *cmd, int *i)
 		{
 			quote = cmd[*i];
 			*i = *i + 1;
-			return (extract_token(cmd, i, quote));
+			return (extract_token(cmd, i, quote, token));
 		}
 		else if (cmd[*i] && !is_space(cmd[*i]))
 		{
 			if (is_there_arrow(&cmd[*i]))
 			{
 				arrow = find_arrow(&cmd[*i]);
-				return (extract_token(cmd, i, arrow));
+				return (extract_token(cmd, i, arrow, token));
 			}
 			else
-				return (extract_token(cmd, i, ' '));
+				return (extract_token(cmd, i, ' ', token));
 		}
 	}
 	return (NULL);
@@ -114,7 +130,7 @@ static void	turn_cmd_into_tokens(char *cmd, t_token **token_lst)
 	{
 		new_token = (t_token *) malloc(sizeof(t_token));
 		new_token->next = NULL;
-		new_token->value = get_token(cmd, &i);
+		new_token->value = get_token(cmd, &i, new_token);
 		if (!new_token->value)
 			return (free(new_token));
 		if (*token_lst == NULL)

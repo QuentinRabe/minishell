@@ -35,6 +35,10 @@ void	transform_quoted_pipe(char *str, t_msh *msh);
 bool	in_pipe_arr(t_msh *msh, int val);
 void	restore_quoted_pipe(t_msh *msh);
 void	type_token(t_msh *msh);
+/*==========ENVIRONMENT==========*/
+void	create_env_lst(t_e_env *env, char **env_vars);
+void	create_exp_lst(t_e_env *ex_env, char **env_vars);
+void	sort_export_env(t_e_env **exp);
 /*==========UTILS==========*/
 bool	is_space(char c);
 int		customed_strlen(char *str, char charset);

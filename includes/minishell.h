@@ -34,7 +34,9 @@ bool	end_with_quote(char *str, char quote);
 void	transform_quoted_pipe(char *str, t_msh *msh);
 bool	in_pipe_arr(t_msh *msh, int val);
 void	restore_quoted_pipe(t_msh *msh);
+void	type_token(t_msh *msh);
 /*==========UTILS==========*/
 bool	is_space(char c);
 int		customed_strlen(char *str, char charset);
+void	unclosed_quote(char *cmd, char *prompt);
 #endif // !MINISHELL_H

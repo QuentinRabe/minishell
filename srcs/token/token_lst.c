@@ -134,24 +134,12 @@ static void	turn_cmd_into_tokens(char *cmd, t_token **token_lst)
 void	create_token_list(t_msh *msh)
 {
 	t_cmd	*current_cmd;
-	t_token	*current_token;
 
 	current_cmd = msh->cmd_lst;
 	while (current_cmd)
 	{
 		current_cmd->token_lst = NULL;
 		turn_cmd_into_tokens(current_cmd->value, &msh->cmd_lst->token_lst);
-		current_cmd = current_cmd->next;
-	}
-	current_cmd = msh->cmd_lst;
-	while (current_cmd)
-	{
-		current_token = current_cmd->token_lst;
-		while (current_token)
-		{
-			printf("[%s]\n", current_token->value);
-			current_token = current_token->next;
-		}
 		current_cmd = current_cmd->next;
 	}
 }

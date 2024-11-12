@@ -18,7 +18,6 @@ int	main(int ac, char **av, char **env)
 	char	*prompt;
 	t_cmd	*curr;
 	t_token	*tok;
-	int		i;
 
 	(void) ac,
 	(void) av;
@@ -26,30 +25,13 @@ int	main(int ac, char **av, char **env)
 	prompt = get_prompt_cwd();
 	msh.cmd = readline(prompt);
 	msh.cmd_lst = NULL;
-	i = - 1;
-	while (msh.cmd[++i])
-	{
-		if ((msh.cmd[i] == '\'' || msh.cmd[i] == '"'))
-		{
-			if (msh.cmd[i + 1] && !end_with_quote(&msh.cmd[i + 1], msh.cmd[i]))
-			{
-				free(prompt);
-				free(msh.cmd);
-				exit(1);
-			}
-			if (msh.cmd[i + 1] == 0)
-			{
-				free(prompt);
-				free(msh.cmd);
-				exit(1);
-			}
-		}
-	}
+	unclosed_quote(msh.cmd, prompt);
 	transform_quoted_pipe(msh.cmd, &msh);
 	create_cmd_lst(msh.cmd, &msh);
 	msh.i_qut_pipe = 0;
 	restore_quoted_pipe(&msh);
 	create_token_list(&msh);
+	type_token(&msh);
 	while (msh.cmd_lst)
 	{
 		curr = msh.cmd_lst;

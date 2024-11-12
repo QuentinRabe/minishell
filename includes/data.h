@@ -26,6 +26,7 @@ enum e_token_kind
 	APPEND,
 	INFILE,
 	OUTFILE,
+	EOF_HD,
 	HEREDOC,
 	REDIR_IN
 };

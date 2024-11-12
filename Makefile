@@ -34,4 +34,7 @@ fclean	:	clean
 		@make fclean -sC ./libft
 		@rm -f $(NAME) && echo -e "$(GREEN)Fully cleaned!$(NC)" || echo -e "$(RED)Full clean failed!$(NC)"
 
+msh_val	:	all
+		valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./$(NAME)
+
 re		:	fclean all

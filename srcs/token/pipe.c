@@ -41,7 +41,7 @@ static void	check_for_quoted_pipe(char *str, int *i, int *j, int *pos)
 	{
 		quote = str[*i];
 		result = end_with_quote(&str[*i + 1], quote);
-		if (result == true)
+		if (result == TRUE)
 		{
 			*i += 1;
 			while (str[*i] && str[*i] != quote)

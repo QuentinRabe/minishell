@@ -33,7 +33,7 @@ int	customed_strlen(char *str, char charset)
 	return (counter);
 }
 
-bool	is_space(char c)
+t_bool	is_space(char c)
 {
 	return (c == ' ');
 }

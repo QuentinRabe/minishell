@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-bool	in_pipe_arr(t_msh *msh, int val)
+t_bool	in_pipe_arr(t_msh *msh, int val)
 {
 	int	i;
 
@@ -20,15 +20,15 @@ bool	in_pipe_arr(t_msh *msh, int val)
 	while (++i < msh->quoted_pipe)
 	{
 		if (val == msh->pipe_pos[i])
-			return (true);
+			return (TRUE);
 	}
-	return (false);
+	return (FALSE);
 }
 
-bool	end_with_quote(char *str, char quote)
+t_bool	end_with_quote(char *str, char quote)
 {
 	if (*str == 0)
-		return (false);
+		return (FALSE);
 	while (*str && *str != quote)
 		str++;
 	return (*str == quote);

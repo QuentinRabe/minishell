@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-static bool	is_last_a_slash(char *path)
+static t_bool	is_last_a_slash(char *path)
 {
 	return (path[ft_strlen(path) - 1] == '/');
 }

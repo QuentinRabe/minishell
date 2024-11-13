@@ -40,7 +40,7 @@ void	unclosed_quote(char *cmd, char *prompt)
 {
 	int		i;
 	char	quote;
-	bool	result;
+	t_bool	result;
 
 	i = -1;
 	while (cmd[++i])
@@ -48,12 +48,12 @@ void	unclosed_quote(char *cmd, char *prompt)
 		if (cmd[i] == '\'' || cmd[i] == '"')
 		{
 			quote = cmd[i];
-			result = false;
+			result = FALSE;
 			while (cmd[++i])
 			{
 				if (cmd[i] == quote)
 				{
-					result = true;
+					result = TRUE;
 					break;
 				}
 			}

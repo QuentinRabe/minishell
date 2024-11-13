@@ -18,7 +18,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <colors.h>
-# include <stdbool.h>
 # include <data.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -30,9 +29,9 @@ void	create_cmd_lst(char *input, t_msh *msh);
 void	create_token_list(t_msh *msh);
 int		count_quoted_pipe(char *str);
 void	count_pipe_in_substr(char *substr, int *counter);
-bool	end_with_quote(char *str, char quote);
+t_bool	end_with_quote(char *str, char quote);
 void	transform_quoted_pipe(char *str, t_msh *msh);
-bool	in_pipe_arr(t_msh *msh, int val);
+t_bool	in_pipe_arr(t_msh *msh, int val);
 void	restore_quoted_pipe(t_msh *msh);
 void	type_token(t_msh *msh);
 /*==========ENVIRONMENT==========*/
@@ -40,7 +39,7 @@ void	create_env_lst(t_e_env *env, char **env_vars);
 void	create_exp_lst(t_e_env *ex_env, char **env_vars);
 void	sort_export_env(t_e_env **exp);
 /*==========UTILS==========*/
-bool	is_space(char c);
+t_bool	is_space(char c);
 int		customed_strlen(char *str, char charset);
 void	unclosed_quote(char *cmd, char *prompt);
 void	skip_space(char *str, int *i);

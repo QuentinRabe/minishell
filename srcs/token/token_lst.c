@@ -37,15 +37,15 @@ static char	find_arrow(char *str)
 	return (0);
 }
 
-static bool	is_there_arrow(char *str)
+static t_bool	is_there_arrow(char *str)
 {
 	while (*str && *str != ' ')
 	{
 		if (*str == '<' || *str == '>')
-			return (true);
+			return (TRUE);
 		str++;
 	}
-	return (false);
+	return (FALSE);
 }
 
 static int	count_arrow(char *str, char arrow)
@@ -78,9 +78,9 @@ static char	*extract_token(char *cmd, int *i, char delimiter, t_token *token)
 	else
 		length = customed_strlen(&cmd[*i], delimiter);
 	if (delimiter == '"')
-		token->in_d_quote = true;
+		token->in_d_quote = TRUE;
 	else
-		token->in_d_quote = false;
+		token->in_d_quote = FALSE;
 	result = ft_substr(cmd, *i, length);
 	if (!result)
 		return (NULL);

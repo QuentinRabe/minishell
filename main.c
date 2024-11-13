@@ -14,12 +14,41 @@
 
 int	main(int ac, char **av, char **env)
 {
-	t_env	env_var;
+	t_msh	msh;
+	char	*prompt;
+	t_cmd	*curr;
+	t_token	*tok;
 
 	(void) ac,
 	(void) av;
 	(void) env;
-	// create_exp_lst(env_var.ex_env, env);
-	create_env_lst(env_var.env, env);
+	prompt = get_prompt_cwd();
+	msh.cmd = readline(prompt);
+	msh.cmd_lst = NULL;
+	unclosed_quote(msh.cmd, prompt);
+	transform_quoted_pipe(msh.cmd, &msh);
+	successive_pipe(msh.cmd, prompt,  &msh);
+	create_cmd_lst(msh.cmd, &msh);
+	msh.i_qut_pipe = 0;
+	restore_quoted_pipe(&msh);
+	create_token_list(&msh);
+	type_token(&msh);
+	while (msh.cmd_lst)
+	{
+		curr = msh.cmd_lst;
+		while (curr->token_lst)
+		{
+			tok = curr->token_lst->next;
+			free(curr->token_lst->value);
+			free(curr->token_lst);
+			curr->token_lst = tok;
+		}
+		msh.cmd_lst = curr->next;
+		free(curr->value);
+		free(curr);
+	}
+	free(msh.pipe_pos);
+	free(prompt);
+	free(msh.cmd);
 	return (0);
 }

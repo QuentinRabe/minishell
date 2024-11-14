@@ -1,7 +1,7 @@
 NAME	=	minishell
 CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra -I./includes/ -I./libft/
-SRCS	=	$(shell find srcs -name '*.c') main.c
+SRCS	=	$(shell find srcs libft -name '*.c') main.c
 O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
@@ -19,19 +19,14 @@ all		:	$(NAME)
 $(NAME)	:	$(OBJS)
 		@echo "Building $(NAME)..."
 		@echo "--------------------"
-		@echo "Making libft..."
-		@make -sC ./libft
-		@echo "--------------------"
-		@$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -lreadline -L./libft -lft && echo -e "$(GREEN)Build successful!$(NC)" || echo -e "$(RED)Build failed!$(NC)"
+		@$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -lreadline && echo -e "$(GREEN)Build successful!$(NC)" || echo -e "$(RED)Build failed!$(NC)"
 
 clean	:
 		@echo "Cleaning object files..."
-		@make clean -sC ./libft
 		@rm -rf $(O_DIR) && echo -e "$(GREEN)Cleaned!$(NC)" || echo -e "$(RED)Clean failed!$(NC)"
 
 fclean	:	clean
 		@echo "Removing executable..."
-		@make fclean -sC ./libft
 		@rm -f $(NAME) && echo -e "$(GREEN)Fully cleaned!$(NC)" || echo -e "$(RED)Full clean failed!$(NC)"
 
 msh_val	:	all

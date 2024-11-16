@@ -55,6 +55,7 @@ struct s_token
 	struct s_token	*prev;
 	t_token_kind	kind;
 	t_bool			in_d_quote;
+	t_bool			in_s_quote;
 	char			*value;
 	struct s_token	*next;
 };

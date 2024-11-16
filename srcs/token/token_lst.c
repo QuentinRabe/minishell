@@ -78,9 +78,20 @@ static char	*extract_token(char *cmd, int *i, char delimiter, t_token *token)
 	else
 		length = customed_strlen(&cmd[*i], delimiter);
 	if (delimiter == '"')
+	{
 		token->in_d_quote = TRUE;
-	else
+		token->in_s_quote = FALSE;
+	}
+	else if (delimiter == '\'')
+	{
+		token->in_s_quote = TRUE;
 		token->in_d_quote = FALSE;
+	}
+	else
+	{
+		token->in_d_quote = FALSE;
+		token->in_s_quote = FALSE;
+	}
 	result = ft_substr(cmd, *i, length);
 	if (!result)
 		return (NULL);

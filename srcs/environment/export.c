@@ -66,18 +66,18 @@ static void	add_env_var(t_e_env **env, char *env_var)
 	}
 }
 
-void	create_exp_lst(t_e_env *ex_env, char **env_vars)
+void	create_exp_lst(t_e_env **ex_env, char **env_vars)
 {
 	int	i;
 
-	ex_env = NULL;
+	*ex_env = NULL;
 	i = -1;
 	while (env_vars[++i])
-		add_env_var(&ex_env, env_vars[i]);
-	sort_export_env(&ex_env);
-	while (ex_env)
-	{
-		printf("%s=%s\n", ex_env->key, ex_env->value);
-		ex_env = ex_env->next;
-	}
+		add_env_var(ex_env, env_vars[i]);
+	sort_export_env(ex_env);
+	// while (ex_env)
+	// {
+	// 	printf("%s=%s\n", ex_env->key, ex_env->value);
+	// 	ex_env = ex_env->next;
+	// }
 }

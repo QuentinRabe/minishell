@@ -39,10 +39,12 @@ void insert_sorted(t_e_env **sorted, t_e_env *new_node)
 
 void sort_export_env(t_e_env **exp)
 {
-	t_e_env *sorted = NULL;
-	t_e_env *current = *exp;
+	t_e_env *sorted;
+	t_e_env *current;
 	t_e_env *next;
 
+	sorted = NULL;
+	current = *exp;
 	while (current != NULL)
 	{
 		next = current->next;

@@ -34,10 +34,12 @@ void	transform_quoted_pipe(char *str, t_msh *msh);
 t_bool	in_pipe_arr(t_msh *msh, int val);
 void	restore_quoted_pipe(t_msh *msh);
 void	type_token(t_msh *msh);
+void	expand_vars(t_msh *msh);
 /*==========ENVIRONMENT==========*/
-void	create_env_lst(t_e_env *env, char **env_vars);
-void	create_exp_lst(t_e_env *ex_env, char **env_vars);
+void	create_env_lst(t_e_env **env, char **env_vars);
+void	create_exp_lst(t_e_env **ex_env, char **env_vars);
 void	sort_export_env(t_e_env **exp);
+char	*ft_getenv(char *env, t_e_env *e_env);
 /*==========UTILS==========*/
 t_bool	is_space(char c);
 int		customed_strlen(char *str, char charset);

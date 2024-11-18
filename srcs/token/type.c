@@ -12,26 +12,26 @@
 
 #include <minishell.h>
 
-static char	*str_type(int type)
-{
-	if (type == WORD)
-		return ("WORD");
-	else if (type == TRUNC)
-		return ("TRUNC");
-	else if (type == APPEND)
-		return ("APPEND");
-	else if (type == INFILE)
-		return ("INFILE");
-	else if (type == OUTFILE)
-		return ("OUTFILE");
-	else if (type == EOF_HD)
-		return ("EOF_HEREDOC");
-	else if (type == HEREDOC)
-		return ("HEREDOC");
-	else if (type == REDIR_IN)
-		return ("REDIR_IN");
-	return (NULL);
-}
+// static char	*str_type(int type)
+// {
+// 	if (type == WORD)
+// 		return ("WORD");
+// 	else if (type == TRUNC)
+// 		return ("TRUNC");
+// 	else if (type == APPEND)
+// 		return ("APPEND");
+// 	else if (type == INFILE)
+// 		return ("INFILE");
+// 	else if (type == OUTFILE)
+// 		return ("OUTFILE");
+// 	else if (type == EOF_HD)
+// 		return ("EOF_HEREDOC");
+// 	else if (type == HEREDOC)
+// 		return ("HEREDOC");
+// 	else if (type == REDIR_IN)
+// 		return ("REDIR_IN");
+// 	return (NULL);
+// }
 
 static void	check_redir_file_type(t_token *token)
 {
@@ -72,17 +72,6 @@ void	type_token(t_msh *msh)
 		{
 			give_type_token(curr_token->value, curr_token);
 			check_redir_file_type(curr_token);
-			curr_token = curr_token->next;
-		}
-		curr_cmd = curr_cmd->next;
-	}
-	curr_cmd = msh->cmd_lst;
-	while (curr_cmd)
-	{
-		curr_token = curr_cmd->token_lst;
-		while (curr_token)
-		{
-			printf("[value %s type %s In double quote = %d In simple quote = %d]\n", curr_token->value, str_type(curr_token->kind), curr_token->in_d_quote, curr_token->in_s_quote);
 			curr_token = curr_token->next;
 		}
 		curr_cmd = curr_cmd->next;

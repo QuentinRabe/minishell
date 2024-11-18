@@ -24,6 +24,17 @@
 
 #include <minishell.h>
 
+static char	check_for_delimiter(char *str)
+{
+	while (*str && *str != ' ')
+	{
+		if (*str == '"' || *str == '\'')
+			return (*str);
+		str++;
+	}
+	return (' ');
+}
+
 static char	find_arrow(char *str)
 {
 	while (*str && *str != ' ')
@@ -76,7 +87,10 @@ static char	*extract_token(char *cmd, int *i, char delimiter, t_token *token)
 	if ((delimiter == '<' || delimiter == '>') && (cmd[*i] == '<' || cmd[*i] == '>'))
 		length = count_arrow(&cmd[*i], delimiter);
 	else
+	{
+		delimiter = check_for_delimiter(&cmd[*i]);
 		length = customed_strlen(&cmd[*i], delimiter);
+	}
 	if (delimiter == '"')
 	{
 		token->in_d_quote = TRUE;

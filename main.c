@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananariv>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 07:55:26 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/11 12:07:22 by arabefam         ###   ########.fr       */
+/*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
+/*   Updated: 2024/11/18 08:38:01 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void free_env(t_e_env *env)
+{
+	t_e_env *tmp;
+
+	while (env)
+	{
+		tmp = env;
+		env = env->next;
+		free(tmp->key);
+		free(tmp->value);
+		free(tmp);
+	}
+}
 
 int	main(int ac, char **av, char **env)
 {
@@ -33,6 +47,8 @@ int	main(int ac, char **av, char **env)
 	restore_quoted_pipe(&msh);
 	create_token_list(&msh);
 	type_token(&msh);
+	create_env_lst(&msh.env_data.env, env);
+	expand_vars(&msh);
 	while (msh.cmd_lst)
 	{
 		curr = msh.cmd_lst;
@@ -47,6 +63,7 @@ int	main(int ac, char **av, char **env)
 		free(curr->value);
 		free(curr);
 	}
+	free_env(msh.env_data.env);
 	free(msh.pipe_pos);
 	free(prompt);
 	free(msh.cmd);

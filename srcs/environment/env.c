@@ -63,17 +63,17 @@ static void	add_env_var(t_e_env **env, char *env_var)
 
 }
 
-void	create_env_lst(t_e_env *env, char **env_vars)
+void	create_env_lst(t_e_env **env, char **env_vars)
 {
 	int	i;
 
-	env = NULL;
+	*env = NULL;
 	i = -1;
 	while (env_vars[++i])
-		add_env_var(&env, env_vars[i]);
-	while (env)
-	{
-		printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
+		add_env_var(env, env_vars[i]);
+	// while (env)
+	// {
+	// 	printf("%s=%s\n", env->key, env->value);
+	// 	env = env->next;
+	// }
 }

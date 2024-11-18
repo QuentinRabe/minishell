@@ -54,7 +54,7 @@ void	unclosed_quote(char *cmd, char *prompt)
 				if (cmd[i] == quote)
 				{
 					result = TRUE;
-					break;
+					break ;
 				}
 			}
 			if (!result)

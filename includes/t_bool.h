@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getenv.c                                           :+:      :+:    :+:   */
+/*   t_bool.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananariv>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 08:26:42 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/18 08:26:42 by arabefam         ###   ########.fr       */
+/*   Created: 2024/11/18 13:34:56 by arabefam          #+#    #+#             */
+/*   Updated: 2024/11/18 13:35:45 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef T_BOOL_H
+# define T_BOOL_H
+# define TRUE 1
+# define FALSE 0
 
-char	*ft_getenv(char *env, t_e_env *e_env)
-{
-	while (e_env)
-	{
-		if (!ft_strcmp(env, e_env->key))
-			return (e_env->value);
-		e_env = e_env->next;
-	}
-	return (NULL);
-}
+typedef int					t_bool;
+#endif //T_BOOL_H

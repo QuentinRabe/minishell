@@ -12,9 +12,9 @@
 
 #include <minishell.h>
 
-void insert_sorted(t_e_env **sorted, t_e_env *new_node)
+void	insert_sorted(t_e_env **sorted, t_e_env *new_node)
 {
-	t_e_env *current;
+	t_e_env	*current;
 
 	if (*sorted == NULL || ft_strcmp((*sorted)->key, new_node->key) >= 0)
 	{
@@ -27,7 +27,8 @@ void insert_sorted(t_e_env **sorted, t_e_env *new_node)
 	else
 	{
 		current = *sorted;
-		while (current->next != NULL && ft_strcmp(current->next->key, new_node->key) < 0)
+		while (current->next != NULL
+			&& ft_strcmp(current->next->key, new_node->key) < 0)
 			current = current->next;
 		new_node->next = current->next;
 		if (current->next != NULL)
@@ -37,11 +38,11 @@ void insert_sorted(t_e_env **sorted, t_e_env *new_node)
 	}
 }
 
-void sort_export_env(t_e_env **exp)
+void	sort_export_env(t_e_env **exp)
 {
-	t_e_env *sorted;
-	t_e_env *current;
-	t_e_env *next;
+	t_e_env	*sorted;
+	t_e_env	*current;
+	t_e_env	*next;
 
 	sorted = NULL;
 	current = *exp;

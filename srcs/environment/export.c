@@ -29,7 +29,7 @@ static char	*extract_value(char *env_var, int *i)
 	return (result);
 }
 
-static char *extract_key(char *env_var, int *i)
+static char	*extract_key(char *env_var, int *i)
 {
 	char	*result;
 	int		length;
@@ -75,9 +75,4 @@ void	create_exp_lst(t_e_env **ex_env, char **env_vars)
 	while (env_vars[++i])
 		add_env_var(ex_env, env_vars[i]);
 	sort_export_env(ex_env);
-	// while (ex_env)
-	// {
-	// 	printf("%s=%s\n", ex_env->key, ex_env->value);
-	// 	ex_env = ex_env->next;
-	// }
 }

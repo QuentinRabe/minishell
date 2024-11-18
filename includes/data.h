@@ -12,8 +12,7 @@
 
 #ifndef DATA_H
 # define DATA_H
-# define TRUE 1
-# define FALSE 0
+# include <t_bool.h>
 
 typedef struct s_msh		t_msh;
 typedef struct s_env		t_env;
@@ -21,7 +20,6 @@ typedef struct s_cmd		t_cmd;
 typedef struct s_token		t_token;
 typedef struct s_e_env		t_e_env;
 typedef enum e_token_kind	t_token_kind;
-typedef int					t_bool;
 
 enum e_token_kind
 {

@@ -12,6 +12,19 @@
 
 #include <minishell.h>
 
+static void	print_token(t_cmd *cmd_lst)
+{
+	while (cmd_lst)
+	{
+		while (cmd_lst->token_lst)
+		{
+			printf("[value %s]\n", cmd_lst->token_lst->value);
+			cmd_lst->token_lst = cmd_lst->token_lst->next;
+		}
+		cmd_lst = cmd_lst->next;
+	}
+}
+
 static char	check_for_delimiter(char *str)
 {
 	while (*str)
@@ -23,14 +36,39 @@ static char	check_for_delimiter(char *str)
 	return (0);
 }
 
-static void replace_value(char **token, t_e_env *env)
+static void	join_values(char *cpy, int *i, char **token, t_e_env *env)
 {
-	int i;
-	char *cpy;
-	char *sub;
-	char *tmp;
-	char *var_name;
-	char delimiter;
+	char	delimiter;
+	char	*var_name;
+	char	*tmp;
+
+	if (cpy[*i] && cpy[*i] == '$' && cpy[*i + 1]
+		&& (ft_isalnum(cpy[*i + 1]) || cpy[*i + 1] == '_'))
+	{
+		*i += 1;
+		delimiter = check_for_delimiter(&cpy[*i]);
+		var_name = ft_substr(cpy, *i, customed_strlen(&cpy[*i], delimiter));
+		*i += customed_strlen(&cpy[*i], delimiter);
+		tmp = ft_strjoin(*token, ft_getenv(var_name, env));
+		free(*token);
+		*token = tmp;
+		free(var_name);
+	}
+	else if (cpy[*i] && cpy[*i] == '$')
+	{
+		tmp = ft_strjoin(*token, "$");
+		free(*token);
+		*token = tmp;
+		*i += 1;
+	}
+}
+
+static void	replace_value(char **token, t_e_env *env)
+{
+	int		i;
+	char	*cpy;
+	char	*sub;
+	char	*tmp;
 
 	cpy = ft_strdup(*token);
 	free(*token);
@@ -44,24 +82,7 @@ static void replace_value(char **token, t_e_env *env)
 		free(*token);
 		*token = tmp;
 		free(sub);
-		if (cpy[i] && cpy[i] == '$' && cpy[i + 1] && (ft_isalnum(cpy[i + 1]) || cpy[i + 1] == '_'))
-		{
-			i++;
-			delimiter = check_for_delimiter(&cpy[i]);
-			var_name = ft_substr(cpy, i, customed_strlen(&cpy[i], delimiter));
-			i += customed_strlen(&cpy[i], delimiter);
-			tmp = ft_strjoin(*token, ft_getenv(var_name, env));
-			free(*token);
-			*token = tmp;
-			free(var_name);
-		}
-		else if (cpy[i] && cpy[i] == '$')
-		{
-			tmp = ft_strjoin(*token, "$");
-			free(*token);
-			*token = tmp;
-			i++;
-		}
+		join_values(cpy, &i, token, env);
 	}
 	free(cpy);
 }
@@ -83,15 +104,5 @@ void	expand_vars(t_msh *msh)
 		}
 		curr_cmd = curr_cmd->next;
 	}
-	curr_cmd = msh->cmd_lst;
-	while (curr_cmd)
-	{
-		curr_token = curr_cmd->token_lst;
-		while (curr_token)
-		{
-			printf("[value %s]\n", curr_token->value);
-			curr_token = curr_token->next;
-		}
-		curr_cmd = curr_cmd->next;
-	}
+	print_token(msh->cmd_lst);
 }

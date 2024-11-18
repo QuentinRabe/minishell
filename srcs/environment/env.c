@@ -29,7 +29,7 @@ static char	*extract_value(char *env_var, int *i)
 	return (result);
 }
 
-static char *extract_key(char *env_var, int *i)
+static char	*extract_key(char *env_var, int *i)
 {
 	char	*result;
 	int		length;
@@ -60,7 +60,6 @@ static void	add_env_var(t_e_env **env, char *env_var)
 		last = find_last_node(*env);
 		last->next = new;
 	}
-
 }
 
 void	create_env_lst(t_e_env **env, char **env_vars)
@@ -71,9 +70,4 @@ void	create_env_lst(t_e_env **env, char **env_vars)
 	i = -1;
 	while (env_vars[++i])
 		add_env_var(env, env_vars[i]);
-	// while (env)
-	// {
-	// 	printf("%s=%s\n", env->key, env->value);
-	// 	env = env->next;
-	// }
 }

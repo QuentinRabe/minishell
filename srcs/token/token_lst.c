@@ -23,74 +23,10 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <token.h>
 
-static char	check_for_delimiter(char *str)
+static void	set_quote_boolean(t_token *token, char delimiter)
 {
-	while (*str && *str != ' ')
-	{
-		if (*str == '"' || *str == '\'')
-			return (*str);
-		str++;
-	}
-	return (' ');
-}
-
-static char	find_arrow(char *str)
-{
-	while (*str && *str != ' ')
-	{
-		if (*str == '<' || *str == '>')
-		{
-			return (*str);
-		}
-		str++;
-	}
-	return (0);
-}
-
-static t_bool	is_there_arrow(char *str)
-{
-	while (*str && *str != ' ')
-	{
-		if (*str == '<' || *str == '>')
-			return (TRUE);
-		str++;
-	}
-	return (FALSE);
-}
-
-static int	count_arrow(char *str, char arrow)
-{
-	int	counter;
-
-	counter = 0;
-	while (*str && *str == arrow)
-	{
-		counter++;
-		str++;
-	}
-	return (counter);
-}
-
-static t_token	*find_last_token(t_token *token_lst)
-{
-	while (token_lst->next)
-		token_lst = token_lst->next;
-	return (token_lst);
-}
-
-static char	*extract_token(char *cmd, int *i, char delimiter, t_token *token)
-{
-	int		length;
-	char	*result;
-
-	if ((delimiter == '<' || delimiter == '>') && (cmd[*i] == '<' || cmd[*i] == '>'))
-		length = count_arrow(&cmd[*i], delimiter);
-	else
-	{
-		delimiter = check_for_delimiter(&cmd[*i]);
-		length = customed_strlen(&cmd[*i], delimiter);
-	}
 	if (delimiter == '"')
 	{
 		token->in_d_quote = TRUE;
@@ -106,6 +42,22 @@ static char	*extract_token(char *cmd, int *i, char delimiter, t_token *token)
 		token->in_d_quote = FALSE;
 		token->in_s_quote = FALSE;
 	}
+}
+
+static char	*extract_token(char *cmd, int *i, char delimiter, t_token *token)
+{
+	int		length;
+	char	*result;
+
+	if ((delimiter == '<' || delimiter == '>')
+		&& (cmd[*i] == '<' || cmd[*i] == '>'))
+		length = count_arrow(&cmd[*i], delimiter);
+	else
+	{
+		delimiter = check_for_delimiter(&cmd[*i]);
+		length = customed_strlen(&cmd[*i], delimiter);
+	}
+	set_quote_boolean(token, delimiter);
 	result = ft_substr(cmd, *i, length);
 	if (!result)
 		return (NULL);

@@ -4,7 +4,18 @@ CFLAGS	=	-Wall -Werror -Wextra -I./includes/ -I./libft/
 SRCS	=	$(shell find srcs libft -name '*.c') main.c
 O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
-
+SUPPRESSIONS = "{\n\
+    leak readline\n\
+    Memcheck:Leak\n\
+    ...\n\
+    fun:readline\n\
+}\n\
+{\n\
+    leak add_history\n\
+    Memcheck:Leak\n\
+    ...\n\
+    fun:add_history\n\
+}"
 GREEN	=	\033[0;32m
 RED		=	\033[0;31m
 NC		=	\033[0m # No Color
@@ -30,6 +41,7 @@ fclean	:	clean
 		@rm -f $(NAME) && echo -e "$(GREEN)Fully cleaned!$(NC)" || echo -e "$(RED)Full clean failed!$(NC)"
 
 msh_val	:	all
-		valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./$(NAME)
-
+		@echo -e $(SUPPRESSIONS) > readline.supp
+		@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./$(NAME)
+		@rm readline.supp
 re		:	fclean all

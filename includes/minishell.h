@@ -46,4 +46,8 @@ void	unclosed_quote(char *cmd, char *prompt);
 void	skip_space(char *str, int *i);
 void	successive_pipe(char *cmd, char *prompt, t_msh *msh);
 void	build_argv(t_msh *msh);
+/*==========EXPANSION==========*/
+t_bool	countain_dollar(char *str);
+char	check_delimiter(char *str);
+void	join_values(char *cpy, int *i, char **token, t_e_env *env);
 #endif // !MINISHELL_H

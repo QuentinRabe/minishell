@@ -30,64 +30,6 @@ void	print_token(t_cmd *cmd_lst)
 	}
 }
 
-static t_bool	countain_dollar(char *str)
-{
-	while (*str)
-	{
-		if (*str == '$')
-			return (TRUE);
-		str++;
-	}
-	return (FALSE);
-}
-
-static char	check_for_delimiter(char *str)
-{
-	while (*str)
-	{
-		if ((!ft_isalnum(*str) && *str != '_') || *str == '?')
-			return (*str);
-		str++;
-	}
-	return (0);
-}
-
-static void	join_values(char *cpy, int *i, char **token, t_e_env *env)
-{
-	char	delimiter;
-	char	*var_name;
-	char	*tmp;
-	char	*value;
-
-	if (cpy[*i] && cpy[*i] == '$' && cpy[*i + 1]
-		&& (ft_isalnum(cpy[*i + 1]) || cpy[*i + 1] == '_'))
-	{
-		*i += 1;
-		delimiter = check_for_delimiter(&cpy[*i]);
-		var_name = ft_substr(cpy, *i, customed_strlen(&cpy[*i], delimiter));
-		if (!var_name)
-			return ;
-		*i += customed_strlen(&cpy[*i], delimiter);
-		value = ft_getenv(var_name, env);
-		if (value)
-			tmp = ft_strjoin(*token, value);
-		else
-			tmp = ft_strjoin(*token, "");
-		free(*token);
-		*token = ft_strdup(tmp);
-		free(tmp);
-		free(var_name);
-	}
-	else if (cpy[*i] && cpy[*i] == '$')
-	{
-		tmp = ft_strjoin(*token, "$");
-		free(*token);
-		*token = ft_strdup(tmp);
-		free(tmp);
-		*i += 1;
-	}
-}
-
 static void	replace_value(char **token, t_e_env *env)
 {
 	int		i;
@@ -107,6 +49,7 @@ static void	replace_value(char **token, t_e_env *env)
 		{
 			tmp = ft_strjoin(*token, sub);
 			free(*token);
+			free(sub);
 		}
 		else
 			tmp = sub;
@@ -134,5 +77,4 @@ void	expand_vars(t_msh *msh)
 		}
 		curr_cmd = curr_cmd->next;
 	}
-	print_token(msh->cmd_lst);
 }

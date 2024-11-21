@@ -21,11 +21,8 @@ static int	count_word(t_token *token)
 	curr_token = token;
 	while (curr_token)
 	{
-		printf("token -> %s\n", curr_token->value);
 		if (curr_token->kind == WORD)
-		{
 			counter++;
-		}
 		curr_token = curr_token->next;
 	}
 	return (counter);
@@ -51,15 +48,12 @@ void	build_argv(t_msh *msh)
 {
 	t_cmd	*curr_cmd;
 	int		i;
-	// t_token	*curr_token;
 	int		args;
 
 	curr_cmd = msh->cmd_lst;
-	while (curr_cmd)
+	while (curr_cmd)	
 	{
-		printf("cmd value -> %s\n", curr_cmd->value);
 		args = count_word(curr_cmd->token_lst);
-		printf("there are %d args\n", args);
 		curr_cmd->argv = (char **) malloc((args + 1) * sizeof(char *));
 		take_token_word(&curr_cmd->argv, curr_cmd->token_lst);
 		curr_cmd = curr_cmd->next;

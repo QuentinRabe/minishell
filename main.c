@@ -50,13 +50,12 @@ int	main(int ac, char **av, char **env)
 	type_token(&msh);
 	create_env_lst(&msh.env_data.env, env);
 	expand_vars(&msh);
-	build_argv(&msh);
+	// build_argv(&msh);
 	while (msh.cmd_lst)
 	{
 		curr = msh.cmd_lst;
 		while (curr->token_lst)
 		{
-			printf("Hello\n");
 			tok = curr->token_lst->next;
 			free(curr->token_lst->value);
 			free(curr->token_lst);

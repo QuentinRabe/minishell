@@ -62,6 +62,7 @@ struct s_cmd
 {
 	char			*value;
 	struct s_token	*token_lst;
+	char			**argv;
 	struct s_cmd	*next;
 };
 
@@ -71,6 +72,7 @@ struct s_msh
 	int				*pipe_pos;
 	int				quoted_pipe;
 	int				i_qut_pipe;
+	int				ex_status;
 	struct s_env	env_data;
 	struct s_cmd	*cmd_lst;
 };

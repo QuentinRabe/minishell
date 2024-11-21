@@ -132,7 +132,7 @@ void	create_token_list(t_msh *msh)
 	while (current_cmd)
 	{
 		current_cmd->token_lst = NULL;
-		turn_cmd_into_tokens(current_cmd->value, &msh->cmd_lst->token_lst);
+		turn_cmd_into_tokens(current_cmd->value, &current_cmd->token_lst);
 		current_cmd = current_cmd->next;
 	}
 }

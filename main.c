@@ -36,6 +36,7 @@ int	main(int ac, char **av, char **env)
 	(void) ac,
 	(void) av;
 	(void) env;
+	msh.ex_status = 0;
 	prompt = get_prompt_cwd();
 	msh.cmd = readline(prompt);
 	msh.cmd_lst = NULL;
@@ -49,11 +50,13 @@ int	main(int ac, char **av, char **env)
 	type_token(&msh);
 	create_env_lst(&msh.env_data.env, env);
 	expand_vars(&msh);
+	build_argv(&msh);
 	while (msh.cmd_lst)
 	{
 		curr = msh.cmd_lst;
 		while (curr->token_lst)
 		{
+			printf("Hello\n");
 			tok = curr->token_lst->next;
 			free(curr->token_lst->value);
 			free(curr->token_lst);

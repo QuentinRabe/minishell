@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananariv>  +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 06:26:28 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/12 10:15:48 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/26 10:23:37 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ static char	*extract_token(char *cmd, int *i, char delimiter, t_token *token)
 	if ((delimiter == '<' || delimiter == '>')
 		&& (cmd[*i] == '<' || cmd[*i] == '>'))
 		length = count_arrow(&cmd[*i], delimiter);
-	else
+	else if (delimiter != '"' && delimiter != '\'')
 	{
 		delimiter = check_for_delimiter(&cmd[*i]);
 		length = customed_strlen(&cmd[*i], delimiter);
 	}
+	else
+		length = customed_strlen(&cmd[*i], delimiter);
 	set_quote_boolean(token, delimiter);
 	result = ft_substr(cmd, *i, length);
 	if (!result)

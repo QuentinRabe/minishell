@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 07:20:46 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/26 10:37:36 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/11/28 08:42:09 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,35 @@ void	print_token(t_cmd *cmd_lst)
 
 void	replace_value(char **token, t_e_env *env)
 {
-	char	*first;
+	char	*sub;
 	char	*var_name;
-	char	*third;
+	char	*last;
+	char	*value;
+	char	*tmp;
 	int		i;
 	char	delimiter;
 
 	(void) env;
-	first = ft_substr(*token, 0, customed_strlen(*token, '$'));
+	sub = ft_substr(*token, 0, customed_strlen(*token, '$'));
 	i = customed_strlen(*token, '$') + 1;
 	delimiter = check_delimiter(&(*token)[i]);
 	var_name = ft_substr(*token, i, customed_strlen(&(*token)[i], delimiter));
+	value = ft_getenv(var_name, env);
 	i = i + customed_strlen(&(*token)[i], delimiter);
-	printf("i = %d\n", i);
-	third = ft_substr(*token, i, customed_strlen(&(*token)[i], '\0'));
-	printf("first %s\nVar_name %s\nThird %s\n", first, var_name, third);
+	last = ft_substr(*token, i, customed_strlen(&(*token)[i], '\0'));
+	// free(*token);
+	tmp = sub;
+	if (value)
+		tmp = ft_strjoin(sub, value);
+	// free(sub);
+	// free(value);
+	*token = ft_strjoin(tmp, last);
+	// free(tmp);
+	// free(last);
+	if (countain_dollar(*token))
+		replace_value(token, env);
+	return ;
 }
-
 void	expand_vars(t_msh *msh)
 {
 	t_cmd	*curr_cmd;

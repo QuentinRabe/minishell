@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/11 10:56:10 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/12/29 12:17:03 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <data.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+/*==========ERROR==========*/
+void check_obvious_error(char *str, t_msh *msh);
 
 char	*get_prompt_cwd(void);
 char	**extract_path_from_env(char **env);

@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   obvious.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/08 11:13:53 by quentin           #+#    #+#             */
-/*   Updated: 2024/06/08 11:14:06 by quentin          ###   ########.fr       */
+/*   Created: 2024/12/29 12:11:49 by arabefam          #+#    #+#             */
+/*   Updated: 2024/12/29 12:18:37 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft.h"
+#include <minishell.h>
 
-int	ft_strcmp(char *s1, char *s2)
+void check_obvious_error(char *str, t_msh *msh)
 {
-	while (*s1 && (*s1 == *s2))
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		s1++;
-		s2++;
+		skip_space(str, &i);
+		if (str[i] == '|')
+		{
+			ft_putstr_fd("Token error near |\n", 2);
+			msh->ex_status = 2;
+			exit(msh->ex_status);
+		}
 	}
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+
 }

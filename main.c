@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananariv>  +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/18 08:38:01 by arabefam         ###   ########.fr       */
+/*   Updated: 2024/12/29 12:18:00 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int ac, char **av, char **env)
 	prompt = get_prompt_cwd();
 	msh.cmd = readline(prompt);
 	msh.cmd_lst = NULL;
+	check_obvious_error(msh.cmd, &msh);
 	unclosed_quote(msh.cmd, prompt);
 	transform_quoted_pipe(msh.cmd, &msh);
 	successive_pipe(msh.cmd, prompt,  &msh);

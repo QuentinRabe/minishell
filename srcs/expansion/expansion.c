@@ -40,23 +40,25 @@ void	replace_value(char **token, t_e_env *env)
 	int		i;
 	char	delimiter;
 
-	(void) env;
 	sub = ft_substr(*token, 0, customed_strlen(*token, '$'));
 	i = customed_strlen(*token, '$') + 1;
 	delimiter = check_delimiter(&(*token)[i]);
 	var_name = ft_substr(*token, i, customed_strlen(&(*token)[i], delimiter));
+	printf("var_name = %s\n", var_name);
 	value = ft_getenv(var_name, env);
 	i = i + customed_strlen(&(*token)[i], delimiter);
 	last = ft_substr(*token, i, customed_strlen(&(*token)[i], '\0'));
-	// free(*token);
+	free(*token);
 	tmp = sub;
 	if (value)
 		tmp = ft_strjoin(sub, value);
-	// free(sub);
+	free(sub);
 	// free(value);
 	*token = ft_strjoin(tmp, last);
-	// free(tmp);
-	// free(last);
+
+	free(tmp);
+	free(last);
+	free(var_name);
 	if (countain_dollar(*token))
 		replace_value(token, env);
 	return ;

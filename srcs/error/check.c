@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananariv>  +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 07:20:30 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/12 07:21:53 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/01 11:51:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	successive_pipe(char *cmd, char *prompt, t_msh *msh)
+t_bool	successive_pipe(char *cmd, t_msh *msh)
 {
 	int	i;
 
@@ -25,24 +25,25 @@ void	successive_pipe(char *cmd, char *prompt, t_msh *msh)
 			skip_space(cmd, &i);
 			if (cmd[i] == '|')
 			{
-				free(msh->pipe_pos);
-				free(prompt);
-				free(cmd);
-				exit(1);
+				ft_putstr_fd("Token error near |\n", 2);
+				msh->ex_status = 2;
+				return (FALSE);
 			}
 		}
 		else
 			i++;
 	}
+	return (TRUE);
 }
 
-void	unclosed_quote(char *cmd, char *prompt)
+t_bool	unclosed_quote(char *cmd, t_msh *msh)
 {
 	int		i;
 	char	quote;
 	t_bool	result;
 
 	i = -1;
+	result = TRUE;
 	while (cmd[++i])
 	{
 		if (cmd[i] == '\'' || cmd[i] == '"')
@@ -59,10 +60,10 @@ void	unclosed_quote(char *cmd, char *prompt)
 			}
 			if (!result)
 			{
-				free(prompt);
-				free(cmd);
-				exit(1);
+				msh->ex_status = 2;
+				return (FALSE);
 			}
 		}
 	}
+	return (result);
 }

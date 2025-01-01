@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananarivo. +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 09:34:08 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/11 11:26:31 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/01 12:14:38 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	transform_quoted_pipe(char *str, t_msh *msh)
 
 	msh->quoted_pipe = count_quoted_pipe(str);
 	msh->pipe_pos = (int *) malloc(msh->quoted_pipe * sizeof(int));
+	if (!msh->pipe_pos)
+		return ;
 	i = 0;
 	j = 0;
 	while (str[++i])

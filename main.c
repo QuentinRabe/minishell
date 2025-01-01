@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2024/12/29 12:18:00 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/01 12:50:12 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,14 @@ void free_env(t_e_env *env)
 	}
 }
 
-int	main(int ac, char **av, char **env)
+void	reset_token(t_msh *msh)
 {
-	t_msh	msh;
-	char	*prompt;
 	t_cmd	*curr;
 	t_token	*tok;
 
-	(void) ac,
-	(void) av;
-	(void) env;
-	msh.ex_status = 0;
-	prompt = get_prompt_cwd();
-	msh.cmd = readline(prompt);
-	msh.cmd_lst = NULL;
-	check_obvious_error(msh.cmd, &msh);
-	unclosed_quote(msh.cmd, prompt);
-	transform_quoted_pipe(msh.cmd, &msh);
-	successive_pipe(msh.cmd, prompt,  &msh);
-	create_cmd_lst(msh.cmd, &msh);
-	msh.i_qut_pipe = 0;
-	restore_quoted_pipe(&msh);
-	create_token_list(&msh);
-	type_token(&msh);
-	create_env_lst(&msh.env_data.env, env);
-	expand_vars(&msh);
-	// build_argv(&msh);
-	while (msh.cmd_lst)
+	while (msh->cmd_lst)
 	{
-		curr = msh.cmd_lst;
+		curr = msh->cmd_lst;
 		while (curr->token_lst)
 		{
 			tok = curr->token_lst->next;
@@ -62,13 +41,63 @@ int	main(int ac, char **av, char **env)
 			free(curr->token_lst);
 			curr->token_lst = tok;
 		}
-		msh.cmd_lst = curr->next;
+		msh->cmd_lst = curr->next;
 		free(curr->value);
 		free(curr);
 	}
+	free(msh->cmd);
+}
+
+void	tokenization(t_msh *msh)
+{
+	create_cmd_lst(msh->cmd, msh);
+	msh->i_qut_pipe = 0;
+	restore_quoted_pipe(msh);
+	create_token_list(msh);
+	type_token(msh);
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_msh	msh;
+
+	(void) ac,
+	(void) av;
+	(void) env;
+	init_env(&msh, env);
+	msh.ex_status = 0;
+	while (1)
+	{
+		msh.cmd = readline("$>");
+		msh.cmd_lst = NULL;
+		if (!check_obvious_error(msh.cmd, &msh))
+		{
+			reset(&msh);
+			continue;
+		}
+		tokenization(&msh);
+		expand_vars(&msh);
+		build_argv(&msh);
+		reset_token(&msh);
+	}
+
+	// while (msh.cmd_lst)
+	// {
+	// 	curr = msh.cmd_lst;
+	// 	while (curr->token_lst)
+	// 	{
+	// 		tok = curr->token_lst->next;
+	// 		free(curr->token_lst->value);
+	// 		free(curr->token_lst);
+	// 		curr->token_lst = tok;
+	// 	}
+	// 	msh.cmd_lst = curr->next;
+	// 	free(curr->value);
+	// 	free(curr);
+	// }
+	// free(msh.pipe_pos);
 	free_env(msh.env_data.env);
-	free(msh.pipe_pos);
-	free(prompt);
-	free(msh.cmd);
+	free_env(msh.env_data.ex_env);
+	// free(msh.cmd);
 	return (0);
 }

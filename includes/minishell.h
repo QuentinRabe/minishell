@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2024/12/29 12:17:03 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/01 12:25:27 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <readline/history.h>
 
 /*==========ERROR==========*/
-void check_obvious_error(char *str, t_msh *msh);
+t_bool check_obvious_error(char *str, t_msh *msh);
+void	reset(t_msh *msh);
 
 char	*get_prompt_cwd(void);
 char	**extract_path_from_env(char **env);
@@ -42,12 +43,13 @@ void	create_env_lst(t_e_env **env, char **env_vars);
 void	create_exp_lst(t_e_env **ex_env, char **env_vars);
 void	sort_export_env(t_e_env **exp);
 char	*ft_getenv(char *env, t_e_env *e_env);
+void	init_env(t_msh *msh, char **env);
 /*==========UTILS==========*/
 t_bool	is_space(char c);
 int		customed_strlen(char *str, char charset);
-void	unclosed_quote(char *cmd, char *prompt);
+t_bool	unclosed_quote(char *cmd, t_msh *msh);
 void	skip_space(char *str, int *i);
-void	successive_pipe(char *cmd, char *prompt, t_msh *msh);
+t_bool	successive_pipe(char *cmd, t_msh *msh);
 void	build_argv(t_msh *msh);
 /*==========EXPANSION==========*/
 t_bool	countain_dollar(char *str);

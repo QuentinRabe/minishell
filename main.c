@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/02 15:35:21 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/02 16:57:43 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	main(int ac, char **av, char **env)
 		{
 			free_env(msh.env_data.env);
 			free_env(msh.env_data.ex_env);
-			printf("exit\n");
+			printf("exit \n");
 			exit(msh.ex_status);
 		}
 		if (!check_obvious_error(msh.cmd, &msh))

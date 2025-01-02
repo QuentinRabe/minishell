@@ -2,6 +2,7 @@
 	"files.associations": {
 		"bitset": "c",
 		"string_view": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"types.h": "c"
 	}
 }

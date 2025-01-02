@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/02 10:21:35 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/02 15:25:17 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <data.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <signal.h>
 
 /*==========ERROR==========*/
 t_bool	check_obvious_error(char *str, t_msh *msh);
@@ -51,6 +55,7 @@ t_bool	unclosed_quote(char *cmd, t_msh *msh);
 void	skip_space(char *str, int *i);
 t_bool	successive_pipe(char *cmd, t_msh *msh);
 void	build_argv(t_msh *msh);
+char	*get_next_line(int fd);
 /*==========EXPANSION==========*/
 t_bool	countain_dollar(char *str);
 char	check_delimiter(char *str);

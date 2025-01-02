@@ -6,11 +6,27 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/02 09:53:05 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/02 15:35:21 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	signal_handler(int sig)
+{
+	if (sig)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
+void	init_signal()
+{
+	signal(SIGINT, signal_handler);
+}
 
 void	free_argv(char **argv)
 {
@@ -79,10 +95,19 @@ int	main(int ac, char **av, char **env)
 	(void) env;
 	init_env(&msh, env);
 	msh.ex_status = 0;
+
 	while (1)
 	{
+		init_signal();
 		msh.cmd = readline("$>");
 		msh.cmd_lst = NULL;
+		if (!msh.cmd)
+		{
+			free_env(msh.env_data.env);
+			free_env(msh.env_data.ex_env);
+			printf("exit\n");
+			exit(msh.ex_status);
+		}
 		if (!check_obvious_error(msh.cmd, &msh))
 		{
 			reset(&msh);
@@ -92,7 +117,6 @@ int	main(int ac, char **av, char **env)
 		expand_vars(&msh, WORD);
 		build_argv(&msh);
 		reset_token(&msh);
-		break;
 	}
 	free_env(msh.env_data.env);
 	free_env(msh.env_data.ex_env);

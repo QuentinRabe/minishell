@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/01 12:25:27 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/02 10:21:35 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <readline/history.h>
 
 /*==========ERROR==========*/
-t_bool check_obvious_error(char *str, t_msh *msh);
+t_bool	check_obvious_error(char *str, t_msh *msh);
 void	reset(t_msh *msh);
 
 char	*get_prompt_cwd(void);
@@ -37,7 +37,7 @@ void	transform_quoted_pipe(char *str, t_msh *msh);
 t_bool	in_pipe_arr(t_msh *msh, int val);
 void	restore_quoted_pipe(t_msh *msh);
 void	type_token(t_msh *msh);
-void	expand_vars(t_msh *msh);
+void	expand_vars(t_msh *msh, t_token_kind type);
 /*==========ENVIRONMENT==========*/
 void	create_env_lst(t_e_env **env, char **env_vars);
 void	create_exp_lst(t_e_env **ex_env, char **env_vars);

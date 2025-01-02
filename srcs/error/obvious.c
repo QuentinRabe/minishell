@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/29 12:11:49 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/01 12:22:42 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/02 08:30:16 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_bool	check_separator(char *str, t_msh *msh)
 	return (TRUE);
 }
 
-t_bool check_obvious_error(char *str, t_msh *msh)
+t_bool	check_obvious_error(char *str, t_msh *msh)
 {
 	transform_quoted_pipe(str, msh);
 	if (!unclosed_quote(str, msh) || !check_separator(str, msh)

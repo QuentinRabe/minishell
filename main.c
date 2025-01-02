@@ -6,13 +6,23 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/01 12:50:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/02 09:53:05 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void free_env(t_e_env *env)
+void	free_argv(char **argv)
+{
+	int	i;
+
+	i = -1;
+	while (argv[++i])
+		free(argv[i]);
+	free(argv);
+}
+
+void	free_env(t_e_env *env)
 {
 	t_e_env *tmp;
 
@@ -31,6 +41,8 @@ void	reset_token(t_msh *msh)
 	t_cmd	*curr;
 	t_token	*tok;
 
+	if (msh->pipe_pos)
+		free(msh->pipe_pos);
 	while (msh->cmd_lst)
 	{
 		curr = msh->cmd_lst;
@@ -41,6 +53,7 @@ void	reset_token(t_msh *msh)
 			free(curr->token_lst);
 			curr->token_lst = tok;
 		}
+		free_argv(msh->cmd_lst->argv);
 		msh->cmd_lst = curr->next;
 		free(curr->value);
 		free(curr);
@@ -76,28 +89,12 @@ int	main(int ac, char **av, char **env)
 			continue;
 		}
 		tokenization(&msh);
-		expand_vars(&msh);
+		expand_vars(&msh, WORD);
 		build_argv(&msh);
 		reset_token(&msh);
+		break;
 	}
-
-	// while (msh.cmd_lst)
-	// {
-	// 	curr = msh.cmd_lst;
-	// 	while (curr->token_lst)
-	// 	{
-	// 		tok = curr->token_lst->next;
-	// 		free(curr->token_lst->value);
-	// 		free(curr->token_lst);
-	// 		curr->token_lst = tok;
-	// 	}
-	// 	msh.cmd_lst = curr->next;
-	// 	free(curr->value);
-	// 	free(curr);
-	// }
-	// free(msh.pipe_pos);
 	free_env(msh.env_data.env);
 	free_env(msh.env_data.ex_env);
-	// free(msh.cmd);
 	return (0);
 }

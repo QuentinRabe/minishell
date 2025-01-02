@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananariv>  +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/21 10:09:09 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/02 10:16:46 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,13 @@ t_bool	countain_dollar(char *str)
 
 char	check_delimiter(char *str)
 {
+	if (*str == '?')
+		return (*(str + 1));
+	if (*str == '$')
+		return ('$');
 	while (*str)
 	{
-		if ((!ft_isalnum(*str) && *str != '_') || *str == '?')
+		if ((!ft_isalnum(*str) && *str != '_'))
 			return (*str);
 		str++;
 	}

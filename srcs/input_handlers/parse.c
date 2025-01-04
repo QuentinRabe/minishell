@@ -1,19 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_bool.h                                           :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananariv>  +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 13:34:56 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/18 13:35:45 by arabefam         ###   ########.fr       */
+/*   Created: 2025/01/04 10:27:06 by arabefam          #+#    #+#             */
+/*   Updated: 2025/01/04 11:13:18 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_BOOL_H
-# define T_BOOL_H
-# define TRUE 1
-# define FALSE 0
-
-typedef int					t_bool;
-#endif //T_BOOL_H
+#include <minishell.h>

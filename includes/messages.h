@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   messages.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/01 10:52:54 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/02 08:09:20 by arabefam         ###   ########.fr       */
+/*   Created: 2025/01/04 11:17:35 by arabefam          #+#    #+#             */
+/*   Updated: 2025/01/04 11:19:27 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef MESSAGES_H
+# define MESSAGES_H
+# define ERRPIPE "msh:syntax error near unexpected token `|'\n"
+# define ERRQUOTE "msh:unclosed quote syntax error\n"
 
-void	init_env(t_msh *msh, char **env)
-{
-	create_env_lst(&msh->env_data.env, env);
-	create_exp_lst(&msh->env_data.ex_env, env);
-}
+#endif

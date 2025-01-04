@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:28:20 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 20:44:03 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 21:57:59 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ bool	has_obvious_syntax_error(char *str)
 
 	result = false;
 	trim = ft_strtrim(str, SPACES);
-	if (has_extrem_pipe(trim) || has_successive_pipe(trim) || has_unclosed_quote(trim) || has_too_much_arrows(trim))
+	if (has_extrem_pipe(trim) || has_successive_pipe(trim)
+		|| has_unclosed_quote(trim) || has_too_much_arrows(trim)
+		|| has_consecutive_opps_arrows(trim))
 		result = !result;
 	free(trim);
 	return (result);

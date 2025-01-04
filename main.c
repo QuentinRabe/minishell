@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 20:53:04 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:07:23 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int ac, char **av, char **env)
 		if (!has_obvious_syntax_error(input))
 		{
 			trim(&input);
+			printf("We need %d more spaces\n", count_additionnal_spaces(input));
 			if (!has_pipe(input))
 				splitted = split_single_input(input);
 			head = create_token_list(splitted);

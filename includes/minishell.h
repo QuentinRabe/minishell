@@ -6,13 +6,17 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 20:36:41 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 22:07:09 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
+# define _PIPE " | "
+# define _TRUNC " > "
+# define _APPEND " >> "
+# define _REDIR_IN " < "
+# define _HEREDOC " << "
 # include <libft.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -30,8 +34,10 @@
 // ==============INPUT_HANDLERS==============
 bool	has_obvious_syntax_error(char *str);
 bool	has_too_much_arrows(char *str);
+bool	has_consecutive_opps_arrows(char *str);
 char	**split_single_input(char *str);
 bool	has_pipe(char *str);
+int		count_additionnal_spaces(char *str);
 // ==============TOKEN==============
 t_token	*create_token_list(char **tokens);
 // ==============UTILS==============

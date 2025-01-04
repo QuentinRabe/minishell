@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   messages.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quentin <quentin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/08 11:13:53 by quentin           #+#    #+#             */
-/*   Updated: 2024/06/08 11:14:06 by quentin          ###   ########.fr       */
+/*   Created: 2025/01/04 11:17:35 by arabefam          #+#    #+#             */
+/*   Updated: 2025/01/04 20:43:29 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libft.h"
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	while (*s1 && (*s1 == *s2))
-	{
-		s1++;
-		s2++;
-	}
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
-}
+#ifndef MESSAGES_H
+# define MESSAGES_H
+# define ERRSYNT "msh:syntax error near unexpected token "
+#endif

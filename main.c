@@ -5,28 +5,53 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/18 07:55:26 by arabefam          #+#    #+#             */
-/*   Updated: 2024/11/06 11:13:28 by arabefam         ###   ########.fr       */
+/*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
+/*   Updated: 2025/01/04 20:53:04 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+void	signal_handler(int sig)
+{
+	if (sig)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
+
+void	init_signal(void)
+{
+	signal(SIGINT, signal_handler);
+}
+
 int	main(int ac, char **av, char **env)
 {
-	t_env	vars;
-	int		i;
+	char	*input;
+	char	**splitted;
+	t_token	*head;
 
 	(void) ac,
 	(void) av;
 	(void) env;
-	i = -1;
-	vars.path = extract_path_from_env(env);
-	while (vars.path[++i])
-		printf("%s\n", vars.path[i]);
-	i = -1;
-	while (vars.path[++i])
-		free(vars.path[i]);
-	free(vars.path);
+	while (1)
+	{
+		init_signal();
+		input = readline("msh$ ");
+		if (!input)
+			exit(0);
+		if (!has_obvious_syntax_error(input))
+		{
+			trim(&input);
+			if (!has_pipe(input))
+				splitted = split_single_input(input);
+			head = create_token_list(splitted);
+			print_list(head);
+		}
+		free(input);
+	}
 	return (0);
 }

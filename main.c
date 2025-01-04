@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 11:23:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:37:41 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	init_signal(void)
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
+	char	**splitted;
 
 	(void) ac,
 	(void) av;
@@ -42,6 +43,14 @@ int	main(int ac, char **av, char **env)
 		if (!input)
 			exit(0);
 		has_obvious_syntax_error(input);
+		trim(&input);
+		if (!has_pipe(input))
+			splitted = split_single_input(input);
+		while (*splitted)
+		{
+			printf("[%s]\n", *splitted);
+			splitted++;
+		}
 		free(input);
 	}
 	return (0);

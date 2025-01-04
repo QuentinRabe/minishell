@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 11:19:49 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:37:22 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@
 
 // ==============INPUT_HANDLERS==============
 bool	has_obvious_syntax_error(char *str);
+char	**split_single_input(char *str);
+bool	has_pipe(char *str);
 // ==============UTILS==============
 bool	is_space(char c);
+bool	is_in(char *set, char c);
+void	trim(char **str);
 
 #endif // !MINISHELL_H

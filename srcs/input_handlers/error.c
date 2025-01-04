@@ -6,11 +6,38 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:28:20 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 11:22:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 12:15:06 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static bool	has_successive_pipe(char *str)
+{
+	char	quote;
+
+	while (*str)
+	{
+		if (*str == '\'' || *str == '"')
+		{
+			quote = *str;
+			str++;
+			while (*str && *str != quote)
+				str++;
+		}
+		else if (*str == '|')
+		{
+			str++;
+			while (*str && is_in(SPACES, *str))
+				str++;
+			if (*str == '|')
+				printf(ERRPIPE);
+			return (true);
+		}
+		str++;
+	}
+	return (false);
+}
 
 static bool	has_unclosed_quote(char *str)
 {
@@ -61,7 +88,7 @@ bool	has_obvious_syntax_error(char *str)
 
 	result = false;
 	trim = ft_strtrim(str, SPACES);
-	if (has_extrem_pipe(trim) || has_unclosed_quote(trim))
+	if (has_extrem_pipe(trim) || has_successive_pipe(trim) || has_unclosed_quote(trim))
 		result = !result;
 	free(trim);
 	return (result);

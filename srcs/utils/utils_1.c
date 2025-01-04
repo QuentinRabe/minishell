@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 20:18:19 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 21:44:04 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ bool	is_in(char *set, char c, int *index)
 		}
 	}
 	return (false);
-}
-
-void	trim(char **str)
-{
-	char	*tmp;
-
-	tmp = ft_strdup(*str);
-	free(*str);
-	*str = ft_strtrim(tmp, SPACES);
-	free(tmp);
 }
 
 bool	is_space(char c)

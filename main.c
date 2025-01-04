@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 12:37:41 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 20:53:04 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	char	**splitted;
+	t_token	*head;
 
 	(void) ac,
 	(void) av;
@@ -42,14 +43,13 @@ int	main(int ac, char **av, char **env)
 		input = readline("msh$ ");
 		if (!input)
 			exit(0);
-		has_obvious_syntax_error(input);
-		trim(&input);
-		if (!has_pipe(input))
-			splitted = split_single_input(input);
-		while (*splitted)
+		if (!has_obvious_syntax_error(input))
 		{
-			printf("[%s]\n", *splitted);
-			splitted++;
+			trim(&input);
+			if (!has_pipe(input))
+				splitted = split_single_input(input);
+			head = create_token_list(splitted);
+			print_list(head);
 		}
 		free(input);
 	}

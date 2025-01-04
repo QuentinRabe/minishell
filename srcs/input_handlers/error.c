@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:28:20 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 12:15:06 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 20:44:03 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static bool	has_successive_pipe(char *str)
 		else if (*str == '|')
 		{
 			str++;
-			while (*str && is_in(SPACES, *str))
+			while (*str && is_in(SPACES, *str, NULL))
 				str++;
 			if (*str == '|')
-				printf(ERRPIPE);
+				printf(ERRSYNT"`|'\n");
 			return (true);
 		}
 		str++;
@@ -57,7 +57,7 @@ static bool	has_unclosed_quote(char *str)
 			if (*str == '\0')
 			{
 				result = true;
-				printf(ERRQUOTE);
+				printf(ERRSYNT"`%c'\n", quote);
 				break ;
 			}
 		}
@@ -75,7 +75,7 @@ static bool	has_extrem_pipe(char *str)
 	result = false;
 	if (str[0] == '|' || str[end_index] == '|')
 	{
-		printf(ERRPIPE);
+		printf(ERRSYNT"`|'\n");
 		result = !result;
 	}
 	return (result);
@@ -88,7 +88,7 @@ bool	has_obvious_syntax_error(char *str)
 
 	result = false;
 	trim = ft_strtrim(str, SPACES);
-	if (has_extrem_pipe(trim) || has_successive_pipe(trim) || has_unclosed_quote(trim))
+	if (has_extrem_pipe(trim) || has_successive_pipe(trim) || has_unclosed_quote(trim) || has_too_much_arrows(trim))
 		result = !result;
 	free(trim);
 	return (result);

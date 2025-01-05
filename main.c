@@ -6,12 +6,11 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 13:16:16 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:35:34 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
 
 void	free_tokens(t_token *head)
 {
@@ -60,6 +59,19 @@ void	free_argv(char **argv)
 	free(argv);
 }
 
+void	clean_all(t_msh *msh, char ***inputs)
+{
+	char	***tmp;
+
+	tmp = inputs;
+	while (*tmp)
+	{
+		free_argv(*tmp);
+		tmp++;
+	}
+	free(inputs);
+	free_msh(msh);
+}
 void	signal_handler(int sig)
 {
 	if (sig)
@@ -79,9 +91,7 @@ void	init_signal(void)
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
-	char	**splitted;
-	char	***splitted_multi;
-	char	***tmp;
+	char	***splitted;
 	t_msh	msh;
 
 	(void) ac,
@@ -97,26 +107,11 @@ int	main(int ac, char **av, char **env)
 		{
 			format_input(&input);
 			if (!has_pipe(input))
-			{
 				splitted = create_token_single_cmd(&msh, input);
-				print_list(msh.cmds);
-				free_argv(splitted);
-				free_msh(&msh);
-			}
 			else
-			{
-				splitted_multi = create_token_multi_cmds(&msh, input);
-				print_list(msh.cmds);
-				tmp = splitted_multi;
-				while (*tmp)
-				{
-					free_argv(*tmp);
-					tmp++;
-				}
-				free(splitted_multi);
-				free_msh(&msh);
-
-			}
+				splitted = create_token_multi_cmds(&msh, input);
+			print_list(msh.cmds);
+			clean_all(&msh, splitted);
 		}
 		free(input);
 	}

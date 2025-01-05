@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 13:03:24 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:45:54 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	has_pipe(char *str);
 int		count_additionnal_spaces(char *str);
 void	format_input(char **str);
 // ==============TOKEN==============
-char	**create_token_single_cmd(t_msh *msh, char *input);
+char	***create_token_single_cmd(t_msh *msh, char *input);
 char	***create_token_multi_cmds(t_msh *msh, char *input);
 t_token	*create_token_list(char **tokens);
 // ==============UTILS==============

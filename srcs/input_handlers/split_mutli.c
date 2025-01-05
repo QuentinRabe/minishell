@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_single.c                                     :+:      :+:    :+:   */
+/*   split_mutli.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/04 10:27:06 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 11:16:24 by arabefam         ###   ########.fr       */
+/*   Created: 2025/01/05 11:13:03 by arabefam          #+#    #+#             */
+/*   Updated: 2025/01/05 11:17:53 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,39 @@ static void	restore(char *str)
 {
 	while (*str)
 	{
-		if (*str <= -1 && *str >= -6)
-			*str = SPACES[((int)(*str) + 1) * -1];
+		if (*str == -1)
+			*str = '|';
 		str++;
 	}
 }
 
-static void	substitute_spaces(char *str, char delimiter)
+static void	substitute_pipes(char *str, char delimiter)
 {
-	int	i;
-
-	i = 0;
 	while (*str && *str != delimiter)
 		str++;
 	if (*str)
 		str++;
 	while (*str && *str != delimiter)
 	{
-		if (is_in(SPACES, *str, &i))
-			*str = (i + 1) * -1;
+		if (is_in("|", *str, NULL))
+			*str = -1;
 		str++;
 	}
 	if (*str)
 	{
 		str++;
-		substitute_spaces(str, delimiter);
+		substitute_pipes(str, delimiter);
 	}
 }
 
-char	**split_single_input(char *str)
+char	**split_multi_input(char *str)
 {
 	char	**splitted;
 	char	**ptr;
 
-	substitute_spaces(str, '"');
-	substitute_spaces(str, '\'');
-	splitted = ft_split_set(str, SPACES);
+	substitute_pipes(str, '"');
+	substitute_pipes(str, '\'');
+	splitted = ft_split(str, '|');
 	ptr = splitted;
 	while (*ptr)
 	{

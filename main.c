@@ -6,13 +6,14 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 10:47:28 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:38:54 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_token(t_token *head)
+
+void	free_tokens(t_token *head)
 {
 	t_token	*next;
 
@@ -22,6 +23,31 @@ void	free_token(t_token *head)
 		free(head);
 		head = next;
 	}
+}
+
+void	free_cmds(t_cmd *head)
+{
+	t_cmd	*next;
+
+	while (head)
+	{
+		next = head->next;
+		free(head);
+		head = next;
+	}
+}
+
+void	free_msh(t_msh *msh)
+{
+	t_cmd	*curr;
+
+	curr = msh->cmds;
+	while (curr)
+	{
+		free_tokens(curr->token_lis);
+		curr = curr->next;
+	}
+	free_cmds(msh->cmds);
 }
 
 void	free_argv(char **argv)
@@ -54,12 +80,11 @@ int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	char	**splitted;
-	t_token	*head;
+	t_msh	msh;
 
 	(void) ac,
 	(void) av;
 	(void) env;
-	splitted = NULL;
 	while (1)
 	{
 		init_signal();
@@ -70,11 +95,10 @@ int	main(int ac, char **av, char **env)
 		{
 			format_input(&input);
 			if (!has_pipe(input))
-				splitted = split_single_input(input);
-			head = create_token_list(splitted);
-			print_list(head);
+				splitted = create_token_single_cmd(&msh, input);
+			print_list(msh.cmds->token_lis);
 			free_argv(splitted);
-			free_token(head);
+			free_msh(&msh);
 		}
 		free(input);
 	}

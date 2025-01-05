@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 10:39:35 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:34:14 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ bool	has_obvious_syntax_error(char *str);
 bool	has_too_much_arrows(char *str);
 bool	has_consecutive_opps_arrows(char *str);
 char	**split_single_input(char *str);
+char	**split_multi_input(char *str);
 bool	has_pipe(char *str);
 int		count_additionnal_spaces(char *str);
 void	format_input(char **str);
 // ==============TOKEN==============
+char	**create_token_single_cmd(t_msh *msh, char *input);
 t_token	*create_token_list(char **tokens);
 // ==============UTILS==============
 bool	is_space(char c);

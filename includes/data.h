@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 23:30:42 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 11:22:25 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define PIPENCO ">|<"
 
 typedef struct s_token	t_token;
+typedef struct s_msh	t_msh;
+typedef struct s_cmd	t_cmd;
 typedef enum e_type		t_type;
 
 enum	e_type
@@ -37,16 +39,16 @@ struct s_token
 	t_token	*next;
 };
 
-// enum e_token_kind
-// {
-// 	WORD,
-// 	TRUNC,
-// 	APPEND,
-// 	INFILE,
-// 	OUTFILE,
-// 	EOF_HD,
-// 	HEREDOC,
-// 	REDIR_IN
-// }	t_token_kind;
+struct s_cmd
+{
+	char	*value;
+	t_token	*token_lis;
+	t_cmd	*next;
+};
+
+struct s_msh
+{
+	t_cmd	*cmds;
+};
 
 #endif

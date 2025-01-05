@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 13:45:54 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:04:33 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 bool	has_obvious_syntax_error(char *str);
 bool	has_too_much_arrows(char *str);
 bool	has_consecutive_opps_arrows(char *str);
+bool	has_redir_without_filname(char *str);
 char	**split_single_input(char *str);
 char	**split_multi_input(char *str);
 bool	has_pipe(char *str);

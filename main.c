@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 13:35:34 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:55:52 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	clean_all(t_msh *msh, char ***inputs)
 	free(inputs);
 	free_msh(msh);
 }
+
 void	signal_handler(int sig)
 {
 	if (sig)

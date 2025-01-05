@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 14:58:08 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:21:49 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,20 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	char	***splitted;
 	t_msh	msh;
+	t_var_env	*curr;
 
 	(void) ac,
 	(void) av;
 	(void) env;
 	get_var_env(&msh.env, env);
+	get_var_env(&msh.exp, env);
+	sort_list_env(&msh.exp);
+	curr = msh.exp;
+	while (curr)
+	{
+		printf("%s=%s\n", curr->key, curr->value);
+		curr = curr->next;
+	}
 	while (1)
 	{
 		init_signal();
@@ -122,6 +131,7 @@ int	main(int ac, char **av, char **env)
 		if (!input)
 		{
 			free_env(msh.env);
+			free_env(msh.exp);
 			exit(0);
 		}
 		if (!has_obvious_syntax_error(input))

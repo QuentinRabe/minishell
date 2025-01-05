@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 14:47:33 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 18:05:47 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 // ==============ENVIRONMENT==============
 void	get_var_env(t_var_env **env, char **args);
+void	sort_list_env(t_var_env **env);
 // ==============INPUT_HANDLERS==============
 bool	has_obvious_syntax_error(char *str);
 bool	has_too_much_arrows(char *str);

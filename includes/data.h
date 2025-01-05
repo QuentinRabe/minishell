@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 14:29:24 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 17:42:08 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ struct s_msh
 {
 	t_cmd		*cmds;
 	t_var_env	*env;
+	t_var_env	*exp;
 };
 
 #endif

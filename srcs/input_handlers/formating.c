@@ -6,13 +6,32 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 21:44:13 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 23:50:03 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:59:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	adding_spaces_proccess(char *new, char *str)
+static void	pipenco_case(char *str, char *new, int *i, int *j)
+{
+	if (str[*i - 1] && !is_in(SPACES, str[*i - 1], NULL)
+		&& str[*i - 1] != str[*i])
+	{
+		new[*j] = ' ';
+		*j += 1;
+	}
+	new[*j] = str[*i];
+	*j += 1;
+	if (str[*i + 1] && str[*i + 1] != str[*i]
+		&& !is_in(SPACES, str[*i + 1], NULL))
+	{
+		new[*j] = ' ';
+		*j += 1;
+	}
+	*i += 1;
+}
+
+static void	adding_spaces_proccess(char *new, char *str)
 {
 	int		i;
 	int		j;
@@ -31,24 +50,14 @@ void	adding_spaces_proccess(char *new, char *str)
 			new[j++] = str[i++];
 		}
 		else if (is_in(PIPENCO, str[i], NULL))
-		{
-			if (str[i - 1] && !is_in(SPACES, str[i - 1], NULL) && str[i - 1] != str[i])
-				new[j++] = ' ';
-			new[j++] = str[i];
-			if (str[i + 1] && str[i + 1] == str[i])
-				new[j++] = str[i++];
-			if (str[i + 1] && str[i + 1] != str[i] && !is_in(SPACES, str[i + 1], NULL))
-				new[j++] = ' ';
-			i++;
-		}
+			pipenco_case(str, new, &i, &j);
 		else
 			new[j++] = str[i++];
 	}
 	new[j] = '\0';
-	printf("This is new -> %s\n", new);
 }
 
-void	add_spaces_around(char **str)
+static void	add_spaces_around(char **str)
 {
 	char	*new;
 	int		len;
@@ -60,6 +69,8 @@ void	add_spaces_around(char **str)
 	if (!new)
 		return ;
 	adding_spaces_proccess(new, *str);
+	free(*str);
+	*str = new;
 }
 
 void	trim(char **str)
@@ -74,7 +85,7 @@ void	trim(char **str)
 
 void	format_input(char **str)
 {
-	printf("OK\n");
+	add_history(*str);
 	trim(str);
 	add_spaces_around(str);
 }

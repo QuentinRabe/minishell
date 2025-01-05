@@ -6,11 +6,33 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 23:45:29 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:47:28 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	free_token(t_token *head)
+{
+	t_token	*next;
+
+	while (head)
+	{
+		next = head->next;
+		free(head);
+		head = next;
+	}
+}
+
+void	free_argv(char **argv)
+{
+	int	i;
+
+	i = -1;
+	while (argv[++i])
+		free(argv[i]);
+	free(argv);
+}
 
 void	signal_handler(int sig)
 {
@@ -51,6 +73,8 @@ int	main(int ac, char **av, char **env)
 				splitted = split_single_input(input);
 			head = create_token_list(splitted);
 			print_list(head);
+			free_argv(splitted);
+			free_token(head);
 		}
 		free(input);
 	}

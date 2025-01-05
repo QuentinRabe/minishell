@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:28:20 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 23:41:21 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:48:01 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,15 @@ bool	has_obvious_syntax_error(char *str)
 	char	*trim;
 	bool	result;
 
-	printf("Eto ndray ary\n");
 	result = false;
-	trim = ft_strtrim(str, SPACES);
-	if (has_extrem_pipe(trim) || has_successive_pipe(trim)
-		|| has_unclosed_quote(trim) || has_too_much_arrows(trim)
-		|| has_consecutive_opps_arrows(trim))
+	if (ft_strlen(str))
 	{
-		printf("Misy tsy milamina ato\n");
-		result = !result;
+		trim = ft_strtrim(str, SPACES);
+		if (has_extrem_pipe(trim) || has_successive_pipe(trim)
+			|| has_unclosed_quote(trim) || has_too_much_arrows(trim)
+			|| has_consecutive_opps_arrows(trim))
+			result = !result;
+		free(trim);
 	}
-	free(trim);
 	return (result);
 }

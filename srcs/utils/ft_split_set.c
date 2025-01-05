@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:38:52 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 15:53:52 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 10:59:37 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static int	count_len(char *s, char *set)
 
 	if (!s || !set)
 		return (0);
-
 	ptr = s;
 	while (*ptr && !is_in(set, *ptr, NULL))
 		ptr++;

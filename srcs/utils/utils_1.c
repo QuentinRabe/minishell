@@ -6,21 +6,28 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 21:44:04 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:03:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	print_list(t_token *head)
+void	print_list(t_cmd *head)
 {
-	t_token	*ptr;
+	t_cmd	*ptr_cmd;
+	t_token	*ptr_token;
 
-	ptr = head;
-	while (ptr)
+	ptr_cmd = head;
+	while (ptr_cmd)
 	{
-		printf("[%s][%d]\n", ptr->value, ptr->type);
-		ptr = ptr->next;
+		ptr_token = ptr_cmd->token_lis;
+		while (ptr_token)
+		{
+			printf("[%s]", ptr_token->value);
+			ptr_token = ptr_token->next;
+		}
+		printf("\n");
+		ptr_cmd = ptr_cmd->next;
 	}
 }
 

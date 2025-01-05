@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 11:34:14 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:03:24 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ int		count_additionnal_spaces(char *str);
 void	format_input(char **str);
 // ==============TOKEN==============
 char	**create_token_single_cmd(t_msh *msh, char *input);
+char	***create_token_multi_cmds(t_msh *msh, char *input);
 t_token	*create_token_list(char **tokens);
 // ==============UTILS==============
 bool	is_space(char c);
 bool	is_in(char *set, char c, int *index);
 void	trim(char **str);
 char	**ft_split_set(char *s, char *set);
-void	print_list(t_token *head);
+void	print_list(t_cmd *head);
 int		count_additionnal_spaces(char *str);
+void	free_argv(char **argv);
 #endif // !MINISHELL_H

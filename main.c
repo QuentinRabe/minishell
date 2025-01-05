@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 11:38:54 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 13:16:16 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	char	**splitted;
+	char	***splitted_multi;
+	char	***tmp;
 	t_msh	msh;
 
 	(void) ac,
@@ -95,10 +97,26 @@ int	main(int ac, char **av, char **env)
 		{
 			format_input(&input);
 			if (!has_pipe(input))
+			{
 				splitted = create_token_single_cmd(&msh, input);
-			print_list(msh.cmds->token_lis);
-			free_argv(splitted);
-			free_msh(&msh);
+				print_list(msh.cmds);
+				free_argv(splitted);
+				free_msh(&msh);
+			}
+			else
+			{
+				splitted_multi = create_token_multi_cmds(&msh, input);
+				print_list(msh.cmds);
+				tmp = splitted_multi;
+				while (*tmp)
+				{
+					free_argv(*tmp);
+					tmp++;
+				}
+				free(splitted_multi);
+				free_msh(&msh);
+
+			}
 		}
 		free(input);
 	}

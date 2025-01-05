@@ -6,17 +6,12 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 22:07:09 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 23:21:33 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define _PIPE " | "
-# define _TRUNC " > "
-# define _APPEND " >> "
-# define _REDIR_IN " < "
-# define _HEREDOC " << "
 # include <libft.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -38,6 +33,7 @@ bool	has_consecutive_opps_arrows(char *str);
 char	**split_single_input(char *str);
 bool	has_pipe(char *str);
 int		count_additionnal_spaces(char *str);
+void	format_input(char **str);
 // ==============TOKEN==============
 t_token	*create_token_list(char **tokens);
 // ==============UTILS==============
@@ -46,5 +42,7 @@ bool	is_in(char *set, char c, int *index);
 void	trim(char **str);
 char	**ft_split_set(char *s, char *set);
 void	print_list(t_token *head);
+int	count_additionnal_spaces(char *str);
+
 
 #endif // !MINISHELL_H

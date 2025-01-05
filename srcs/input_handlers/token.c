@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:32:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/04 20:21:30 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/04 23:44:53 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_token	*create_token_list(char **tokens)
 	t_token	*head;
 	int		i;
 
+	if (tokens == NULL)
+		return (NULL);
 	head = NULL;
 	i = -1;
 	while (tokens[++i])

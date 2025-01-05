@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 11:22:25 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:29:24 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 # define SPACES "\t\n\v\f\r "
 # define PIPENCO ">|<"
 
-typedef struct s_token	t_token;
-typedef struct s_msh	t_msh;
-typedef struct s_cmd	t_cmd;
-typedef enum e_type		t_type;
+typedef struct s_var_env	t_var_env;
+typedef struct s_token		t_token;
+typedef struct s_msh		t_msh;
+typedef struct s_cmd		t_cmd;
+typedef enum e_type			t_type;
 
 enum	e_type
 {
@@ -31,6 +32,14 @@ enum	e_type
 	HEREDOC,
 	REDIR_IN
 };
+
+struct s_var_env
+{
+	char		*key;
+	char		*value;
+	t_var_env	*next;
+};
+
 
 struct s_token
 {
@@ -48,7 +57,8 @@ struct s_cmd
 
 struct s_msh
 {
-	t_cmd	*cmds;
+	t_cmd		*cmds;
+	t_var_env	*env;
 };
 
 #endif

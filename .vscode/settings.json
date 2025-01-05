@@ -3,6 +3,7 @@
 		"bitset": "c",
 		"string_view": "c",
 		"minishell.h": "c",
-		"types.h": "c"
+		"types.h": "c",
+		"stdio.h": "c"
 	}
 }

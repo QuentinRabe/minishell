@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 13:55:52 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:58:08 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,22 @@ void	free_msh(t_msh *msh)
 		curr = curr->next;
 	}
 	free_cmds(msh->cmds);
+}
+
+void	free_env(t_var_env *env)
+{
+	t_var_env	*curr;
+	t_var_env	*next;
+
+	curr = env;
+	while (curr)
+	{
+		next = curr->next;
+		free(curr->key);
+		free(curr->value);
+		free(curr);
+		curr = next;
+	}
 }
 
 void	free_argv(char **argv)
@@ -98,12 +114,16 @@ int	main(int ac, char **av, char **env)
 	(void) ac,
 	(void) av;
 	(void) env;
+	get_var_env(&msh.env, env);
 	while (1)
 	{
 		init_signal();
 		input = readline("msh$ ");
 		if (!input)
+		{
+			free_env(msh.env);
 			exit(0);
+		}
 		if (!has_obvious_syntax_error(input))
 		{
 			format_input(&input);

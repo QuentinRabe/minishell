@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 14:04:33 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/05 14:47:33 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <data.h>
 # include <messages.h>
 
+// ==============ENVIRONMENT==============
+void	get_var_env(t_var_env **env, char **args);
 // ==============INPUT_HANDLERS==============
 bool	has_obvious_syntax_error(char *str);
 bool	has_too_much_arrows(char *str);

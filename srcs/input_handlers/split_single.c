@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:27:06 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 11:16:24 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/06 21:16:30 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,19 @@ static void	restore(char *str)
 
 static void	substitute_spaces(char *str, char delimiter)
 {
-	int	i;
+	char	*ptr;
+	int		i;
 
 	i = 0;
 	while (*str && *str != delimiter)
 		str++;
 	if (*str)
 		str++;
+	ptr = str;
+	while (*ptr && *ptr != delimiter)
+		ptr++;
+	if (*ptr == '\0')
+		return ;
 	while (*str && *str != delimiter)
 	{
 		if (is_in(SPACES, *str, &i))

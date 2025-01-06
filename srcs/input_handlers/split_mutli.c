@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 11:13:03 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 13:22:47 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/06 21:19:45 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@ static void	restore(char *str)
 
 static void	substitute_pipes(char *str, char delimiter)
 {
+	char	*ptr;
+
 	while (*str && *str != delimiter)
 		str++;
 	if (*str)
 		str++;
+	ptr = str;
+	while (*ptr && *ptr != delimiter)
+		ptr++;
+	if (*ptr == '\0')
+		return ;
 	while (*str && *str != delimiter)
 	{
 		if (is_in("|", *str, NULL))

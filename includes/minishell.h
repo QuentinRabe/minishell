@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/07 13:35:27 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:03:23 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <signal.h>
 # include <data.h>
 # include <messages.h>
-# include <string.h>
 
 // ==============EXPANSION==============
 void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env);

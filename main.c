@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/07 13:43:43 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:08:39 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_tokens(t_token *head)
 	while (head)
 	{
 		next = head->next;
-		// free_var_list(head->var_list);
+		free_var_list(head->var_list);
 		free(head);
 		head = next;
 	}
@@ -149,7 +149,7 @@ int	main(int ac, char **av, char **env)
 				splitted = create_token_single_cmd(&msh, input);
 			else
 				splitted = create_token_multi_cmds(&msh, input);
-			// expand_variables(WORD, msh.cmds, msh.env);
+			expand_variables(WORD, msh.cmds, msh.env);
 			print_list(msh.cmds);
 			clean_all(&msh, splitted);
 		}

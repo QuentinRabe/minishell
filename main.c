@@ -6,11 +6,25 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/07 10:42:32 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:43:43 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	free_var_list(t_var *head)
+{
+	t_var	*next;
+
+	while (head)
+	{
+		next = head->next;
+		free(head->varname);
+		free(head->value);
+		free(head);
+		head = next;
+	}
+}
 
 void	free_tokens(t_token *head)
 {
@@ -19,6 +33,7 @@ void	free_tokens(t_token *head)
 	while (head)
 	{
 		next = head->next;
+		// free_var_list(head->var_list);
 		free(head);
 		head = next;
 	}
@@ -110,7 +125,6 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	char	***splitted;
 	t_msh	msh;
-	t_var_env	*curr;
 
 	(void) ac,
 	(void) av;
@@ -118,12 +132,6 @@ int	main(int ac, char **av, char **env)
 	get_var_env(&msh.env, env);
 	get_var_env(&msh.exp, env);
 	sort_list_env(&msh.exp);
-	curr = msh.exp;
-	while (curr)
-	{
-		printf("%s=%s\n", curr->key, curr->value);
-		curr = curr->next;
-	}
 	while (1)
 	{
 		init_signal();
@@ -141,7 +149,7 @@ int	main(int ac, char **av, char **env)
 				splitted = create_token_single_cmd(&msh, input);
 			else
 				splitted = create_token_multi_cmds(&msh, input);
-			expand_variables(WORD, msh.cmds, msh.env);
+			// expand_variables(WORD, msh.cmds, msh.env);
 			print_list(msh.cmds);
 			clean_all(&msh, splitted);
 		}

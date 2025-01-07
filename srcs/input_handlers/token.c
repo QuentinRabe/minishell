@@ -6,11 +6,23 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:32:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 12:51:13 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/07 13:43:04 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static int	count_token(char **tokens)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = -1;
+	while (tokens[++i])
+		count++;
+	return (count);
+}
 
 static void	assign_type(t_token *new, char **prev)
 {
@@ -30,7 +42,9 @@ static void	assign_type(t_token *new, char **prev)
 		new->type = HEREDOC;
 	else
 		new->type = WORD;
-	*prev = new->value;
+	if (*prev)
+		free(*prev);
+	*prev = ft_strdup(new->value);
 }
 
 static t_token	*get_last_node(t_token *head)
@@ -43,7 +57,7 @@ static t_token	*get_last_node(t_token *head)
 	return (ptr);
 }
 
-static void	add_token(t_token **head, char *token)
+static void	add_token(t_token **head, char *token, int count, int i)
 {
 	t_token		*new;
 	t_token		*last;
@@ -62,18 +76,25 @@ static void	add_token(t_token **head, char *token)
 		last = get_last_node(*head);
 		last->next = new;
 	}
+	if (count - 1 == i)
+	{
+		free(prev);
+		prev = NULL;
+	}
 }
 
 t_token	*create_token_list(char **tokens)
 {
 	t_token	*head;
 	int		i;
+	int		count;
 
 	if (tokens == NULL)
 		return (NULL);
 	head = NULL;
 	i = -1;
+	count = count_token(tokens);
 	while (tokens[++i])
-		add_token(&head, tokens[i]);
+		add_token(&head, tokens[i], count, i);
 	return (head);
 }

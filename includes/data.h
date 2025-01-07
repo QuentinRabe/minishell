@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 17:42:08 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:20:52 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 typedef struct s_var_env	t_var_env;
 typedef struct s_token		t_token;
+typedef struct s_var		t_var;
 typedef struct s_msh		t_msh;
 typedef struct s_cmd		t_cmd;
 typedef enum e_type			t_type;
@@ -40,11 +41,19 @@ struct s_var_env
 	t_var_env	*next;
 };
 
+struct s_var
+{
+	char	*varname;
+	char	*value;
+	int		index;
+	t_var	*next;
+};
 
 struct s_token
 {
 	char	*value;
 	t_type	type;
+	t_var	*var_list;
 	t_token	*next;
 };
 

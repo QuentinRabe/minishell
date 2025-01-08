@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:28:20 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 14:05:33 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/08 07:47:28 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static bool	has_successive_pipe(char *str)
 	{
 		if (*str == '\'' || *str == '"')
 		{
-			quote = *str;
-			str++;
+			quote = *str++;
 			while (*str && *str != quote)
 				str++;
 		}
@@ -36,7 +35,8 @@ static bool	has_successive_pipe(char *str)
 				return (true);
 			}
 		}
-		str++;
+		if (*str)
+			str++;
 	}
 	return (false);
 }

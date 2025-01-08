@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/07 14:08:39 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:01:06 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	free_tokens(t_token *head)
 	while (head)
 	{
 		next = head->next;
-		free_var_list(head->var_list);
+		if (head->value && head->type == WORD)
+			free(head->value);
 		free(head);
 		head = next;
 	}

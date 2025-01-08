@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/07 14:03:23 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:07:49 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,7 @@ char	**ft_split_set(char *s, char *set);
 void	print_list(t_cmd *head);
 int		count_additionnal_spaces(char *str);
 void	free_argv(char **argv);
+void	free_var_list(t_var *head);
+bool	is_in_sq(char *token, int i);
+bool	is_in_dq(char *token, int i);
 #endif // !MINISHELL_H

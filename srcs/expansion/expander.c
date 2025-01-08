@@ -6,11 +6,97 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/07 13:26:05 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/08 09:21:59 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	get_len_new_token(char *token, t_var *list)
+{
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	while (token[i])
+	{
+		if (token[i] == '$' && list)
+		{
+			len += ft_strlen(list->value);
+			i += ft_strlen(list->varname) + 1;
+			list = list->next;
+		}
+		else
+		{
+			len++;
+			i++;
+		}
+	}
+	return (len);
+}
+
+void	build_new_token(char *token, t_var *list, t_token *curr_token)
+{
+	char	*new;
+	int		len;
+	int		i;
+	int		j;
+	int		k;
+
+	len = get_len_new_token(token, list);
+	new = (char *) malloc((len + 1) * sizeof(char));
+	if (!new)
+		return ;
+	i = 0;
+	j = 0;
+	while (token[i])
+	{
+		if (token[i] == '$' && list)
+		{
+			k = 0;
+			while (list->value[k])
+				new[j++] = list->value[k++];
+			i += ft_strlen(list->varname) + 1;
+			list = list->next;
+		}
+		else
+			new[j++] = token[i++];
+	}
+	new[j] = '\0';
+	curr_token->value = new;
+}
+
+bool	count_if_quote_case(char *token, int *count)
+{
+	int		i;
+	char	quote;
+
+	i = -1;
+	if (token[0] != '\'' && token[0] != '"')
+		return (false);
+	while (token[++i])
+	{
+		if (token[i] == '"' || token[i] == '\'')
+		{
+			quote = token[i++];
+			*count += 1;
+			if ((quote == '"' && is_in_dq(token, i))
+				|| (quote == '\'' && is_in_sq(token, i)))
+			{
+				while (token[i] && token[i] != quote)
+				{
+					*count += 1;
+					i++;
+				}
+				if (token[i])
+					*count += 1;
+				return (true);
+			}
+		}
+	}
+	return (false);
+}
 
 int	get_varlen(char *token)
 {
@@ -19,16 +105,19 @@ int	get_varlen(char *token)
 
 	count = 0;
 	i = -1;
-	while (token[++i])
+	if (!count_if_quote_case(token, &count))
 	{
-		if (ft_isalnum(token[i]))
-			count++;
-		else if (!ft_isalnum(token[i]) && (token[i] == '?' || token[i] == '$') && i == 0)
-			return (1);
-		else if ((!ft_isalnum(token[i]) && token[i] == '_'))
-			count++;
-		else if (!ft_isalnum(token[i]))
-			return (count);
+		while (token[++i])
+		{
+			if (ft_isalnum(token[i]))
+				count++;
+			else if (!ft_isalnum(token[i]) && (token[i] == '?' || token[i] == '$') && i == 0)
+				return (1);
+			else if ((!ft_isalnum(token[i]) && token[i] == '_'))
+				count++;
+			else if (!ft_isalnum(token[i]))
+				return (count);
+		}
 	}
 	return (count);
 }
@@ -47,6 +136,7 @@ char	*get_varname(char *token, int i)
 	int		j;
 
 	varlen = get_varlen(token + i);
+	printf("len=[%d]\n", varlen);
 	if (varlen == 0)
 		return (ft_strdup("$"));
 	varname = (char *) malloc((varlen + 1) * sizeof(char));
@@ -67,8 +157,6 @@ void	add_to_var_list(char *token, int *i, t_var **list, t_var_env *env)
 	t_var	*new;
 	t_var	*last;
 
-	(void) list;
-	(void) env;
 	new = (t_var *) malloc(sizeof(t_var));
 	if (!new)
 		return ;
@@ -86,14 +174,78 @@ void	add_to_var_list(char *token, int *i, t_var **list, t_var_env *env)
 	}
 }
 
+bool	is_in_sq(char *token, int i)
+{
+	int		tmp;
+	int		count;
+
+	tmp = i;
+	count = 0;
+	while (i >= 0)
+	{
+		if (token[i] && token[i] == '\'')
+		{
+			count++;
+			break;
+		}
+		i--;
+	}
+	i = tmp;
+	while (token[i])
+	{
+		if (token[i] == '\'')
+		{
+			count++;
+			break;
+		}
+		i++;
+	}
+	if (count == 2)
+		return (true);
+	else
+		return (false);
+}
+
+bool	is_in_dq(char *token, int i)
+{
+	int		tmp;
+	int		count;
+
+	tmp = i;
+	count = 0;
+	while (i >= 0)
+	{
+		if (token[i] && token[i] == '"')
+		{
+			count++;
+			break;
+		}
+		i--;
+	}
+	i = tmp;
+	while (token[i])
+	{
+		if (token[i] == '"')
+		{
+			count++;
+			break;
+		}
+		i++;
+	}
+	if (count == 2)
+		return (true);
+	else
+		return (false);
+}
+
 void	create_var_list(char *token, t_var_env *env, t_var **list)
 {
 	int	i;
 
-	i = -1;
-	while (token[++i])
+	i = 0;
+	while (token[i])
 	{
-		if (token[i] == '\'')
+		if (token[i] == '\'' && !is_in_dq(token, i))
 		{
 			i++;
 			while (token[i] && token[i] != '\'')
@@ -101,6 +253,8 @@ void	create_var_list(char *token, t_var_env *env, t_var **list)
 		}
 		else if (token[i] == '$')
 			add_to_var_list(token, &i, list, env);
+		if (token[i])
+			i++;
 	}
 }
 
@@ -109,6 +263,7 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 	t_token	*curr;
 	t_cmd	*curr_cmd;
 	t_var	*curr_var;
+	t_var	*var_list;
 
 	(void) type;
 	curr_cmd = cmds;
@@ -117,24 +272,19 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 		curr = curr_cmd->token_lis;
 		while (curr)
 		{
-			curr->var_list = NULL;
+			var_list = NULL;
 			if (curr->type == type)
-				create_var_list(curr->value, env, &curr->var_list);
-			curr = curr->next;
-		}
-		curr_cmd = curr_cmd->next;
-	}
-	curr_cmd = cmds;
-	while (curr_cmd)
-	{
-		curr = curr_cmd->token_lis;
-		while (curr)
-		{
-			curr_var = curr->var_list;
-			while (curr_var)
 			{
-				printf("[%s=%s]\n", curr_var->varname, curr_var->value);
-				curr_var = curr_var->next;
+				create_var_list(curr->value, env, &var_list);
+				curr_var = var_list;
+				while (curr_var)
+				{
+					printf("[%s=%s]\n", curr_var->varname, curr_var->value);
+					curr_var = curr_var->next;
+				}
+				printf("We need %d for the new token\n", get_len_new_token(curr->value, var_list));
+				build_new_token(curr->value, var_list, curr);
+				free_var_list(var_list);
 			}
 			curr = curr->next;
 		}

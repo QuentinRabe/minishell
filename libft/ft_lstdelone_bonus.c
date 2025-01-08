@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 08:27:24 by arabefam          #+#    #+#             */
-/*   Updated: 2024/02/26 09:14:11 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/08 11:54:41 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/08 09:21:59 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:17:33 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,25 +73,26 @@ bool	count_if_quote_case(char *token, int *count)
 	char	quote;
 
 	i = -1;
-	if (token[0] != '\'' && token[0] != '"')
-		return (false);
-	while (token[++i])
+	if (token[0] == '\'' || token[0] == '"')
 	{
-		if (token[i] == '"' || token[i] == '\'')
+		while (token[++i])
 		{
-			quote = token[i++];
-			*count += 1;
-			if ((quote == '"' && is_in_dq(token, i))
-				|| (quote == '\'' && is_in_sq(token, i)))
+			if (token[i] == '"' || token[i] == '\'')
 			{
-				while (token[i] && token[i] != quote)
+				quote = token[i++];
+				*count += 1;
+				if ((quote == '"' && is_in_dq(token, i))
+					|| (quote == '\'' && is_in_sq(token, i)))
 				{
-					*count += 1;
-					i++;
+					while (token[i] && token[i] != quote)
+					{
+						*count += 1;
+						i++;
+					}
+					if (token[i])
+						*count += 1;
+					return (true);
 				}
-				if (token[i])
-					*count += 1;
-				return (true);
 			}
 		}
 	}
@@ -136,7 +137,6 @@ char	*get_varname(char *token, int i)
 	int		j;
 
 	varlen = get_varlen(token + i);
-	printf("len=[%d]\n", varlen);
 	if (varlen == 0)
 		return (ft_strdup("$"));
 	varname = (char *) malloc((varlen + 1) * sizeof(char));
@@ -262,10 +262,8 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 {
 	t_token	*curr;
 	t_cmd	*curr_cmd;
-	t_var	*curr_var;
 	t_var	*var_list;
 
-	(void) type;
 	curr_cmd = cmds;
 	while (curr_cmd)
 	{
@@ -276,13 +274,6 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 			if (curr->type == type)
 			{
 				create_var_list(curr->value, env, &var_list);
-				curr_var = var_list;
-				while (curr_var)
-				{
-					printf("[%s=%s]\n", curr_var->varname, curr_var->value);
-					curr_var = curr_var->next;
-				}
-				printf("We need %d for the new token\n", get_len_new_token(curr->value, var_list));
 				build_new_token(curr->value, var_list, curr);
 				free_var_list(var_list);
 			}

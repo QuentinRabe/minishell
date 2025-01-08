@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:59:52 by arabefam          #+#    #+#             */
-/*   Updated: 2024/02/26 16:09:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/08 11:54:31 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

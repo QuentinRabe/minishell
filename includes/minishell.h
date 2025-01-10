@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/08 09:07:49 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/10 09:34:17 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/types.h>
+#include <sys/wait.h>
 # include <sys/stat.h>
 # include <signal.h>
 # include <data.h>
@@ -57,4 +58,9 @@ void	free_argv(char **argv);
 void	free_var_list(t_var *head);
 bool	is_in_sq(char *token, int i);
 bool	is_in_dq(char *token, int i);
+void	clean_all(t_msh *msh, char ***inputs);
+void	free_env(t_var_env *env);
+// ==============HEREDOC==============
+void	check_heredoc(t_msh	*msh, char ***splitted);
+
 #endif // !MINISHELL_H

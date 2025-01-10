@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 12:22:24 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 13:22:20 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/10 09:32:10 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char	***create_token_multi_cmds(t_msh *msh, char *input)
 	int		i;
 
 	splitted = split_multi_input(input);
+	free(input);
 	ptr = (char ***) malloc((count_cmds(splitted) + 1) * sizeof(char **));
 	if (!ptr)
 		return (NULL);

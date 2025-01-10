@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/08 09:01:06 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/10 09:37:20 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,10 +151,10 @@ int	main(int ac, char **av, char **env)
 			else
 				splitted = create_token_multi_cmds(&msh, input);
 			expand_variables(WORD, msh.cmds, msh.env);
+			check_heredoc(&msh, splitted);
 			print_list(msh.cmds);
 			clean_all(&msh, splitted);
 		}
-		free(input);
 	}
 	return (0);
 }

@@ -6,21 +6,21 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 12:22:24 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/10 09:32:10 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/14 09:02:58 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	count_cmds(char **cmds)
-{
-	int	i;
+// static int	count_cmds(char **cmds)
+// {
+// 	int	i;
 
-	i = -1;
-	while (cmds[++i])
-		;
-	return (i);
-}
+// 	i = -1;
+// 	while (cmds[++i])
+// 		;
+// 	return (i);
+// }
 
 static t_cmd	*get_last_node(t_cmd *head)
 {
@@ -32,7 +32,7 @@ static t_cmd	*get_last_node(t_cmd *head)
 	return (ptr);
 }
 
-static char	**treat_each_cmd(t_cmd **head, char *cmd)
+void	treat_each_cmd(t_cmd **head, char *cmd)
 {
 	t_cmd	*new;
 	t_cmd	*last;
@@ -40,9 +40,9 @@ static char	**treat_each_cmd(t_cmd **head, char *cmd)
 
 	new = (t_cmd *) malloc(sizeof(t_cmd));
 	if (!new)
-		return (NULL);
+		return ;
 	splitted = split_single_input(cmd);
-	new->value = cmd;
+	new->value = ft_strdup(cmd);
 	new->token_lis = create_token_list(splitted);
 	new->next = NULL;
 	if (*head == NULL)
@@ -52,25 +52,19 @@ static char	**treat_each_cmd(t_cmd **head, char *cmd)
 		last = get_last_node(*head);
 		last->next = new;
 	}
-	return (splitted);
+	free_argv(splitted);
 }
 
-char	***create_token_multi_cmds(t_msh *msh, char *input)
+void	create_token_multi_cmds(t_msh *msh, char *input)
 {
 	char	**splitted;
-	char	***ptr;
 	int		i;
 
 	splitted = split_multi_input(input);
 	free(input);
-	ptr = (char ***) malloc((count_cmds(splitted) + 1) * sizeof(char **));
-	if (!ptr)
-		return (NULL);
 	msh->cmds = NULL;
 	i = -1;
 	while (splitted[++i])
-		ptr[i] = treat_each_cmd(&msh->cmds, splitted[i]);
-	ptr[i] = NULL;
+		treat_each_cmd(&msh->cmds, splitted[i]);
 	free_argv(splitted);
-	return (ptr);
 }

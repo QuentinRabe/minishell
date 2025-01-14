@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/08 10:17:33 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/14 10:54:38 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	build_new_token(char *token, t_var *list, t_token *curr_token)
 			new[j++] = token[i++];
 	}
 	new[j] = '\0';
+	free(curr_token->value);
 	curr_token->value = new;
 }
 

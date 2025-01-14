@@ -30,5 +30,5 @@ fclean	:	clean
 		@rm -f $(NAME) && echo -e "$(GREEN)Fully cleaned!$(NC)" || echo -e "$(RED)Full clean failed!$(NC)"
 
 msh_val	:	all
-		@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all ./$(NAME)
+		@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes  --verbose ./$(NAME)
 re		:	fclean all

@@ -1,0 +1,190 @@
+==37975== Memcheck, a memory error detector
+==37975== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==37975== Using Valgrind-3.24.0-fcdaa47426-20241101 and LibVEX; rerun with -h for copyright info
+==37975== Command: ./minishell
+==37975== Parent PID: 37973
+==37975== 
+--37975-- 
+--37975-- Valgrind options:
+--37975--    --suppressions=readline.supp
+--37975--    --leak-check=full
+--37975--    --show-leak-kinds=all
+--37975--    --track-origins=yes
+--37975--    --log-file=valgrind.log
+--37975--    --verbose
+--37975-- Contents of /proc/version:
+--37975--   Linux version 6.12.9-arch1-1 (linux@archlinux) (gcc (GCC) 14.2.1 20240910, GNU ld (GNU Binutils) 2.43.1) #1 SMP PREEMPT_DYNAMIC Fri, 10 Jan 2025 00:39:41 +0000
+--37975-- 
+--37975-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-rdtscp-sse3-ssse3-avx
+--37975-- Page sizes: currently 4096, max supported 4096
+--37975-- Valgrind library directory: /usr/lib/valgrind
+--37975-- Reading syms from /home/arabefam/42/minishell/minishell
+--37975-- Reading syms from /usr/lib/ld-linux-x86-64.so.2
+==37975== Downloading debug info for /usr/lib/ld-linux-x86-64.so.2...
+--37975--   Considering /home/arabefam/.cache/debuginfod_client/1eb3b3e47bd3d9034ef4bd4ede577a26bcc6dcc6/debuginfo ..
+--37975--   .. CRC is valid
+==37975== Successfully downloaded debug file for /usr/lib/ld-linux-x86-64.so.2
+--37975-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--37975--    object doesn't have a dynamic symbol table
+--37975-- Scheduler: using generic scheduler lock implementation.
+--37975-- Reading suppressions file: readline.supp
+--37975-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==37975== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-37975-by-arabefam-on-???
+==37975== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-37975-by-arabefam-on-???
+==37975== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-37975-by-arabefam-on-???
+==37975== 
+==37975== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==37975== don't want to do, unless you know exactly what you're doing,
+==37975== or are doing some strange experiment):
+==37975==   /usr/lib/valgrind/../../bin/vgdb --pid=37975 ...command...
+==37975== 
+==37975== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==37975==   /path/to/gdb ./minishell
+==37975== and then give GDB the following command
+==37975==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=37975
+==37975== --pid is optional if only one valgrind process is running
+==37975== 
+==37975== Downloading debug info for /usr/lib/valgrind/memcheck-amd64-linux...
+--37975--   Considering /home/arabefam/.cache/debuginfod_client/8d90e2041c4196faa241b19e284abb7125855c0a/debuginfo ..
+--37975--   .. CRC is valid
+==37975== Successfully downloaded debug file for /usr/lib/valgrind/memcheck-amd64-linux
+--37975-- Warning: cross-CU LIMITATION: some inlined fn names
+--37975-- might be shown as UnknownInlinedFun
+--37975-- REDIR: 0x40270e0 (ld-linux-x86-64.so.2:strlen) redirected to 0x5821f114 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--37975-- REDIR: 0x4025aa0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x5821f12e (vgPlain_amd64_linux_REDIR_FOR_strcmp)
+--37975-- REDIR: 0x4025870 (ld-linux-x86-64.so.2:index) redirected to 0x5821f149 (vgPlain_amd64_linux_REDIR_FOR_index)
+--37975-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--37975-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+==37975== WARNING: new redirection conflicts with existing -- ignoring it
+--37975--     old: 0x04025aa0 (strcmp              ) R-> (0000.0) 0x5821f12e vgPlain_amd64_linux_REDIR_FOR_strcmp
+==37975== Downloading debug info for /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so...
+--37975--   Considering /home/arabefam/.cache/debuginfod_client/92c195939680c8adca97472fefd04679e336de68/debuginfo ..
+--37975--   .. CRC is valid
+==37975== Successfully downloaded debug file for /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--37975--     new: 0x04025aa0 (strcmp              ) R-> (2016.0) 0x0484f150 strcmp
+==37975== WARNING: new redirection conflicts with existing -- ignoring it
+--37975--     old: 0x040270e0 (strlen              ) R-> (0000.0) 0x5821f114 vgPlain_amd64_linux_REDIR_FOR_strlen
+--37975--     new: 0x040270e0 (strlen              ) R-> (2007.0) 0x0484ddc0 strlen
+--37975-- REDIR: 0x4024ed0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x48538a0 (mempcpy)
+--37975-- Reading syms from /usr/lib/libreadline.so.8.2
+--37975-- Reading syms from /usr/lib/libc.so.6
+==37975== Downloading debug info for /usr/lib/libc.so.6...
+--37975--   Considering /home/arabefam/.cache/debuginfod_client/98b3d8e0b8c534c769cb871c438b4f8f3a8e4bf3/debuginfo ..
+--37975--   .. CRC is valid
+==37975== Successfully downloaded debug file for /usr/lib/libc.so.6
+--37975-- Reading syms from /usr/lib/libncursesw.so.6.5
+--37975-- REDIR: 0x4027280 (ld-linux-x86-64.so.2:strncmp) redirected to 0x484e8c0 (strncmp)
+==37975== Downloading debug info for /usr/lib/valgrind/vgpreload_core-amd64-linux.so...
+--37975--   Considering /home/arabefam/.cache/debuginfod_client/c17d5783942c5ec1b05df8b9536e88056cfcda19/debuginfo ..
+--37975--   .. CRC is valid
+==37975== Successfully downloaded debug file for /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--37975-- REDIR: 0x497a710 (libc.so.6:strncasecmp) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4977860 (libc.so.6:mempcpy) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x498e010 (libc.so.6:wcpncpy) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4977bc0 (libc.so.6:stpcpy) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x49f4060 (libc.so.6:__memmove_chk) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x499c880 (libc.so.6:wmemcmp) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4978890 (libc.so.6:strcat) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4976eb0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x498fec0 (libc.so.6:wcsncpy) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x49f3f40 (libc.so.6:__memcpy_chk) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+==37975== WARNING: new redirection conflicts with existing -- ignoring it
+--37975--     old: 0x0497e660 (__memcpy_chk_sse2_un) R-> (2024.0) 0x048532b0 __memmove_chk
+--37975--     new: 0x0497e660 (__memcpy_chk_sse2_un) R-> (2030.0) 0x048539b0 __memcpy_chk
+--37975-- REDIR: 0x498f610 (libc.so.6:wcslen) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4977a10 (libc.so.6:memset) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x498ff20 (libc.so.6:wcsnlen) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497aa10 (libc.so.6:strnlen) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497aaa0 (libc.so.6:strpbrk) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4978a10 (libc.so.6:strcmp) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4977980 (libc.so.6:memrchr) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x498e400 (libc.so.6:wcschr) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4978900 (libc.so.6:index) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497aad0 (libc.so.6:rindex) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x498e4b0 (libc.so.6:wcscmp) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4977c30 (libc.so.6:stpncpy) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x499c800 (libc.so.6:wmemchr) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497a8b0 (libc.so.6:strncmp) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4977c90 (libc.so.6:strcasecmp) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4979c90 (libc.so.6:strcspn) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x498f3e0 (libc.so.6:wcscpy) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497a7b0 (libc.so.6:strncasecmp_l) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4978980 (libc.so.6:strchrnul) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4976dc0 (libc.so.6:bcmp) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4979c20 (libc.so.6:strcpy) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4977d30 (libc.so.6:strcasecmp_l) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497a680 (libc.so.6:strlen) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497a950 (libc.so.6:strncpy) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4977740 (libc.so.6:memmove) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x4976d40 (libc.so.6:memchr) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497aca0 (libc.so.6:strspn) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+--37975-- REDIR: 0x497a850 (libc.so.6:strncat) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+==37975== WARNING: new redirection conflicts with existing -- ignoring it
+--37975--     old: 0x0497e660 (__memcpy_chk_sse2_un) R-> (2024.0) 0x048532b0 __memmove_chk
+--37975--     new: 0x0497e660 (__memcpy_chk_sse2_un) R-> (2030.0) 0x048539b0 __memcpy_chk
+--37975-- REDIR: 0x497b5f0 (libc.so.6:strstr) redirected to 0x48391a0 (_vgnU_ifunc_wrapper)
+==37975== WARNING: new redirection conflicts with existing -- ignoring it
+--37975--     old: 0x0497e660 (__memcpy_chk_sse2_un) R-> (2024.0) 0x048532b0 __memmove_chk
+--37975--     new: 0x0497e660 (__memcpy_chk_sse2_un) R-> (2030.0) 0x048539b0 __memcpy_chk
+--37975-- REDIR: 0x498b640 (libc.so.6:__strrchr_sse2) redirected to 0x484d620 (__strrchr_sse2)
+--37975-- REDIR: 0x4972e50 (libc.so.6:malloc) redirected to 0x4844730 (malloc)
+--37975-- REDIR: 0x4985750 (libc.so.6:__strlen_sse2) redirected to 0x484dd00 (__strlen_sse2)
+==37975== Downloading debug info for /usr/lib/libreadline.so.8.2...
+--37975--   Considering /home/arabefam/.cache/debuginfod_client/b5ab85fdfde9897cc3e087951caa5f45f384e96b/debuginfo ..
+--37975--   .. CRC is valid
+==37975== Successfully downloaded debug file for /usr/lib/libreadline.so.8.2
+--37975-- REDIR: 0x4985120 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x484ddf0 (strcpy)
+--37975-- REDIR: 0x4983720 (libc.so.6:__strchrnul_sse2) redirected to 0x4853330 (strchrnul)
+--37975-- REDIR: 0x497e670 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x484f2c0 (memcpy@GLIBC_2.2.5)
+--37975-- REDIR: 0x4910b40 (libc.so.6:setenv) redirected to 0x4854760 (setenv)
+--37975-- REDIR: 0x49834f0 (libc.so.6:__strchr_sse2) redirected to 0x484d780 (__strchr_sse2)
+--37975-- REDIR: 0x4a5b900 (libc.so.6:__strncmp_sse42) redirected to 0x484e800 (__strncmp_sse42)
+--37975-- REDIR: 0x49737c0 (libc.so.6:realloc) redirected to 0x484bdc0 (realloc)
+--37975-- REDIR: 0x497e660 (libc.so.6:__memcpy_chk_sse2_unaligned) redirected to 0x48532b0 (__memmove_chk)
+--37975-- REDIR: 0x497e650 (libc.so.6:__mempcpy_sse2_unaligned) redirected to 0x4853460 (mempcpy)
+--37975-- REDIR: 0x4a58f90 (libc.so.6:__strcmp_sse42) redirected to 0x484f0f0 (__strcmp_sse42)
+==37975== Downloading debug info for /usr/lib/libncursesw.so.6.5...
+--37975--   Considering /home/arabefam/.cache/debuginfod_client/47a1c4fad4907f700970251886989a52e957fcc7/debuginfo ..
+--37975--   .. CRC is valid
+==37975== Successfully downloaded debug file for /usr/lib/libncursesw.so.6.5
+--37975-- REDIR: 0x4973ed0 (libc.so.6:calloc) redirected to 0x484bb60 (calloc)
+--37975-- REDIR: 0x498b420 (libc.so.6:__strnlen_sse2) redirected to 0x484dc40 (strnlen)
+--37975-- REDIR: 0x4973550 (libc.so.6:free) redirected to 0x4847880 (free)
+--37975-- REDIR: 0x497ef40 (libc.so.6:__memset_sse2_unaligned) redirected to 0x4852470 (memset)
+--37975-- REDIR: 0x498a410 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x484e430 (__strncpy_sse2_unaligned)
+--37975-- REDIR: 0x497dd80 (libc.so.6:__memchr_sse2) redirected to 0x484f210 (memchr)
+--37975-- REDIR: 0x497f400 (libc.so.6:__stpcpy_sse2_unaligned) redirected to 0x4851f70 (__stpcpy_sse2_unaligned)
+--37975-- REDIR: 0x4a57740 (libc.so.6:__strcasecmp_sse42) redirected to 0x484e920 (strcasecmp)
+--37975-- REDIR: 0x4a59e60 (libc.so.6:__strncasecmp_sse42) redirected to 0x484ea00 (strncasecmp)
+--37975-- REDIR: 0x497e0c0 (libc.so.6:__memcmp_sse2) redirected to 0x4851a60 (__memcmp_sse2)
+--37975-- REDIR: 0x4a5c9e0 (libc.so.6:__strspn_sse42) redirected to 0x4853d50 (strspn)
+--37975-- REDIR: 0x4a59d40 (libc.so.6:__strcspn_sse42) redirected to 0x4853c50 (strcspn)
+==37975== 
+==37975== HEAP SUMMARY:
+==37975==     in use at exit: 240,017 bytes in 240 blocks
+==37975==   total heap usage: 3,177 allocs, 2,937 frees, 420,442 bytes allocated
+==37975== 
+==37975== Searching for pointers to 240 not-freed blocks
+==37975== Checked 242,864 bytes
+==37975== 
+==37975== 5 bytes in 1 blocks are definitely lost in loss record 2 of 78
+==37975==    at 0x48447A8: malloc (vg_replace_malloc.c:446)
+==37975==    by 0x10C4D5: ft_strdup (ft_strdup.c:20)
+==37975==    by 0x10A7C1: add_token (token.c:70)
+==37975==    by 0x10A8BE: create_token_list (token.c:99)
+==37975==    by 0x10A394: create_token_single_cmd (token_single_input.c:25)
+==37975==    by 0x10DE13: main (main.c:142)
+==37975== 
+==37975== LEAK SUMMARY:
+==37975==    definitely lost: 5 bytes in 1 blocks
+==37975==    indirectly lost: 0 bytes in 0 blocks
+==37975==      possibly lost: 0 bytes in 0 blocks
+==37975==    still reachable: 0 bytes in 0 blocks
+==37975==         suppressed: 240,012 bytes in 239 blocks
+==37975== 
+==37975== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+--37975-- 
+--37975-- used_suppression:     73 leak readline readline.supp:2 suppressed: 235,955 bytes in 235 blocks
+--37975-- used_suppression:      4 leak add_history readline.supp:8 suppressed: 4,057 bytes in 4 blocks
+==37975== 
+==37975== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

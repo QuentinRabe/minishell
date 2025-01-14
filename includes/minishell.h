@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/10 09:34:17 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/14 09:04:01 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ bool	has_pipe(char *str);
 int		count_additionnal_spaces(char *str);
 void	format_input(char **str);
 // ==============TOKEN==============
-char	***create_token_single_cmd(t_msh *msh, char *input);
-char	***create_token_multi_cmds(t_msh *msh, char *input);
+void	create_token_single_cmd(t_msh *msh, char *input);
+void	create_token_multi_cmds(t_msh *msh, char *input);
 t_token	*create_token_list(char **tokens);
 // ==============UTILS==============
 bool	is_space(char c);
@@ -58,9 +58,9 @@ void	free_argv(char **argv);
 void	free_var_list(t_var *head);
 bool	is_in_sq(char *token, int i);
 bool	is_in_dq(char *token, int i);
-void	clean_all(t_msh *msh, char ***inputs);
+void	clean_all(t_msh *msh);
 void	free_env(t_var_env *env);
 // ==============HEREDOC==============
-void	check_heredoc(t_msh	*msh, char ***splitted);
+void	check_heredoc(t_msh	*msh);
 
 #endif // !MINISHELL_H

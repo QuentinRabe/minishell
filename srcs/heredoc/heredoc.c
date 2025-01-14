@@ -6,13 +6,13 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/10 09:34:32 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/14 09:03:38 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	heredoc(t_cmd *cmd, char *eof, char ***splitted, t_msh *msh)
+void	heredoc(t_cmd *cmd, char *eof, t_msh *msh)
 {
 	int	pipefd[2];
 	pid_t	pid;
@@ -39,7 +39,7 @@ void	heredoc(t_cmd *cmd, char *eof, char ***splitted, t_msh *msh)
 		close(pipefd[1]);
 		free_env(msh->env);
 		free_env(msh->exp);
-		clean_all(msh, splitted);
+		clean_all(msh);
 		exit(EXIT_SUCCESS);
 	}
 	close(pipefd[1]);
@@ -48,7 +48,7 @@ void	heredoc(t_cmd *cmd, char *eof, char ***splitted, t_msh *msh)
 	wait(NULL);
 }
 
-void	check_heredoc(t_msh	*msh, char ***splitted)
+void	check_heredoc(t_msh	*msh)
 {
 	t_cmd	*cmd;
 	t_token	*token;
@@ -61,7 +61,7 @@ void	check_heredoc(t_msh	*msh, char ***splitted)
 		{
 			if (token->type == HEREDOC)
 			{
-				heredoc(cmd, token->next->value, splitted, msh);
+				heredoc(cmd, token->next->value, msh);
 				printf("heredocfd->[%d]\n", cmd->heredoc_fd);
 			}
 			token = token->next;

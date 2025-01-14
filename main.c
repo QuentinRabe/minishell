@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/10 09:37:20 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/14 10:57:45 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void	free_tokens(t_token *head)
 	while (head)
 	{
 		next = head->next;
-		if (head->value && head->type == WORD)
-			free(head->value);
+		free(head->value);
 		free(head);
 		head = next;
 	}
@@ -47,6 +46,8 @@ void	free_cmds(t_cmd *head)
 	while (head)
 	{
 		next = head->next;
+		free(head->value);
+		free_tokens(head->token_lis);
 		free(head);
 		head = next;
 	}
@@ -54,14 +55,6 @@ void	free_cmds(t_cmd *head)
 
 void	free_msh(t_msh *msh)
 {
-	t_cmd	*curr;
-
-	curr = msh->cmds;
-	while (curr)
-	{
-		free_tokens(curr->token_lis);
-		curr = curr->next;
-	}
 	free_cmds(msh->cmds);
 }
 
@@ -91,17 +84,8 @@ void	free_argv(char **argv)
 	free(argv);
 }
 
-void	clean_all(t_msh *msh, char ***inputs)
+void	clean_all(t_msh *msh)
 {
-	char	***tmp;
-
-	tmp = inputs;
-	while (*tmp)
-	{
-		free_argv(*tmp);
-		tmp++;
-	}
-	free(inputs);
 	free_msh(msh);
 }
 
@@ -124,7 +108,6 @@ void	init_signal(void)
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
-	char	***splitted;
 	t_msh	msh;
 
 	(void) ac,
@@ -147,13 +130,13 @@ int	main(int ac, char **av, char **env)
 		{
 			format_input(&input);
 			if (!has_pipe(input))
-				splitted = create_token_single_cmd(&msh, input);
+				create_token_single_cmd(&msh, input);
 			else
-				splitted = create_token_multi_cmds(&msh, input);
+				create_token_multi_cmds(&msh, input);
 			expand_variables(WORD, msh.cmds, msh.env);
-			check_heredoc(&msh, splitted);
+			check_heredoc(&msh);
 			print_list(msh.cmds);
-			clean_all(&msh, splitted);
+			clean_all(&msh);
 		}
 	}
 	return (0);

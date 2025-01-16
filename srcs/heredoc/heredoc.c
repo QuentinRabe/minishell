@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 09:08:41 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 09:36:30 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_heredoc(t_msh	*msh)
 	while (cmd)
 	{
 		init_fds(cmd->heredoc_fd);
-		token = cmd->token_lis;
+		token = cmd->token_list;
 		while (token)
 		{
 			if (token->type == HEREDOC)

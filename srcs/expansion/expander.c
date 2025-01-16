@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/14 10:54:38 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 09:37:33 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 	curr_cmd = cmds;
 	while (curr_cmd)
 	{
-		curr = curr_cmd->token_lis;
+		curr = curr_cmd->token_list;
 		while (curr)
 		{
 			var_list = NULL;

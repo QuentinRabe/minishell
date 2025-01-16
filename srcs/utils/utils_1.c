@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 08:36:50 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 09:37:20 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_list(t_cmd *head)
 	ptr_cmd = head;
 	while (ptr_cmd)
 	{
-		ptr_token = ptr_cmd->token_lis;
+		ptr_token = ptr_cmd->token_list;
 		while (ptr_token)
 		{
 			printf("[%s]", ptr_token->value);

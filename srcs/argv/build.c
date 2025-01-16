@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 08:14:22 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 08:30:28 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 09:36:22 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	build_argv(t_msh *msh)
 	curr_cmd = msh->cmds;
 	while (curr_cmd)
 	{
-		curr_cmd->argv = take_words(curr_cmd->token_lis);
+		curr_cmd->argv = take_words(curr_cmd->token_list);
 		curr_cmd = curr_cmd->next;
 	}
 }

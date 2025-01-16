@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 12:22:24 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/14 09:02:58 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 09:03:07 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	treat_each_cmd(t_cmd **head, char *cmd)
 		return ;
 	splitted = split_single_input(cmd);
 	new->value = ft_strdup(cmd);
+	new->argv = NULL;
 	new->token_lis = create_token_list(splitted);
 	new->next = NULL;
 	if (*head == NULL)

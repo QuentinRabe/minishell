@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 08:15:40 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 08:50:33 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ struct s_cmd
 {
 	char	*value;
 	t_token	*token_lis;
-	int		heredoc_fd;
+	int		heredoc_fd[2];
 	char	**argv;
 	t_cmd	*next;
 };

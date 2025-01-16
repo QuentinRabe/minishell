@@ -6,11 +6,27 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 13:03:13 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 08:36:50 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	print_argv(t_cmd *head)
+{
+	t_cmd	*ptr_cmd;
+	int		i;
+
+	ptr_cmd = head;
+	while (ptr_cmd)
+	{
+		i = -1;
+		while (ptr_cmd->argv[++i])
+			printf("[%s]", ptr_cmd->argv[i]);
+		printf("\n");
+		ptr_cmd = ptr_cmd->next;
+	}
+}
 
 void	print_list(t_cmd *head)
 {

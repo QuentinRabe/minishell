@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 08:27:40 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 08:37:03 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ bool	is_in(char *set, char c, int *index);
 void	trim(char **str);
 char	**ft_split_set(char *s, char *set);
 void	print_list(t_cmd *head);
+void	print_argv(t_cmd *head);
 int		count_additionnal_spaces(char *str);
 void	free_argv(char **argv);
 void	free_var_list(t_var *head);

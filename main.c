@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 08:27:55 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 09:01:12 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	free_cmds(t_cmd *head)
 		next = head->next;
 		free(head->value);
 		free_tokens(head->token_lis);
-		free_argv(head->argv);
+		if (head->argv)
+			free_argv(head->argv);
 		free(head);
 		head = next;
 	}
@@ -135,8 +136,10 @@ int	main(int ac, char **av, char **env)
 			else
 				create_token_multi_cmds(&msh, input);
 			expand_variables(WORD, msh.cmds, msh.env);
+			check_heredoc(&msh);
 			build_argv(&msh);
 			print_list(msh.cmds);
+			print_argv(msh.cmds);
 			clean_all(&msh);
 		}
 	}

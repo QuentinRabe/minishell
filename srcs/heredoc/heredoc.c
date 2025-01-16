@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/14 09:03:38 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 08:03:02 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	heredoc(t_cmd *cmd, char *eof, t_msh *msh)
 {
-	int	pipefd[2];
+	int		pipefd[2];
 	pid_t	pid;
 	char	*line;
 

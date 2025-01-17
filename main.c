@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 10:51:22 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/17 12:56:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ void	free_tokens(t_token *head)
 		head = next;
 	}
 }
+void	free_redir_list(t_redir *head)
+{
+	t_redir	*next;
+
+	while (head)
+	{
+		next = head->next;
+		free(head);
+		head = next;
+	}
+}
 
 void	free_cmds(t_cmd *head)
 {
@@ -50,6 +61,7 @@ void	free_cmds(t_cmd *head)
 		free_tokens(head->token_list);
 		if (head->argv)
 			free_argv(head->argv);
+		free_redir_list(head->redir_list);
 		free(head);
 		head = next;
 	}
@@ -136,8 +148,10 @@ int	main(int ac, char **av, char **env)
 			else
 				create_token_multi_cmds(&msh, input);
 			expand_variables(WORD, msh.cmds, msh.env);
+			// check_heredoc(&msh);
 			build_argv(&msh);
-			minishell(&msh, env);
+			build_redir_list(&msh);
+			// minishell(&msh, env);
 			clean_all(&msh);
 		}
 	}

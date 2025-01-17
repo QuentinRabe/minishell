@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 08:37:03 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/17 12:51:50 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,6 @@ void	free_env(t_var_env *env);
 void	check_heredoc(t_msh	*msh);
 // ==============ARGV==============
 void	build_argv(t_msh *msh);
+// ==============REDIR==============
+void	build_redir_list(t_msh *msh);
 #endif // !MINISHELL_H

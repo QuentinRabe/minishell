@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:28:20 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/08 07:47:28 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:05:44 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	has_successive_pipe(char *str)
 				str++;
 			if (*str == '|')
 			{
-				printf(ERRSYNT"`|'\n");
+				ft_putendl_fd(ERRSYNT"`|'", 2);
 				return (true);
 			}
 		}
@@ -59,7 +59,9 @@ static bool	has_unclosed_quote(char *str)
 			if (*str == '\0')
 			{
 				result = true;
-				printf(ERRSYNT"`%c'\n", quote);
+				ft_putstr_fd(ERRSYNT"`", 2);
+				ft_putstr_fd(&quote, 2);
+				ft_putendl_fd("'", 2);
 				break ;
 			}
 		}
@@ -77,7 +79,7 @@ static bool	has_extrem_pipe(char *str)
 	result = false;
 	if (str[0] == '|' || str[end_index] == '|')
 	{
-		printf(ERRSYNT"`|'\n");
+		ft_putendl_fd(ERRSYNT"`|'", 2);
 		result = !result;
 	}
 	return (result);

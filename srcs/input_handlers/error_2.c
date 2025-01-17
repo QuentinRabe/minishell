@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 13:58:51 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 14:04:13 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:03:27 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ bool	has_redir_without_filname(char *str)
 			while (is_in(SPACES, *str, NULL))
 				str++;
 			if (*str == '\0')
-				return (printf(ERRSYNT"`newline'\n"), true);
+				return (ft_putendl_fd(ERRSYNT"`newline'", 2), true);
 			if (*str && *str == '|')
-				return (printf(ERRSYNT"`|'\n"), true);
+				return (ft_putendl_fd(ERRSYNT"`|'", 2), true);
 		}
 		str++;
 	}

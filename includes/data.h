@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 09:35:51 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/17 12:46:23 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ struct s_var
 	char	*value;
 	int		index;
 	t_var	*next;
+};
+
+struct s_redir
+{
+	t_type	type;
+	char	*filename;
+	int		heredoc_fd[2];
+	bool	expand;
+	t_redir	*next;
 };
 
 struct s_token

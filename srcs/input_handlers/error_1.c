@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 20:29:11 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 14:08:59 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:05:01 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ char	opposite_of(char arrow)
 	if (arrow == '>')
 		return ('<');
 	return ('>');
+}
+
+static void	print_arrow_error(char arrow)
+{
+	ft_putstr_fd(ERRSYNT"`", 2);
+	ft_putstr_fd(&arrow, 2);
+	ft_putendl_fd("'\n", 2);
 }
 
 bool	has_consecutive_opps_arrows(char *str)
@@ -37,7 +44,7 @@ bool	has_consecutive_opps_arrows(char *str)
 			arrow = *str;
 			str++;
 			if (*str && *str == opposite_of(arrow))
-				return (printf(ERRSYNT"`%c'\n", arrow), true);
+				return (print_arrow_error(arrow), true);
 		}
 		if (*str)
 			str++;
@@ -66,7 +73,7 @@ bool	has_too_much_arrows(char *str)
 			while (*str && *str++ == arrow)
 				count++;
 			if (count > 2)
-				return (printf(ERRSYNT"`%c'\n", arrow), true);
+				return (print_arrow_error(arrow), true);
 		}
 		if (*str)
 			str++;

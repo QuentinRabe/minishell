@@ -1,7 +1,7 @@
 NAME	=	minishell
 CC		=	gcc
 CFLAGS	=	-Wall -Werror -Wextra -g -I./includes/ -I./libft/
-SRCS	=	$(shell find srcs libft -name '*.c') main.c
+SRCS	=	$(shell find srcs libft pipex -name '*.c') main.c
 O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 

@@ -6,21 +6,11 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 12:22:24 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 09:37:54 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:36:51 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-// static int	count_cmds(char **cmds)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (cmds[++i])
-// 		;
-// 	return (i);
-// }
 
 static t_cmd	*get_last_node(t_cmd *head)
 {

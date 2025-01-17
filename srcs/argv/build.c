@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 08:14:22 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 09:36:22 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/16 10:37:39 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	**take_words(t_token *token_list)
 	int		i;
 
 	len = count_words(token_list);
-	printf("WORDS = [%d]\n", len);
 	argv = (char **) malloc((len + 1) * sizeof(char *));
 	if (!argv)
 		return (NULL);

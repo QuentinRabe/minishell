@@ -26,6 +26,7 @@
 # include <signal.h>
 # include <data.h>
 # include <messages.h>
+# include <../pipex/pipex.h>
 
 // ==============EXPANSION==============
 void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env);

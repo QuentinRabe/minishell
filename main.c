@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/17 12:56:55 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/18 10:42:00 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	free_redir_list(t_redir *head)
 	while (head)
 	{
 		next = head->next;
+		free(head->filename);
 		free(head);
 		head = next;
 	}
@@ -148,9 +149,9 @@ int	main(int ac, char **av, char **env)
 			else
 				create_token_multi_cmds(&msh, input);
 			expand_variables(WORD, msh.cmds, msh.env);
-			// check_heredoc(&msh);
-			build_argv(&msh);
 			build_redir_list(&msh);
+			check_heredoc(&msh);
+			build_argv(&msh);
 			// minishell(&msh, env);
 			clean_all(&msh);
 		}

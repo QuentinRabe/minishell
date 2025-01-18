@@ -6,24 +6,21 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/17 10:45:00 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/18 09:55:21 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	count_heredoc(t_token *token_list)
+bool	is_there_heredoc(t_redir *list)
 {
-	int	count;
-
-	count = 0;
-	while (token_list)
+	while (list)
 	{
-		if (token_list->type == HEREDOC)
-			count++;
-		token_list = token_list->next;
+		if (list->type == HEREDOC)
+			return (true);
+		list = list->next;
 	}
-	return (count);
+	return (false);
 }
 
 void	fake_heredoc(char *eof, t_msh *msh)
@@ -39,7 +36,6 @@ void	fake_heredoc(char *eof, t_msh *msh)
 			line = readline("here_doc: ");
 			if (!line || !ft_strcmp(line, eof))
 			{
-				printf("End Fake\n");
 				free(line);
 				break;
 			}
@@ -69,7 +65,6 @@ void	real_heredoc(char *eof, t_msh *msh, int heredoc_fd[2])
 			line = readline("here_doc: ");
 			if (!line || !ft_strcmp(line, eof))
 			{
-				printf("End Real\n");
 				free(line);
 				break;
 			}
@@ -87,57 +82,47 @@ void	real_heredoc(char *eof, t_msh *msh, int heredoc_fd[2])
 	wait(NULL);
 }
 
-void	heredoc(char *eof, t_msh *msh, int heredoc_fd[2], int n)
+void	heredoc(t_redir *list, t_msh *msh)
 {
 	static int	i = 1;
 
-	printf("[i->%d][n->%d]\n", i, n);
-	if (i < n)
+	if (!list->is_last)
 	{
-		printf("Fake\n");
-		fake_heredoc(eof, msh);
+		fake_heredoc(list->filename, msh);
 		i++;
 		return ;
 	}
 	else
 	{
-		printf("Real\n");
-		real_heredoc(eof, msh, heredoc_fd);
+		real_heredoc(list->filename, msh, list->heredoc_fd);
 		i = 1;
 		return ;
 	}
 }
 
-void	init_fds(int heredoc_fd[2])
-{
-	heredoc_fd[0] = -1;
-	heredoc_fd[1] = -1;
-}
 void	check_heredoc(t_msh	*msh)
 {
 	t_cmd	*cmd;
-	t_token	*token;
-	int		heredocs;
+	t_redir	*list;
 
 	cmd = msh->cmds;
 	while (cmd)
 	{
-		init_fds(cmd->heredoc_fd);
-		token = cmd->token_list;
-		heredocs = count_heredoc(token);
-		while (token)
+		list = cmd->redir_list;
+		if (is_there_heredoc(list))
 		{
-			if (heredocs == 0)
-				break ;
-			if (token->type == HEREDOC)
-				heredoc(token->next->value, msh, cmd->heredoc_fd, heredocs);
-			token = token->next;
+			while (list)
+			{
+				if (list->type == HEREDOC)
+					heredoc(list, msh);
+				list = list->next;
+			}
 		}
-		if (heredocs)
-		{
-			printf("Heredoc_fd[0] = [%d]\n", cmd->heredoc_fd[0]);
-			close(cmd->heredoc_fd[0]);
-		}
+		// if (heredocs)
+		// {
+		// 	printf("Heredoc_fd[0] = [%d]\n", cmd->heredoc_fd[0]);
+		// 	close(cmd->heredoc_fd[0]);
+		// }
 		cmd = cmd->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 13:58:51 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/17 13:03:27 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/18 10:39:05 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ bool	has_redir_without_filname(char *str)
 			if (*str && *str == '|')
 				return (ft_putendl_fd(ERRSYNT"`|'", 2), true);
 		}
-		str++;
+		if (*str)
+			str++;
 	}
 	return (false);
 }

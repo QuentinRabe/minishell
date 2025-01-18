@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/17 12:46:23 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/18 09:25:36 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ enum	e_type
 	OUTFILE,
 	EOF_HD,
 	HEREDOC,
-	REDIR_IN
+	REDIR_IN,
+	IN,
+	OUT
 };
 
 struct s_var_env
@@ -53,8 +55,10 @@ struct s_var
 struct s_redir
 {
 	t_type	type;
+	t_type	absolute_type;
 	char	*filename;
 	int		heredoc_fd[2];
+	bool	is_last;
 	bool	expand;
 	t_redir	*next;
 };

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 12:28:08 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/18 10:46:35 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/18 10:57:46 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ void	create_redir_list(t_redir **redir_list, t_type type, char *filename)
 		tmp = ft_strdup(new->filename);
 		free(new->filename);
 		new->filename = heredoc_delimiter(filename, new, tmp);
-		printf("[heredoc del = %s]\n", new->filename);
 		free(tmp);
 		new->absolute_type = IN;
 	}
@@ -179,7 +178,7 @@ void	build_redir_list(t_msh *msh)
 {
 	t_cmd	*curr_cmd;
 	t_token	*curr_tok;
-	t_redir	*curr_redir;
+	// t_redir	*curr_redir;
 
 	curr_cmd = msh->cmds;
 	while (curr_cmd)
@@ -204,20 +203,20 @@ void	build_redir_list(t_msh *msh)
 	}
 
 	//print redir_list
-	curr_cmd = msh->cmds;
-	while (curr_cmd)
-	{
-		if (count_redir(curr_cmd->token_list))
-		{
-			curr_redir = curr_cmd->redir_list;
-			printf("[REDIR]\n");
-			while (curr_redir)
-			{
-				printf("[%d][%s][last%d][expand%d]", curr_redir->type, curr_redir->filename, curr_redir->is_last, curr_redir->expand);
-				curr_redir = curr_redir->next;
-			}
-			printf("\n");
-		}
-		curr_cmd = curr_cmd->next;
-	}
+	// curr_cmd = msh->cmds;
+	// while (curr_cmd)
+	// {
+	// 	if (count_redir(curr_cmd->token_list))
+	// 	{
+	// 		curr_redir = curr_cmd->redir_list;
+	// 		printf("[REDIR]\n");
+	// 		while (curr_redir)
+	// 		{
+	// 			printf("[%d][%s][last%d][expand%d]", curr_redir->type, curr_redir->filename, curr_redir->is_last, curr_redir->expand);
+	// 			curr_redir = curr_redir->next;
+	// 		}
+	// 		printf("\n");
+	// 	}
+	// 	curr_cmd = curr_cmd->next;
+	// }
 }

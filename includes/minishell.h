@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/17 12:51:50 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/18 10:59:06 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <data.h>
 # include <messages.h>
 # include <../pipex/pipex.h>
+# include <../srcs/gnl/get_next_line.h>
 
 // ==============EXPANSION==============
 void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env);

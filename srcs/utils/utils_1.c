@@ -6,11 +6,57 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/16 10:39:32 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/19 08:43:48 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+bool	is_in_quotes(char *token, int i, char quote)
+{
+	int		tmp;
+	int		count;
+
+	tmp = i;
+	count = 0;
+	while (i >= 0)
+	{
+		if (token[i] && token[i] == quote)
+		{
+			count++;
+			break ;
+		}
+		i--;
+	}
+	i = tmp;
+	while (token[i])
+	{
+		if (token[i] == quote)
+		{
+			count++;
+			break;
+		}
+		i++;
+	}
+	return (count == 2);
+}
+
+bool	is_in_dq(char *token, int i)
+{
+	return is_in_quotes(token, i, '"');
+}
+
+bool	is_in_sq(char *token, int i)
+{
+	return is_in_quotes(token, i, '\'');
+}
+
+void	free_everything(t_msh *msh)
+{
+	free_env(msh->env);
+	free_env(msh->exp);
+	clean_all(msh);
+}
 
 void	print_argv(t_cmd *head)
 {

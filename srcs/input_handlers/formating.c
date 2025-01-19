@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 21:44:13 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/08 08:40:48 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/19 09:04:52 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	pipenco_case(char *str, char *new, int *i, int *j)
 {
 	if ((*i - 1) > 0 && (str[*i - 1] && !is_in(SPACES, str[*i - 1], NULL)
-		&& str[*i - 1] != str[*i]))
+			&& str[*i - 1] != str[*i]))
 	{
 		new[*j] = ' ';
 		*j += 1;

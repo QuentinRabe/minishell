@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 12:28:08 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/18 10:57:46 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/19 08:22:03 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ static void	create_delimiter(char *new, char *old)
 				j++;
 				i++;
 			}
+			if (old[i])
+				i++;
 		}
 		else
 		{
@@ -130,6 +132,7 @@ static char	*heredoc_delimiter(char *str, t_redir *old, char *filename)
 	char	*new;
 
 	len = heredoc_delimiter_len(str);
+	printf("hd delimiter len->[%d]\n", len);
 	new = (char *) malloc((len + 1) * sizeof(char));
 	if (!new)
 		return (NULL);

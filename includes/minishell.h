@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/18 10:59:06 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/19 09:09:34 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <sys/types.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 # include <sys/stat.h>
 # include <signal.h>
 # include <data.h>
@@ -31,6 +31,13 @@
 
 // ==============EXPANSION==============
 void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env);
+void	expand_input(char **input, t_var_env *env);
+char	*get_varname(char *token, int i);
+int		get_varlen(char *token);
+int		get_len_new_token(char *token, t_var *list);
+int		get_varlen_hd(char *token);
+char	*get_varname_hd(char *token, int i);
+int		get_len_new_input_hd(char *input, t_var *list);
 // ==============ENVIRONMENT==============
 void	get_var_env(t_var_env **env, char **args);
 void	sort_list_env(t_var_env **env);
@@ -63,8 +70,11 @@ bool	is_in_sq(char *token, int i);
 bool	is_in_dq(char *token, int i);
 void	clean_all(t_msh *msh);
 void	free_env(t_var_env *env);
+bool	count_if_quote_case(char *token, int *count);
+void	free_everything(t_msh *msh);
 // ==============HEREDOC==============
 void	check_heredoc(t_msh	*msh);
+bool	is_there_heredoc(t_redir *list);
 // ==============ARGV==============
 void	build_argv(t_msh *msh);
 // ==============REDIR==============

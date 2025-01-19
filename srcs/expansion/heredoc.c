@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/19 08:56:10 by arabefam         ###   ########.fr       */
+/*   Created: 2025/01/19 07:38:27 by arabefam          #+#    #+#             */
+/*   Updated: 2025/01/19 09:03:30 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ static t_var	*get_last_node(t_var *var)
 	return (var);
 }
 
-static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
+static void	build_new_token_hd(char **input, t_var *list, int i[3])
 {
 	char	*new;
 	int		len;
 
-	len = get_len_new_token(token, list);
+	len = get_len_new_input_hd(*input, list);
 	new = (char *) malloc((len + 1) * sizeof(char));
 	if (!new)
 		return ;
 	i[0] = 0;
 	i[1] = 0;
-	while (token[i[0]])
+	while ((*input)[i[0]])
 	{
-		if (token[i[0]] == '$' && list)
+		if ((*input)[i[0]] == '$' && list)
 		{
 			i[2] = 0;
 			while (list->value[i[2]])
@@ -41,14 +41,15 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 			list = list->next;
 		}
 		else
-			new[i[1]++] = token[i[0]++];
+			new[i[1]++] = (*input)[i[0]++];
 	}
 	new[i[1]] = '\0';
-	free(curr->value);
-	curr->value = new;
+	(*input) = ft_strdup(new);
+	free(new);
 }
 
-static void	add_to_var_list(char *token, int *i, t_var **list, t_var_env *env)
+static void	add_to_var_list_hd(char *token, int *i, \
+t_var **list, t_var_env *env)
 {
 	t_var	*new;
 	t_var	*last;
@@ -58,7 +59,7 @@ static void	add_to_var_list(char *token, int *i, t_var **list, t_var_env *env)
 		return ;
 	new->index = *i;
 	new->next = NULL;
-	new->varname = get_varname(token, *i + 1);
+	new->varname = get_varname_hd(token, *i + 1);
 	new->value = get_env(env, new->varname);
 	*i += ft_strlen(new->varname);
 	if (*list == NULL)
@@ -70,48 +71,28 @@ static void	add_to_var_list(char *token, int *i, t_var **list, t_var_env *env)
 	}
 }
 
-static void	create_var_list(char *token, t_var_env *env, t_var **list)
+static void	create_var_list_hd(char *token, t_var_env *env, t_var **list)
 {
 	int	i;
 
 	i = 0;
 	while (token[i])
 	{
-		if (token[i] == '\'' && !is_in_dq(token, i))
-		{
-			i++;
-			while (token[i] && token[i] != '\'')
-				i++;
-		}
-		else if (token[i] == '$')
-			add_to_var_list(token, &i, list, env);
+		if (token[i] == '$')
+			add_to_var_list_hd(token, &i, list, env);
 		if (token[i])
 			i++;
 	}
 }
 
-void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
+void	expand_input(char **input, t_var_env *env)
 {
-	t_token	*curr;
-	t_cmd	*curr_cmd;
-	t_var	*var_list;
+	t_var	*list;
 	int		i[3];
 
-	curr_cmd = cmds;
-	while (curr_cmd)
-	{
-		curr = curr_cmd->token_list;
-		while (curr)
-		{
-			var_list = NULL;
-			if (curr->type == type)
-			{
-				create_var_list(curr->value, env, &var_list);
-				build_new_token(curr->value, var_list, curr, i);
-				free_var_list(var_list);
-			}
-			curr = curr->next;
-		}
-		curr_cmd = curr_cmd->next;
-	}
+	list = NULL;
+	create_var_list_hd(*input, env, &list);
+	build_new_token_hd(input, list, i);
+	printf("input->[%s]\n", *input);
+	free_var_list(list);
 }

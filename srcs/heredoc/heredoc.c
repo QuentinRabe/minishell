@@ -6,24 +6,13 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/18 11:06:39 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/19 08:37:04 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-bool	is_there_heredoc(t_redir *list)
-{
-	while (list)
-	{
-		if (list->type == HEREDOC)
-			return (true);
-		list = list->next;
-	}
-	return (false);
-}
-
-void	fake_heredoc(char *eof, t_msh *msh)
+static void	fake_heredoc(char *eof, t_msh *msh)
 {
 	pid_t	pid;
 	char	*line;
@@ -37,52 +26,57 @@ void	fake_heredoc(char *eof, t_msh *msh)
 			if (!line || !ft_strcmp(line, eof))
 			{
 				free(line);
-				break;
+				break ;
 			}
 			free(line);
 		}
-		free_env(msh->env);
-		free_env(msh->exp);
-		clean_all(msh);
+		free_everything(msh);
 		exit(EXIT_SUCCESS);
 	}
 	wait(NULL);
 }
 
-void	real_heredoc(char *eof, t_msh *msh, int heredoc_fd[2])
+static void	heredoc_proccess(char *eof, t_msh *msh, int fd[2], bool expand)
 {
-	pid_t	pid;
 	char	*line;
 
-	if (pipe(heredoc_fd) == -1)
+	close(fd[0]);
+	while (1)
+	{
+		line = readline("here_doc: ");
+		if (!line || !ft_strcmp(line, eof))
+		{
+			free(line);
+			break ;
+		}
+		if (expand)
+		{
+			printf("expand\n");
+			expand_input(&line, msh->env);
+		}
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
+		free(line);
+	}
+	close(fd[1]);
+	free_everything(msh);
+	exit(EXIT_SUCCESS);
+}
+
+static void	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
+{
+	pid_t	pid;
+
+	if (pipe(fd) == -1)
 		perror("pipe");
 	pid = fork();
 	if (pid == 0)
-	{
-		close(heredoc_fd[0]);
-		while (1)
-		{
-			line = readline("here_doc: ");
-			if (!line || !ft_strcmp(line, eof))
-			{
-				free(line);
-				break;
-			}
-			write(heredoc_fd[1], line, ft_strlen(line));
-			write(heredoc_fd[1], "\n", 1);
-			free(line);
-		}
-		close(heredoc_fd[1]);
-		free_env(msh->env);
-		free_env(msh->exp);
-		clean_all(msh);
-		exit(EXIT_SUCCESS);
-	}
-	close(heredoc_fd[1]);
+		heredoc_proccess(eof, msh, fd, expand);
+	close(fd[1]);
 	wait(NULL);
 }
 
-void	heredoc(t_redir *list, t_msh *msh)
+static void	heredoc(t_redir *list, t_msh *msh)
 {
 	static int	i = 1;
 
@@ -94,7 +88,7 @@ void	heredoc(t_redir *list, t_msh *msh)
 	}
 	else
 	{
-		real_heredoc(list->filename, msh, list->heredoc_fd);
+		real_heredoc(list->filename, msh, list->heredoc_fd, list->expand);
 		i = 1;
 		return ;
 	}
@@ -115,33 +109,6 @@ void	check_heredoc(t_msh	*msh)
 			{
 				if (list->type == HEREDOC)
 					heredoc(list, msh);
-				list = list->next;
-			}
-		}
-		cmd = cmd->next;
-	}
-	cmd = msh->cmds;
-	while (cmd)
-	{
-		list = cmd->redir_list;
-		if (is_there_heredoc(list))
-		{
-			while (list)
-			{
-				if (list->type == HEREDOC)
-				{
-					if (list->heredoc_fd[0] != -1)
-					{
-						printf("------------------------\nfd->%d\n", list->heredoc_fd[0]);
-						char *line;
-						while ((line = get_next_line(list->heredoc_fd[0])))
-						{
-							printf("%s", line);
-							free(line);
-						}
-						printf("------------------------\n");
-					}
-				}
 				list = list->next;
 			}
 		}

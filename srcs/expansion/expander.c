@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/19 08:56:10 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:46:52 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 		if (token[i[0]] == '$' && list)
 		{
 			i[2] = 0;
-			while (list->value[i[2]])
+			while (list->value && list->value[i[2]])
 				new[i[1]++] = list->value[i[2]++];
 			i[0] += ft_strlen(list->varname) + 1;
 			list = list->next;

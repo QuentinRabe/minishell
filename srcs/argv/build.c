@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 08:14:22 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/20 13:48:19 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:21:37 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ char	**take_words(t_token *token_list)
 	if (!argv)
 		return (NULL);
 	i = 0;
+	while (token_list && !token_list->value[0])
+	{
+		printf("hello\n");
+		token_list = token_list->next;
+	}
 	while (token_list)
 	{
 		if (token_list->type == WORD)
@@ -58,9 +63,6 @@ void	build_argv(t_msh *msh)
 		curr_cmd = curr_cmd->next;
 	}
 	curr_cmd = msh->cmds;
-	while (curr_cmd)
-	{
-		print_list(curr_cmd);
-		curr_cmd = curr_cmd->next;
-	}
+	print_list(curr_cmd);
+	print_argv(curr_cmd);
 }

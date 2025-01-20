@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 15:38:52 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 10:59:37 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:15:02 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	token_count(char *s, char *set)
 	short	is_inside;
 
 	count = 0;
+	if (!s)
+		return (0);
 	while (*s != '\0')
 	{
 		while (*s != '\0' && is_in(set, *s, NULL))
@@ -78,7 +80,15 @@ static char	**split_helper(t_split split, char *s, char *set)
 char	**ft_split_set(char *s, char *set)
 {
 	t_split	split;
+	char	**list;
 
+	if (!token_count(s, set))
+	{
+		list = (char **) malloc(2 * sizeof(char *));
+		list[0] = ft_strdup("");
+		list[1] = NULL;
+		return (list);
+	}
 	split.list = (char **) malloc((token_count(s, set) + 1) * sizeof(char *));
 	if (!split.list)
 	{

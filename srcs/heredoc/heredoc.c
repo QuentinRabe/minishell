@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/19 08:37:04 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/21 06:57:57 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ static void	heredoc_proccess(char *eof, t_msh *msh, int fd[2], bool expand)
 			break ;
 		}
 		if (expand)
-		{
-			printf("expand\n");
 			expand_input(&line, msh->env);
-		}
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		free(line);

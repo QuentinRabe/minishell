@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 07:38:27 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/19 09:03:30 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/21 06:58:08 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,5 @@ void	expand_input(char **input, t_var_env *env)
 	list = NULL;
 	create_var_list_hd(*input, env, &list);
 	build_new_token_hd(input, list, i);
-	printf("input->[%s]\n", *input);
 	free_var_list(list);
 }

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 08:14:22 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/21 06:57:29 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/21 11:55:27 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ void	build_argv(t_msh *msh)
 	}
 	curr_cmd = msh->cmds;
 	// print_list(curr_cmd);
-	// print_argv(curr_cmd);
+	print_argv(curr_cmd);
 }

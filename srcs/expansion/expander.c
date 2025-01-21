@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/20 14:20:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/21 13:24:05 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,11 @@ static void	add_to_var_list(char *token, int *i, t_var **list, t_var_env *env)
 	new->index = *i;
 	new->next = NULL;
 	new->varname = get_varname(token, *i + 1);
-	new->value = get_env(env, new->varname);
+	if (!ft_strcmp(new->varname, "$")
+		&& token[*i + 1] == '"')
+		new->value = ft_strdup("$\"");
+	else
+		new->value = get_env(env, new->varname);
 	if (is_in_dq(token, *i))
 		one_espace_value(new->value, new);
 	*i += ft_strlen(new->varname);
@@ -155,6 +159,7 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 	t_cmd	*curr_cmd;
 	t_var	*var_list;
 	int		i[3];
+	int		it;
 
 	curr_cmd = cmds;
 	while (curr_cmd)
@@ -162,9 +167,10 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 		curr = curr_cmd->token_list;
 		while (curr)
 		{
-			var_list = NULL;
-			if (curr->type == type)
+			it = -1;
+			while (curr->type == type && ++it < 2)
 			{
+				var_list = NULL;
 				create_var_list(curr->value, env, &var_list);
 				build_new_token(curr->value, var_list, curr, i);
 				free_var_list(var_list);

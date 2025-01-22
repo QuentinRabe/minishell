@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/19 09:09:34 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 06:44:05 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		get_len_new_input_hd(char *input, t_var *list);
 void	get_var_env(t_var_env **env, char **args);
 void	sort_list_env(t_var_env **env);
 char	*get_env(t_var_env *env, char *key);
+char	**get_env_arr(t_var_env *env);
 // ==============INPUT_HANDLERS==============
 bool	has_obvious_syntax_error(char *str);
 bool	has_too_much_arrows(char *str);

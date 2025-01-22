@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 10:39:14 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:05:35 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,9 @@ int	main(int ac, char **av, char **env)
 			expand_variables(WORD, msh.cmds, msh.env);
 			expand_variables(INFILE, msh.cmds, msh.env);
 			expand_variables(OUTFILE, msh.cmds, msh.env);
+			remove_quotes(&msh);
 			build_redir_list(&msh);
 			check_heredoc(&msh);
-			remove_quotes(&msh);
 			build_argv(&msh);
 			// minishell(&msh, env);
 			clean_all(&msh);

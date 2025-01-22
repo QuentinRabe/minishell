@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 08:38:29 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 07:08:00 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:38:12 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ char	*get_varname(char *token, int i)
 	int		varlen;
 	int		j;
 
-	varlen = get_varlen(token + i);
-	if (varlen == 0 || (token[i] == '"'
-		&& varlen == 1))
+	varlen = get_varlen(token + i, i);
+	if (varlen == 0)
+		return (ft_strdup("$"));
+	if ((token[i] == '"' && varlen == 0))
 		return (ft_strdup("$"));
 	varname = (char *) malloc((varlen + 1) * sizeof(char));
 	if (!varname)
@@ -35,11 +36,12 @@ char	*get_varname(char *token, int i)
 	return (varname);
 }
 
-int	get_varlen(char *token)
+int	get_varlen(char *token, int j)
 {
 	int	count;
 	int	i;
 
+	(void) j;
 	count = 0;
 	i = -1;
 	if (!count_if_quote_case(token, &count))
@@ -66,6 +68,7 @@ bool	count_if_quote_case(char *token, int *count)
 	char	quote;
 
 	i = 0;
+	printf("quote case\n");
 	if (token[i] == '\'' || token[i] == '"')
 	{
 		quote = token[i++];
@@ -96,7 +99,7 @@ int	get_len_new_token(char *token, t_var *list)
 		if (token[i] == '$' && list)
 		{
 			len += ft_strlen(list->value);
-			i += ft_strlen(list->varname) + 1;
+			i += ft_strlen(list->varname);
 			list = list->next;
 		}
 		else

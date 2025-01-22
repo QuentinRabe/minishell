@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 10:47:00 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:40:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 			i[2] = 0;
 			while (list->value && list->value[i[2]])
 				new[i[1]++] = list->value[i[2]++];
-			i[0] += ft_strlen(list->varname) + 1;
+			i[0] += ft_strlen(list->varname);
 			list = list->next;
 		}
 		else
@@ -118,6 +118,7 @@ static void	add_to_var_list(char *token, int *i, t_var **list, t_var_env *env)
 	new->index = *i;
 	new->next = NULL;
 	new->varname = get_varname(token, *i + 1);
+	printf("varname->%s\n", new->varname);
 	if (!ft_strcmp(new->varname, "$")
 		&& token[*i + 1] == '"')
 		new->value = ft_strdup("$\"");

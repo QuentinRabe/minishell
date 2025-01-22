@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 07:38:27 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/21 14:13:56 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 07:06:18 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ t_var **list, t_var_env *env)
 	new->index = *i;
 	new->next = NULL;
 	new->varname = get_varname_hd(token, *i + 1);
-	printf("varname->%s\n", new->varname);
 	new->value = get_env(env, new->varname);
-	printf("value->%s\n", new->value);
 	*i += ft_strlen(new->varname);
 	if (*list == NULL)
 		*list = new;

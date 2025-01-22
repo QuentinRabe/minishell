@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 06:44:05 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:38:49 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	check_heredoc(t_msh	*msh);
 bool	is_there_heredoc(t_redir *list);
 // ==============ARGV==============
 void	build_argv(t_msh *msh);
+ void	remove_quotes(t_msh *msh);
 // ==============REDIR==============
 void	build_redir_list(t_msh *msh);
 #endif // !MINISHELL_H

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 06:45:41 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:39:14 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	t_msh	msh;
-	char	**envp;
 
 	(void) ac,
 	(void) av;
@@ -154,9 +153,8 @@ int	main(int ac, char **av, char **env)
 			expand_variables(OUTFILE, msh.cmds, msh.env);
 			build_redir_list(&msh);
 			check_heredoc(&msh);
+			remove_quotes(&msh);
 			build_argv(&msh);
-			envp = get_env_arr(msh.env);
-			free_argv(envp);
 			// minishell(&msh, env);
 			clean_all(&msh);
 		}

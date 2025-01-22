@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/21 13:24:05 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 10:47:00 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 			new[i[1]++] = token[i[0]++];
 	}
 	new[i[1]] = '\0';
+	if (ft_strcmp(new, curr->value))
+		curr->expanded = true;
 	free(curr->value);
 	curr->value = new;
 }

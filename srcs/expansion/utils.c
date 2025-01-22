@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 08:38:29 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 13:38:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:46:09 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ char	*get_varname(char *token, int i)
 	char	*varname;
 	int		varlen;
 	int		j;
+	char	spec;
 
+	spec = -1;
 	varlen = get_varlen(token + i, i);
 	if (varlen == 0)
-		return (ft_strdup("$"));
+		return (ft_strdup(&spec));
 	if ((token[i] == '"' && varlen == 0))
-		return (ft_strdup("$"));
+		return (ft_strdup("!"));
 	varname = (char *) malloc((varlen + 1) * sizeof(char));
 	if (!varname)
 		return (NULL);

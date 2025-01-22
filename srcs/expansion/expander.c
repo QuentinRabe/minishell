@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 13:40:13 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/22 13:59:30 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 			while (list->value && list->value[i[2]])
 				new[i[1]++] = list->value[i[2]++];
 			i[0] += ft_strlen(list->varname);
+			if (token[i[0]] != 0)
+				i[0]++;
 			list = list->next;
 		}
 		else
@@ -48,6 +50,7 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 		curr->expanded = true;
 	free(curr->value);
 	curr->value = new;
+	printf("[new->%s]\n", new);
 }
 
  size_t	get_splitted_lenght(char **splitted, int *spaces)

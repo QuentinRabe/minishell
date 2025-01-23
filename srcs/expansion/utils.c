@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 08:38:29 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 13:46:09 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:41:01 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,11 @@ char	*get_varname(char *token, int i)
 	char	*varname;
 	int		varlen;
 	int		j;
-	char	spec;
 
-	spec = -1;
-	varlen = get_varlen(token + i, i);
-	if (varlen == 0)
-		return (ft_strdup(&spec));
-	if ((token[i] == '"' && varlen == 0))
-		return (ft_strdup("!"));
+	varlen = get_varlen(token + i);
+	if (token[i] && (token[i] == '"'
+		|| token[i] == '\''))
+		return (ft_strdup(&token[i]));
 	varname = (char *) malloc((varlen + 1) * sizeof(char));
 	if (!varname)
 		return (NULL);
@@ -38,28 +35,24 @@ char	*get_varname(char *token, int i)
 	return (varname);
 }
 
-int	get_varlen(char *token, int j)
+int	get_varlen(char *token)
 {
 	int	count;
 	int	i;
 
-	(void) j;
 	count = 0;
 	i = -1;
-	if (!count_if_quote_case(token, &count))
+	while (token[++i])
 	{
-		while (token[++i])
-		{
-			if (ft_isalnum(token[i]))
-				count++;
-			else if (!ft_isalnum(token[i]) && (token[i] == '?'
-					|| token[i] == '$') && i == 0)
-				return (1);
-			else if ((!ft_isalnum(token[i]) && token[i] == '_'))
-				count++;
-			else if (!ft_isalnum(token[i]))
-				return (count);
-		}
+		if (ft_isalnum(token[i]))
+			count++;
+		else if (!ft_isalnum(token[i]) && (token[i] == '?'
+				|| token[i] == '$') && i == 0)
+			return (1);
+		else if ((!ft_isalnum(token[i]) && token[i] == '_'))
+			count++;
+		else if (!ft_isalnum(token[i]))
+			return (count);
 	}
 	return (count);
 }

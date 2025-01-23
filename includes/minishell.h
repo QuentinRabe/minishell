@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 13:29:08 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:39:11 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env);
 void	expand_input(char **input, t_var_env *env);
 char	*get_varname(char *token, int i);
-int		get_varlen(char *token, int j);
+int		get_varlen(char *token);
 int		get_len_new_token(char *token, t_var *list);
 int		get_varlen_hd(char *token);
 char	*get_varname_hd(char *token, int i);

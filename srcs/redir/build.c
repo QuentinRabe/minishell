@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 12:28:08 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 16:28:36 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:16:03 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ static char	*heredoc_delimiter(char *str, t_redir *old, char *filename)
 }
 
 void	create_redir_list_process(t_type type, char *filename, \
-t_redir *new)
+t_redir *new, bool in_dq)
 {
 	char	*tmp;
 
 	new->next = NULL;
 	new->expand = true;
+	new->in_dq = in_dq;
 	new->filename = ft_strdup(filename);
 	new->type = type;
 	if (type == HEREDOC || type == REDIR_IN)
@@ -58,7 +59,8 @@ t_redir *new)
 	new->heredoc_fd[1] = -1;
 }
 
-void	create_redir_list(t_redir **redir_list, t_type type, char *filename)
+static void	create_redir_list(t_redir **redir_list, t_type type, \
+char *filename, bool in_dq)
 {
 	t_redir	*new;
 	t_redir	*last;
@@ -66,7 +68,7 @@ void	create_redir_list(t_redir **redir_list, t_type type, char *filename)
 	new = (t_redir *) malloc(sizeof(t_redir));
 	if (!new)
 		return ;
-	create_redir_list_process(type, filename, new);
+	create_redir_list_process(type, filename, new, in_dq);
 	if (*redir_list == NULL)
 		*redir_list = new;
 	else
@@ -78,29 +80,29 @@ void	create_redir_list(t_redir **redir_list, t_type type, char *filename)
 
 void	build_redir_list(t_msh *msh)
 {
-	t_cmd	*curr_cmd;
-	t_token	*curr_tok;
+	t_cmd	*cmd;
+	t_token	*tok;
 
-	curr_cmd = msh->cmds;
-	while (curr_cmd)
+	cmd = msh->cmds;
+	while (cmd)
 	{
-		curr_cmd->redir_list = NULL;
-		if (count_redir(curr_cmd->token_list))
+		cmd->redir_list = NULL;
+		if (count_redir(cmd->token_list))
 		{
-			curr_tok = curr_cmd->token_list;
-			while (curr_tok)
+			tok = cmd->token_list;
+			while (tok)
 			{
-				if (curr_tok->type != WORD)
+				if (tok->type != WORD)
 				{
-					create_redir_list(&curr_cmd->redir_list, \
-					curr_tok->type, curr_tok->next->value);
-					curr_tok = curr_tok->next;
+					create_redir_list(&cmd->redir_list, \
+					tok->type, tok->next->value, tok->next->in_dq);
+					tok = tok->next;
 				}
-				if (curr_tok)
-					curr_tok = curr_tok->next;
+				if (tok)
+					tok = tok->next;
 			}
-			check_last_redir(curr_cmd->redir_list);
+			check_last_redir(cmd->redir_list);
 		}
-		curr_cmd = curr_cmd->next;
+		cmd = cmd->next;
 	}
 }

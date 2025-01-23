@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:36:13 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 16:38:09 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:16:21 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	check_filename_in_dq(char *token, t_token *curr)
 	if (token[0] == '"'
 		&& token[ft_strlen(token) - 1] == '"')
 		curr->in_dq = true;
+	else
+		curr->in_dq = false;
 }
 
 void	one_espace_value(char *value, t_var *new)

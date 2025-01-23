@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 16:34:27 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 17:11:39 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	print_list(t_cmd *head)
 		ptr_redir = ptr_cmd->redir_list;
 		while (ptr_redir)
 		{
-			printf("[%s][%d]", ptr_redir->filename, ptr_redir->expand);
+			printf("[%s][%d]", ptr_redir->filename, ptr_redir->in_dq);
 			ptr_redir = ptr_redir->next;
 		}
 		printf("\n");

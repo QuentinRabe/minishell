@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/20 14:08:38 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:01:12 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ void	print_argv(t_cmd *head)
 void	print_list(t_cmd *head)
 {
 	t_cmd	*ptr_cmd;
-	t_token	*ptr_token;
+	t_redir	*ptr_redir;
 
 	ptr_cmd = head;
 	while (ptr_cmd)
 	{
-		ptr_token = ptr_cmd->token_list;
-		while (ptr_token)
+		ptr_redir = ptr_cmd->redir_list;
+		while (ptr_redir)
 		{
-			printf("[%s]", ptr_token->value);
-			ptr_token = ptr_token->next;
+			printf("[%s][%d]", ptr_redir->filename, ptr_redir->expand);
+			ptr_redir = ptr_redir->next;
 		}
 		printf("\n");
 		ptr_cmd = ptr_cmd->next;

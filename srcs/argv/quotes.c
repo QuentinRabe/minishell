@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 07:13:58 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 13:42:53 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:50:35 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ static char	*remove_process(char *str)
 		tok = cmd->token_list;
 		while (tok)
 		{
-			if ((tok->type == WORD
+			if (tok->type == WORD
 				|| tok->type == INFILE
-				|| tok->type == OUTFILE) && !tok->expanded)
+				|| tok->type == OUTFILE)
 			{
 				tmp = ft_strdup(tok->value);
 				free(tok->value);

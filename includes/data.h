@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 10:45:07 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:55:15 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ struct s_redir
 	int		heredoc_fd[2];
 	bool	is_last;
 	bool	expand;
+	bool	in_dq;
 	t_redir	*next;
 };
 
 struct s_token
 {
 	char	*value;
+	bool	in_dq;
 	t_type	type;
-	bool	expanded;
 	t_token	*next;
 };
 

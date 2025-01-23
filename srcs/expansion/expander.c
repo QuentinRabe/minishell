@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 15:46:55 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:58:31 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,8 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 			new[i[1]++] = token[i[0]++];
 	}
 	new[i[1]] = '\0';
-	if (ft_strcmp(new, curr->value))
-		curr->expanded = true;
 	free(curr->value);
 	curr->value = new;
-	printf("[new->%s]\n", new);
 }
 
  size_t	get_splitted_lenght(char **splitted, int *spaces)
@@ -154,6 +151,13 @@ static void	create_var_list(char *token, t_var_env *env, t_var **list)
 	}
 }
 
+void	check_filename_in_dq(char *token, t_token *curr)
+{
+	if (token[0] == '"'
+		&& token[ft_strlen(token) - 1] == '"')
+		curr->in_dq = true;
+}
+
 void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 {
 	t_token	*curr;
@@ -169,6 +173,8 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 		{
 			if (curr->type == type)
 			{
+				if (curr->type != WORD)
+					check_filename_in_dq(curr->value, curr);
 				var_list = NULL;
 				create_var_list(curr->value, env, &var_list);
 				build_new_token(curr->value, var_list, curr, i);

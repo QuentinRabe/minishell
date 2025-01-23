@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 16:32:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/22 10:45:44 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:55:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static void	add_token(t_token **head, char *token, int count, int i)
 	if (!new)
 		return ;
 	new->value = ft_strdup(token);
-	new->expanded = false;
 	new->next = NULL;
+	new->in_dq = false;
 	assign_type(new, &prev);
 	if (*head == NULL)
 		*head = new;

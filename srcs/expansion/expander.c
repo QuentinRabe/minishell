@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 15:58:31 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:41:23 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 	new = (char *) malloc((len + 1) * sizeof(char));
 	if (!new)
 		return ;
-	i[0] = 0;
-	i[1] = 0;
+	init_array(i);
 	while (token[i[0]])
 	{
 		if (token[i[0]] == '$' && list)
@@ -38,8 +37,7 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 			while (list->value && list->value[i[2]])
 				new[i[1]++] = list->value[i[2]++];
 			i[0] += ft_strlen(list->varname);
-			if (token[i[0]] != 0)
-				i[0]++;
+			increment(token, &i[0]);
 			list = list->next;
 		}
 		else
@@ -48,63 +46,6 @@ static void	build_new_token(char *token, t_var *list, t_token *curr, int i[3])
 	new[i[1]] = '\0';
 	free(curr->value);
 	curr->value = new;
-}
-
- size_t	get_splitted_lenght(char **splitted, int *spaces)
-{
-	int		i;
-	int		j;
-	size_t	len;
-
-	len = 0;
-	i = -1;
-	while (splitted[++i])
-	{
-		j = -1;
-		while (splitted[i][++j])
-			len++;
-		(*spaces)++;
-	}
-	(*spaces)--;
-	return (len);
-}
-
- void	create_new_value(char *new, char **splitted)
-{
-	int		i;
-	int		j;
-	int		k;
-
-	i = -1;
-	k = 0;
-	while (splitted[++i])
-	{
-		j = -1;
-		while (splitted[i][++j])
-			new[k++] = splitted[i][j];
-		new[k++] = ' ';
-	}
-	new[--k] = '\0';
-	free_argv(splitted);
-}
-
- void	one_espace_value(char *value, t_var *new)
-{
-	char	*new_value;
-	char	**splitted;
-	int		spaces;
-	size_t	len;
-
-	spaces = 0;
-	splitted = ft_split_set(value, SPACES);
-	len = get_splitted_lenght(splitted, &spaces);
-	new_value = (char *) malloc((len + spaces + 1) * sizeof(char));
-	if (!new_value)
-		return ;
-	create_new_value(new_value, splitted);
-	free(value);
-	new->value = ft_strdup(new_value);
-	free(new_value);
 }
 
 static void	add_to_var_list(char *token, int *i, t_var **list, t_var_env *env)
@@ -149,13 +90,6 @@ static void	create_var_list(char *token, t_var_env *env, t_var **list)
 		if (token[i])
 			i++;
 	}
-}
-
-void	check_filename_in_dq(char *token, t_token *curr)
-{
-	if (token[0] == '"'
-		&& token[ft_strlen(token) - 1] == '"')
-		curr->in_dq = true;
 }
 
 void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)

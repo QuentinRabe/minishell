@@ -6,11 +6,11 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 07:13:58 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 15:50:35 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:14:31 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include <minishell.h>
+#include <minishell.h>
 
 static int	new_length(char *str)
 {
@@ -69,8 +69,8 @@ static char	*remove_process(char *str)
 	return (new);
 }
 
- void	remove_quotes(t_msh *msh)
- {
+void	remove_quotes(t_msh *msh)
+{
 	t_cmd	*cmd;
 	t_token	*tok;
 	char	*tmp;
@@ -94,4 +94,4 @@ static char	*remove_process(char *str)
 		}
 		cmd = cmd->next;
 	}
- }
+}

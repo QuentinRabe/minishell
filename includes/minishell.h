@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 15:39:11 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:52:21 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # include <signal.h>
 # include <data.h>
 # include <messages.h>
-# include <../pipex/pipex.h>
 # include <../srcs/gnl/get_next_line.h>
 
 // ==============EXPANSION==============
@@ -38,6 +37,12 @@ int		get_len_new_token(char *token, t_var *list);
 int		get_varlen_hd(char *token);
 char	*get_varname_hd(char *token, int i);
 int		get_len_new_input_hd(char *input, t_var *list);
+size_t	get_splitted_lenght(char **splitted, int *spaces);
+void	check_filename_in_dq(char *token, t_token *curr);
+void	create_new_value(char *new, char **splitted);
+void	one_espace_value(char *value, t_var *new);
+void	increment(char *token, int *i);
+void	init_array(int i[3]);
 // ==============ENVIRONMENT==============
 void	get_var_env(t_var_env **env, char **args);
 void	sort_list_env(t_var_env **env);
@@ -60,6 +65,7 @@ t_token	*create_token_list(char **tokens);
 // ==============UTILS==============
 bool	is_space(char c);
 bool	is_in(char *set, char c, int *index);
+bool	is_in_quotes(char *token, int i, char quote);
 void	trim(char **str);
 char	**ft_split_set(char *s, char *set);
 void	print_list(t_cmd *head);
@@ -73,12 +79,22 @@ void	clean_all(t_msh *msh);
 void	free_env(t_var_env *env);
 bool	count_if_quote_case(char *token, int *count);
 void	free_everything(t_msh *msh);
+void	init_signal(void);
+void	signal_handler(int sig);
+void	free_tokens(t_token *head);
+void	free_redir_list(t_redir *head);
+void	free_cmds(t_cmd *head);
+void	free_msh(t_msh *msh);
 // ==============HEREDOC==============
 void	check_heredoc(t_msh	*msh);
 bool	is_there_heredoc(t_redir *list);
 // ==============ARGV==============
 void	build_argv(t_msh *msh);
- void	remove_quotes(t_msh *msh);
+void	remove_quotes(t_msh *msh);
 // ==============REDIR==============
 void	build_redir_list(t_msh *msh);
+int		count_redir(t_token *token_list);
+int		heredoc_delimiter_len(char *str);
+void	check_last_redir(t_redir *list);
+void	create_delimiter(char *new, char *old);
 #endif // !MINISHELL_H

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/21 14:07:45 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:13:09 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,28 +106,6 @@ void	check_heredoc(t_msh	*msh)
 			{
 				if (list->type == HEREDOC)
 					heredoc(list, msh);
-				list = list->next;
-			}
-		}
-		cmd = cmd->next;
-	}
-		cmd = msh->cmds;
-	while (cmd)
-	{
-		list = cmd->redir_list;
-		if (is_there_heredoc(list))
-		{
-			while (list)
-			{
-				if (list->heredoc_fd[0] != -1)
-				{
-					char	*line;
-					while ((line = get_next_line(list->heredoc_fd[0])))
-					{
-						printf("%s", line);
-						free(line);
-					}
-				}
 				list = list->next;
 			}
 		}

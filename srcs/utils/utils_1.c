@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 16:01:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:34:27 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,11 @@ bool	is_in_quotes(char *token, int i, char quote)
 		if (token[i] == quote)
 		{
 			count++;
-			break;
+			break ;
 		}
 		i++;
 	}
 	return (count == 2);
-}
-
-bool	is_in_dq(char *token, int i)
-{
-	return is_in_quotes(token, i, '"');
-}
-
-bool	is_in_sq(char *token, int i)
-{
-	return is_in_quotes(token, i, '\'');
 }
 
 void	free_everything(t_msh *msh)
@@ -92,26 +82,4 @@ void	print_list(t_cmd *head)
 		printf("\n");
 		ptr_cmd = ptr_cmd->next;
 	}
-}
-
-bool	is_in(char *set, char c, int *index)
-{
-	int	i;
-
-	i = -1;
-	while (set[++i])
-	{
-		if (c == set[i])
-		{
-			if (index)
-				*index = i;
-			return (true);
-		}
-	}
-	return (false);
-}
-
-bool	is_space(char c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
 }

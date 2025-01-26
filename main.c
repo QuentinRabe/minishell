@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 16:51:40 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/25 18:26:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	init_env(t_msh *msh, char **env)
 	sort_list_env(&msh->exp);
 }
 
-static void	msh_process(char *input, t_msh *msh)
+static void	msh_process(char *input, t_msh *msh, char **envp)
 {
 	if (!input)
 	{
@@ -41,6 +41,9 @@ static void	msh_process(char *input, t_msh *msh)
 		build_redir_list(msh);
 		check_heredoc(msh);
 		build_argv(msh);
+		envp = get_env_arr(msh->env);
+		minishell(msh, envp);
+		free_argv(envp);
 		clean_all(msh);
 	}
 }
@@ -48,8 +51,10 @@ static void	msh_process(char *input, t_msh *msh)
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
+	char	**envp;
 	t_msh	msh;
 
+	envp = NULL;
 	init_env(&msh, env);
 	(void) ac,
 	(void) av;
@@ -58,7 +63,7 @@ int	main(int ac, char **av, char **env)
 	{
 		init_signal();
 		input = readline("msh$ ");
-		msh_process(input, &msh);
+		msh_process(input, &msh, envp);
 	}
 	return (0);
 }

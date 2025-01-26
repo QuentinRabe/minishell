@@ -63,7 +63,7 @@ bool	count_if_quote_case(char *token, int *count)
 	char	quote;
 
 	i = 0;
-	printf("quote case\n");
+	//printf("quote case\n");
 	if (token[i] == '\'' || token[i] == '"')
 	{
 		quote = token[i++];

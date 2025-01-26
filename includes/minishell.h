@@ -26,6 +26,7 @@
 # include <signal.h>
 # include <data.h>
 # include <messages.h>
+# include <../execution/header.h>
 # include <../srcs/gnl/get_next_line.h>
 
 // ==============EXPANSION==============

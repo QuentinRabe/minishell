@@ -39,7 +39,7 @@ char	**take_words(t_token *token_list)
 	i = 0;
 	while (token_list && !token_list->value[0])
 	{
-		printf("hello\n");
+		//printf("hello\n");
 		token_list = token_list->next;
 	}
 	while (token_list)
@@ -63,6 +63,6 @@ void	build_argv(t_msh *msh)
 		curr_cmd = curr_cmd->next;
 	}
 	curr_cmd = msh->cmds;
-	print_list(curr_cmd);
-	print_argv(curr_cmd);
+	//print_list(curr_cmd);
+	//print_argv(curr_cmd);
 }

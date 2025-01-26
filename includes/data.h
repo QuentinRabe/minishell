@@ -21,6 +21,7 @@ typedef struct s_var		t_var;
 typedef struct s_msh		t_msh;
 typedef struct s_cmd		t_cmd;
 typedef struct s_redir		t_redir;
+typedef struct s_ppx		t_ppx;
 typedef enum e_type			t_type;
 
 enum	e_type
@@ -87,4 +88,13 @@ struct s_msh
 	t_var_env	*env;
 	t_var_env	*exp;
 };
+
+struct s_ppx
+{
+	pid_t	*pid;
+	int		**fd;
+	int		idx;
+	int		nb_cmd;
+};
+
 #endif

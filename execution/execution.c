@@ -91,6 +91,17 @@ int	**create_pipe(t_ppx *pipex)
 	}
 	return (pipex->fd);
 }
+void	sig_handle(int sig)
+{
+	(void) sig;
+}
+
+
+void	config_sig(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
 
 int	ft_execution(t_msh *msh, char **env)
 {
@@ -101,14 +112,13 @@ int	ft_execution(t_msh *msh, char **env)
 	ptr_cmds = msh->cmds;
 	init_pipex(&pipex, msh->cmds);
 	pipex.fd = create_pipe(&pipex);
+	signal(SIGINT, sig_handle);
 	while (ptr_cmds)
 	{
 		pipex.pid/*[pipex.idx]*/ = fork();
 		if (pipex.pid/*[pipex.idx]*/ == 0)
 		{
-			// if (ft_builtins(msh, ptr_cmds, env))
-			// 	exit(0);
-			// else
+			config_sig();
 			child_first_process(msh, ptr_cmds, &pipex, env);
 			exit(0);
 		}

@@ -6,18 +6,29 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/27 10:47:10 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:11:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
+static t_var_env	*get_last_node(t_var_env *head)
+{
+	while (head->next)
+		head = head->next;
+	return (head);
+}
+
 void	add_new_env(t_var_env *env, char *key, char *value)
 {
 	t_var_env	*tmp;
 	t_var_env	*new;
+	t_var_env	*last;
+	t_var_env	*prev;
 
-	while (env->next)
+	last = env;
+	prev = env;
+	while (env)
 	{
 		if (!ft_strcmp(env->key, key))
 		{
@@ -25,11 +36,15 @@ void	add_new_env(t_var_env *env, char *key, char *value)
 			free(env->key);
 			free(env->value);
 			free(env);
+			prev->next = tmp;
 			env = tmp;
-			continue;
+			break ;
 		}
+		prev = env;
 		env = env->next;
 	}
+	env = last;
+	last = get_last_node(env);
 	new = (t_var_env *) malloc(sizeof(t_var_env));
 	if (!new)
 		return ;
@@ -38,7 +53,7 @@ void	add_new_env(t_var_env *env, char *key, char *value)
 	free(key);
 	free(value);
 	new->next = NULL;
-	env->next = new;
+	last->next = new;
 }
 
 char	*var_value(char *str)
@@ -77,7 +92,7 @@ char	*var_name(char *str)
 	return (name);
 }
 
-void	export_process(char **argv, t_var_env *env)
+void	export_process(char **argv, t_var_env *env, t_var_env *exp)
 {
 	char	*key;
 	char	*value;
@@ -90,7 +105,10 @@ void	export_process(char **argv, t_var_env *env)
 		if (!key)
 			continue ;
 		value = var_value(argv[i]);
-		add_new_env(env, key, value);
+		if (value)
+			add_new_env(env, key, value);
+		else
+			add_new_env(exp, key, NULL);
 	}
 }
 
@@ -105,18 +123,19 @@ void	print_env(t_var_env *env, int fd)
 	}
 }
 
-void	execute_export(t_msh *msh)
+void	execute_export(t_msh *msh, int fd)
 {
-	int	fd;
-
-	fd = 1;
-	ft_redir_fd(msh->cmds, 0, &fd);
+	if (fd < 0)
+	{
+		fd = 1;
+		ft_redir_fd(msh->cmds, 0, &fd);
+	}
 	if (!msh->cmds->argv[1])
 	{
-		print_env(msh->env, fd);
+		print_env(msh->exp, fd);
 		if (fd != 1)
 			close(fd);
 	}
 	else
-		export_process(msh->cmds->argv, msh->env);
+		export_process(msh->cmds->argv, msh->env, msh->exp);
 }

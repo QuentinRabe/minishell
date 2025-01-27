@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/25 23:09:58 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:34:26 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 # include "../includes/minishell.h"
 # include <readline/readline.h>
 
-void	ft_exit(char **argv);
-void	execute_pwd(t_cmd *cmds);
+void	ft_exit(char **argv, int fd);
+void	execute_pwd(t_cmd *cmds, int fd);
 void	execute_cd(char **command);
-void	execute_echo(t_cmd *cmds);
-void	execute_export(t_msh *msh);
+void	execute_echo(t_cmd *cmds, int fd);
+void	execute_export(t_msh *msh, int fd);
 
-int		ft_builtins(t_msh *msh, t_cmd *ptr_cmd, char **env);
+int		ft_builtins(t_msh *msh, t_cmd *ptr_cmd, char **env, int fd);
 int		minishell(t_msh *msh, char **env);
 
 int		ft_strlen_argv(t_cmd *cmds);
@@ -39,7 +39,7 @@ void	ft_wait(t_ppx *pipex, int *status);
 
 int		ft_execution(t_msh *msh, char **env);
 
-int		execute(t_cmd *ptr_cmds, char **arge, int input_fd, int output_fd);
+int		execute(t_cmd *ptr_cmds, char **arge);
 char	*find_path(char *cmd, char **arge);
 
 void	close_pipe(t_ppx *pipex);
@@ -55,9 +55,6 @@ void	ft_redir_fd(t_cmd *ptr_cmds, int *input, int *output);
 int		ft_herdoc(t_cmd *ptr_cmds, char **env);
 void	ft_open_file(t_cmd *ptr_cmds, t_ppx *pipex, int *input, int *output);
 
-void	ft_cmd_first(t_cmd *ptr_cmds, t_ppx *pipex, int idx, char **env);
-void	ft_cmd_last(t_cmd *ptr_cmds, t_ppx *pipex, int idx, char **env);
-void	ft_cmd_medium(t_cmd *ptr_cmds, t_ppx *pipex, int idx, char **env);
-void	ft_cmd_one(t_cmd *ptr_cmds, char **env);
-
+void	print_env(t_var_env *env, int fd);
+void	execute_env(t_cmd *cmds, t_var_env *env);
 #endif

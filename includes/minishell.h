@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/27 07:25:45 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:44:00 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	free_tokens(t_token *head);
 void	free_redir_list(t_redir *head);
 void	free_cmds(t_cmd *head);
 void	free_msh(t_msh *msh);
+t_msh	*get_msh(int i, t_msh *msh);
+char	**get_arr(int i, char **arr);
 // ==============HEREDOC==============
 void	check_heredoc(t_msh	*msh);
 bool	is_there_heredoc(t_redir *list);

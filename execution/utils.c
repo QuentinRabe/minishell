@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 10:37:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:25:50 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ void	ft_wait(t_ppx *pipex, int *status)
 	int	i;
 
 	i = 0;
+	waitpid(pipex->pid, status, 0);
 	while (i < pipex->nb_cmd)
 	{
-		waitpid(pipex->pid[i], status, 0);
+		wait(NULL);
 		i++;
 	}
 }

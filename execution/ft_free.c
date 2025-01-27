@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:05:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 10:28:31 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:26:29 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ void	close_unused_pipes(t_ppx *pipex, int idx)
 
 void	cleanup_pipex(t_ppx *pipex)
 {
-	if (pipex->pid)
-		free(pipex->pid);
 	if (pipex->nb_cmd != 1 && pipex->fd)
 		free_array(pipex->fd, pipex->nb_cmd - 1);
 }

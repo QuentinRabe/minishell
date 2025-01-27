@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/25 18:26:13 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:44:19 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,29 @@ static void	msh_process(char *input, t_msh *msh, char **envp)
 		check_heredoc(msh);
 		build_argv(msh);
 		envp = get_env_arr(msh->env);
+		get_arr(0, envp);
 		minishell(msh, envp);
 		free_argv(envp);
 		clean_all(msh);
 	}
+}
+
+t_msh	*get_msh(int i, t_msh *msh)
+{
+	static t_msh	*ptr = NULL;
+
+	if (i == 0)
+		ptr = msh;
+	return (ptr);
+}
+
+char	**get_arr(int i, char **arr)
+{
+	static char	**ptr = NULL;
+
+	if (i == 0)
+		ptr = arr;
+	return (ptr);
 }
 
 int	main(int ac, char **av, char **env)
@@ -56,6 +75,7 @@ int	main(int ac, char **av, char **env)
 
 	envp = NULL;
 	init_env(&msh, env);
+	get_msh(0, &msh);
 	(void) ac,
 	(void) av;
 	(void) env;

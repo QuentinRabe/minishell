@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   builtins_ft_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 10:03:31 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 14:41:17 by arabefam         ###   ########.fr       */
+/*   Created: 2025/01/27 11:47:33 by arabefam          #+#    #+#             */
+/*   Updated: 2025/01/27 11:52:06 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include <minishell.h>
 
-int	ft_error(char *msg, char *cause, int stat)
+void	execute_env(t_cmd *cmds, t_var_env *env)
 {
-	int	size;
-	int	len;
+	int	fd;
 
-	len = ft_strlen(cause);
-	size = ft_strlen(msg);
-	write (2, "Error: ", 7);
-	write (2, msg, size);
-	if (cause != NULL)
-		write (2, cause, len);
-	write (2, "\n", 2);
-	free_everything(get_msh(1, NULL));
-	exit (stat);
+	fd = 1;
+	if (cmds->argv[1])
+	{
+		ft_putendl_fd("msh: too many arguments", 2);
+		return ;
+	}
+	ft_redir_fd(cmds, 0, &fd);
+	print_env(env, fd);
+	if (fd != 1)
+		close(fd);
 }

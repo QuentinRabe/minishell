@@ -24,13 +24,15 @@ void	execute_cd(char **command)
 	}
 }
 
-void	execute_pwd(t_cmd *cmds)
+void	execute_pwd(t_cmd *cmds, int fd)
 {
 	char	cwd[1024];
-	int		fd;
 
-	fd = 1;
-	ft_redir_fd(cmds, 0, &fd);
+	if (fd < 0)
+	{
+		fd = 1;
+		ft_redir_fd(cmds, 0, &fd);
+	}
 	if (cmds->argv[1] != NULL)
 		ft_putendl_fd("clear: too many arguments", 2);
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
@@ -39,9 +41,11 @@ void	execute_pwd(t_cmd *cmds)
 		perror("pwd");
 }
 
-void	ft_exit(char **argv)
+void	ft_exit(char **argv, int fd)
 {
-	ft_putendl_fd("exit", 1);
+	if (fd < 0)
+		fd = 1;
+	ft_putendl_fd("exit", fd);
 	if (argv[1] != NULL)
 	{
 		ft_putstr_fd("exit: ", 2);
@@ -51,9 +55,8 @@ void	ft_exit(char **argv)
 	exit(0);
 }
 
-void	execute_echo(t_cmd *cmds)
+void	execute_echo(t_cmd *cmds, int fd)
 {
-	int		fd;
 	char	**cmd;
 	int		line;
 	int		idx;
@@ -61,8 +64,11 @@ void	execute_echo(t_cmd *cmds)
 	idx = 0;
 	line = 1;
 	cmd = cmds->argv + 1;
-	fd = 1;
-	ft_redir_fd(cmds, 0, &fd);
+	if (fd < 0)
+	{
+		fd = 1;
+		ft_redir_fd(cmds, 0, &fd);
+	}
 	if (ft_valid_option(cmd, &idx) == 1)
 		line = 0;
 	while (cmd[idx])

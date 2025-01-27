@@ -6,11 +6,41 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 10:56:36 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:39:34 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+char	*get_cmd(char *path)
+{
+	char	**splitted;
+	int		i;
+	char	*result;
+
+	splitted = ft_split(path, '/');
+	i = -1;
+	while (splitted[++i])
+		;
+	result = ft_strdup(splitted[i - 1]);
+	free_argv(splitted);
+	return (result);
+}
+
+int	check_absolute_path(char *path, char **cmd)
+{
+	if (is_in(path, '/', NULL))
+	{
+		if (access(path, F_OK) == 0)
+		{
+			*cmd = get_cmd(path);
+			return (0);
+		}
+		else
+			return (-1);
+	}
+	return (1);
+}
 
 char	*find_path(char *cmd, char **arge)
 {
@@ -41,24 +71,29 @@ char	*find_path(char *cmd, char **arge)
 	return (NULL);
 }
 
-int	execute(t_cmd *ptr_cmds, char **arge, int input_fd, int output_fd)
+int	execute(t_cmd *ptr_cmds, char **arge)
 {
 	char	*path;
+	char	*cmd;
+	int		res;
 
-	if (input_fd != STDIN_FILENO)
+	cmd = NULL;
+	res = check_absolute_path(ptr_cmds->argv[0], &cmd);
+	if (res == 0)
 	{
-		dup2(input_fd, STDIN_FILENO);
-		close(input_fd);
+		path = ft_strdup(ptr_cmds->argv[0]);
+		free(ptr_cmds->argv[0]);
+		ptr_cmds->argv[0] = ft_strdup(cmd);
+		free(cmd);
 	}
-	if (output_fd != STDOUT_FILENO)
-	{
-		dup2(output_fd, STDOUT_FILENO);
-		close(output_fd);
-	}
-	path = find_path(ptr_cmds->argv[0], arge);
+	else if (res == -1)
+		ft_error("msh: no such file or directory: ", ptr_cmds->argv[0], 127);
+	else
+		path = find_path(ptr_cmds->argv[0], arge);
 	if (!path)
 		ft_error("command not found: ", ptr_cmds->argv[0], 127);
-	if (execve(path, ptr_cmds->argv, arge) == -1)
-		ft_error("command execution error: ", ptr_cmds->argv[0], 127);
-	return (0);
+	execve(path, ptr_cmds->argv, arge);
+	//ft_error("command execution error: ", ptr_cmds->argv[0], 127);
+	free_everything(get_msh(1, NULL));
+	exit (127);
 }

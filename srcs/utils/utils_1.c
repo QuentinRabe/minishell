@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:30:34 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 17:11:39 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:45:29 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ bool	is_in_quotes(char *token, int i, char quote)
 
 void	free_everything(t_msh *msh)
 {
+	free_argv(get_arr(1, NULL));
 	free_env(msh->env);
 	free_env(msh->exp);
 	clean_all(msh);

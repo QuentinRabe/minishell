@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 15:55:15 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:23:47 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ struct s_msh
 
 struct s_ppx
 {
-	pid_t	*pid;
+	pid_t	pid;
 	int		**fd;
 	int		idx;
 	int		nb_cmd;

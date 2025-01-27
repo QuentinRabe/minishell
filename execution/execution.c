@@ -6,13 +6,13 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:08 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 10:56:47 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:33:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	child_first_process(t_cmd *ptr_cmds, t_ppx *pipex, char **env)
+void	child_first_process(t_msh *msh, t_cmd *ptr_cmds, t_ppx *pipex, char **env)
 {
 	int	input;
 	int	output;
@@ -33,7 +33,9 @@ void	child_first_process(t_cmd *ptr_cmds, t_ppx *pipex, char **env)
 	if (output >= 0)
 		close(output);
 	close_unused_pipes(pipex, pipex->idx);
-	execute(ptr_cmds, env, STDIN_FILENO, STDOUT_FILENO);
+	if (ft_builtins(msh, ptr_cmds, env, STDOUT_FILENO))
+		return ;
+	execute(ptr_cmds, env);
 }
 
 int	**allocate_array(int rows, int cols)
@@ -73,7 +75,7 @@ void	init_pipex(t_ppx *pipex, t_cmd	*cmds)
 		if (pipex->fd == NULL)
 			exit(1);
 	}
-	pipex->pid = (pid_t *)malloc(sizeof(pid_t) * pipex->nb_cmd);
+	//pipex->pid = (pid_t *)malloc(sizeof(pid_t) * pipex->nb_cmd);
 }
 
 int	**create_pipe(t_ppx *pipex)
@@ -101,13 +103,13 @@ int	ft_execution(t_msh *msh, char **env)
 	pipex.fd = create_pipe(&pipex);
 	while (ptr_cmds)
 	{
-		pipex.pid[pipex.idx] = fork();
-		if (pipex.pid[pipex.idx] == 0)
+		pipex.pid/*[pipex.idx]*/ = fork();
+		if (pipex.pid/*[pipex.idx]*/ == 0)
 		{
-			if (ft_builtins(msh, ptr_cmds, env))
-				exit(0);
-			else
-				child_first_process(ptr_cmds, &pipex, env);
+			// if (ft_builtins(msh, ptr_cmds, env))
+			// 	exit(0);
+			// else
+			child_first_process(msh, ptr_cmds, &pipex, env);
 			exit(0);
 		}
 		pipex.idx++;

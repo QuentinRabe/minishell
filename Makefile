@@ -6,6 +6,9 @@ SRCS	=	$(shell find srcs execution -name '*.c') main.c
 O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
+DIR		=	$(wildcard $(O_DIR))
+FILE	=	$(wildcard $(NAME))
+
 BLUE	=	\033[1;36m
 RED		=	\033[0;31m
 NC		=	\033[0m
@@ -16,6 +19,33 @@ define compilation_progress
 	@printf "$(BLUE)[Minishell] Compiling sources⏳$(NC)";
 	@printf "%*s" $(MAX_MESSAGE_LEN) "";
 	@printf "\r";
+	@sleep 0.1
+endef
+
+define clean
+	@if [ -z "$(DIR)" ]; then \
+		printf "$(BLUE)[Minishell] No objects to remove$(NC)";\
+		printf "%*s" $(MAX_MESSAGE_LEN) "";\
+		printf "\n";\
+	else \
+		printf "$(BLUE)[Minishell] Objects removed✅$(NC)";\
+		printf "%*s" $(MAX_MESSAGE_LEN) "";\
+		printf "\n";\
+		rm -rf $(O_DIR);\
+	fi
+endef
+
+define fclean
+	@if [ -z "$(FILE)" ]; then \
+		printf "$(BLUE)[Minishell] No executable to remove$(NC)";\
+		printf "%*s" $(MAX_MESSAGE_LEN) "";\
+		printf "\n";\
+	else \
+		printf "$(BLUE)[Minishell] Executable removed✅$(NC)";\
+		printf "%*s" $(MAX_MESSAGE_LEN) "";\
+		printf "\n";\
+		rm -f $(NAME);\
+	fi
 endef
 
 $(O_DIR)/%.o		:	%.c
@@ -31,17 +61,13 @@ $(NAME)	:	$(OBJS)
 
 clean	:
 		@make clean -sC ./libft
-		@printf "$(BLUE)[Minishell] Objects removed✅$(NC)";
-		@printf "%*s" $(MAX_MESSAGE_LEN) "";
-		@printf "\n";
-		@rm -rf $(O_DIR)
+		$(clean)
+		@sleep 0.5
 
 fclean	:	clean
 		@make fclean -sC ./libft
-		@printf "$(BLUE)[Minishell] Executable removed✅$(NC)";
-		@printf "%*s" $(MAX_MESSAGE_LEN) "";
-		@printf "\n";
-		@rm -f $(NAME)
+		$(fclean)
+		@sleep 0.5
 
 msh_val	:	all
 		@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)

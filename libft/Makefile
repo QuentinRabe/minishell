@@ -6,7 +6,7 @@
 #    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 07:04:28 by arabefam          #+#    #+#              #
-#    Updated: 2025/01/27 09:08:26 by arabefam         ###   ########.fr        #
+#    Updated: 2025/01/27 09:38:35 by arabefam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
 DIR		=	$(wildcard $(O_DIR))
+FILE	=	$(wildcard $(NAME))
 
 GREEN	=	\033[1;32m
 RED		=	\033[0;31m
@@ -29,6 +30,7 @@ define compilation_progress
 	@printf "$(GREEN)[Libft] Compiling sources⏳$(NC)";
 	@printf "%*s" $(MAX_MESSAGE_LEN) "";
 	@printf "\r";
+	@sleep 0.1
 endef
 
 define clean
@@ -45,7 +47,7 @@ define clean
 endef
 
 define fclean
-	@if [ -z "$(NAME)" ]; then \
+	@if [ -z "$(FILE)" ]; then \
 		printf "$(GREEN)[Libft] No archive to remove$(NC)";\
 		printf "%*s" $(MAX_MESSAGE_LEN) "";\
 		printf "\n";\
@@ -72,6 +74,8 @@ $(NAME)	:	$(OBJS)
 
 clean	:
 		$(clean)
+		@sleep 0.5
 fclean	:	clean
 		$(fclean)
+		@sleep 0.5
 re		:	fclean all

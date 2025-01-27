@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils3.c                                           :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rravelom <rravelom@student.42antanana      +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:11:16 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/18 10:11:17 by rravelom         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:53:32 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ int	ft_herdoc(t_cmd *ptr_cmds, char **env)
 	t_redir	*redir;
 
 	redir = ptr_cmds->redir_list;
-	while (redir->type == HEREDOC)
+	while (redir)
 	{
-		if (redir->is_last)
+		if (redir->type == HEREDOC && redir->is_last)
 		{
 			dup2(redir->heredoc_fd[0], STDIN_FILENO);
 			dup2(redir->heredoc_fd[1], STDOUT_FILENO);

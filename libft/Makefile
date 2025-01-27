@@ -6,7 +6,7 @@
 #    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 07:04:28 by arabefam          #+#    #+#              #
-#    Updated: 2025/01/27 09:38:35 by arabefam         ###   ########.fr        #
+#    Updated: 2025/01/27 10:57:48 by arabefam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ define compilation_progress
 	@printf "$(GREEN)[Libft] Compiling sources⏳$(NC)";
 	@printf "%*s" $(MAX_MESSAGE_LEN) "";
 	@printf "\r";
-	@sleep 0.1
 endef
 
 define clean

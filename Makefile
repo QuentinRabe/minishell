@@ -19,7 +19,6 @@ define compilation_progress
 	@printf "$(BLUE)[Minishell] Compiling sources⏳$(NC)";
 	@printf "%*s" $(MAX_MESSAGE_LEN) "";
 	@printf "\r";
-	@sleep 0.1
 endef
 
 define clean

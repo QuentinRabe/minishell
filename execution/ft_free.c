@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rravelom <rravelom@student.42antanana      +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:05:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/18 10:05:55 by rravelom         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:28:31 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

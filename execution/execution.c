@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rravelom <rravelom@student.42antanana      +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:08 by rravelom          #+#    #+#             */
-/*   Updated: 2024/08/04 10:06:09 by rravelom         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:56:47 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_execution(t_msh *msh, char **env)
 		pipex.pid[pipex.idx] = fork();
 		if (pipex.pid[pipex.idx] == 0)
 		{
-			if (ft_builtins(ptr_cmds, env))
+			if (ft_builtins(msh, ptr_cmds, env))
 				exit(0);
 			else
 				child_first_process(ptr_cmds, &pipex, env);

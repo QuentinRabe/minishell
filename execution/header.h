@@ -27,16 +27,14 @@
 
 void	ft_exit(char **argv);
 void	execute_pwd(t_cmd *cmds);
-void	clear(char **command);
 void	execute_cd(char **command);
 void	execute_echo(t_cmd *cmds);
 void	execute_export(t_msh *msh);
 
-int		ft_builtins(t_cmd *ptr_cmd, char **env);
+int		ft_builtins(t_msh *msh, t_cmd *ptr_cmd, char **env);
 int		minishell(t_msh *msh, char **env);
 
 int		ft_strlen_argv(t_cmd *cmds);
-int		ft_strchr_int(char *str, char *command);
 void	ft_wait(t_ppx *pipex, int *status);
 
 int		ft_execution(t_msh *msh, char **env);

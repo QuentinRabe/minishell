@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_ft.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rravelom <rravelom@student.42antanana      +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/18 08:23:23 by rravelom         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:52:42 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "header.h"
 
 void	execute_cd(char **command)
@@ -21,13 +22,6 @@ void	execute_cd(char **command)
 		ft_putstr_fd(command[1], 2);
 		write(1, "\n", 1);
 	}
-}
-
-void	clear(char **command)
-{
-	if (command[1] != NULL)
-		ft_putendl_fd("clear: too many arguments", 2);
-	write(1, "\033[2J\033[H", 8);
 }
 
 void	execute_pwd(t_cmd *cmds)

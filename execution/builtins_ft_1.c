@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/26 12:38:29 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/27 10:47:10 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	add_new_env(t_var_env *env, char *key, char *value)
 
 	while (env->next)
 	{
-		printf("Comparating [%s][%s]\n", env->key, key);
 		if (!ft_strcmp(env->key, key))
 		{
 			tmp = env->next;
@@ -88,7 +87,6 @@ void	export_process(char **argv, t_var_env *env)
 	while (argv[++i])
 	{
 		key = var_name(argv[i]);
-		printf("[%s]\n", key);
 		if (!key)
 			continue ;
 		value = var_value(argv[i]);
@@ -96,21 +94,29 @@ void	export_process(char **argv, t_var_env *env)
 	}
 }
 
-void	print_env(t_var_env *env)
+void	print_env(t_var_env *env, int fd)
 {
 	while (env)
 	{
-		ft_putstr_fd(env->key, 1);
-		ft_putchar_fd('=', 1);
-		ft_putendl_fd(env->value, 1);
+		ft_putstr_fd(env->key, fd);
+		ft_putchar_fd('=', fd);
+		ft_putendl_fd(env->value, fd);
 		env = env->next;
 	}
 }
 
 void	execute_export(t_msh *msh)
 {
+	int	fd;
+
+	fd = 1;
+	ft_redir_fd(msh->cmds, 0, &fd);
 	if (!msh->cmds->argv[1])
-		print_env(msh->env);
+	{
+		print_env(msh->env, fd);
+		if (fd != 1)
+			close(fd);
+	}
 	else
 		export_process(msh->cmds->argv, msh->env);
 }

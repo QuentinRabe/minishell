@@ -1,33 +1,47 @@
 NAME	=	minishell
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -g -I./includes/ -I./libft/
-SRCS	=	$(shell find srcs libft execution -name '*.c') main.c
+CFLAGS	=	-Wall -Werror -Wextra -g -I./includes -I./libft
+LDFLAGS	=	-L./libft -lft -lreadline
+SRCS	=	$(shell find srcs execution -name '*.c') main.c
 O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
-GREEN	=	\033[0;32m
+BLUE	=	\033[1;36m
 RED		=	\033[0;31m
-NC		=	\033[0m # No Color
+NC		=	\033[0m
+MAX_MESSAGE_LEN		:=	40
+
+define compilation_progress
+	@$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
+	@printf "$(BLUE)[Minishell] Compiling sources⏳$(NC)";
+	@printf "%*s" $(MAX_MESSAGE_LEN) "";
+	@printf "\r";
+endef
 
 $(O_DIR)/%.o		:	%.c
 		@mkdir -p $(dir $@)
-		@echo -n "Compiling $<... "
-		@$(CC) $(CFLAGS) -c $< -o $@  && echo -e "$(GREEN)[OK]$(NC)" || echo -e "$(RED)[FAIL]$(NC)"
+		$(compilation_progress)
 
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJS)
-		@echo "Building $(NAME)..."
-		@echo "--------------------"
-		@$(CC) $(CFLAGS) $(SRCS) -o $(NAME) -lreadline && echo -e "$(GREEN)Build successful!$(NC)" || echo -e "$(RED)Build failed!$(NC)"
+		@make -sC ./libft
+		@$(CC) $(CFLAGS)  $(SRCS) -o $(NAME) -L./libft -lft -lreadline && printf "$(BLUE)[Minishell] Success✅$(NC)" || printf "$(RED)[Minishell] Failure😩$(NC)"
+		@printf "\n";
 
 clean	:
-		@echo "Cleaning object files..."
-		@rm -rf $(O_DIR) && echo -e "$(GREEN)Cleaned!$(NC)" || echo -e "$(RED)Clean failed!$(NC)"
+		@make clean -sC ./libft
+		@printf "$(BLUE)[Minishell] Objects removed✅$(NC)";
+		@printf "%*s" $(MAX_MESSAGE_LEN) "";
+		@printf "\n";
+		@rm -rf $(O_DIR)
 
 fclean	:	clean
-		@echo "Removing executable..."
-		@rm -f $(NAME) && echo -e "$(GREEN)Fully cleaned!$(NC)" || echo -e "$(RED)Full clean failed!$(NC)"
+		@make fclean -sC ./libft
+		@printf "$(BLUE)[Minishell] Executable removed✅$(NC)";
+		@printf "%*s" $(MAX_MESSAGE_LEN) "";
+		@printf "\n";
+		@rm -f $(NAME)
 
 msh_val	:	all
 		@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)

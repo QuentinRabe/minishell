@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 07:28:23 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 16:41:23 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/28 08:08:14 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ void	expand_variables(t_type type, t_cmd *cmds, t_var_env *env)
 		{
 			if (curr->type == type)
 			{
-				if (curr->type != WORD)
-					check_filename_in_dq(curr->value, curr);
+				check_filename_in_dq(curr->value, curr);
 				var_list = NULL;
 				create_var_list(curr->value, env, &var_list);
 				build_new_token(curr->value, var_list, curr, i);

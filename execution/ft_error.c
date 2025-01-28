@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:03:31 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 14:41:17 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/28 07:54:33 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_error(char *msg, char *cause, int stat)
 
 	len = ft_strlen(cause);
 	size = ft_strlen(msg);
-	write (2, "Error: ", 7);
+	write (2, "msh: ", 5);
 	write (2, msg, size);
 	if (cause != NULL)
 		write (2, cause, len);

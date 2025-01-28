@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 14:39:34 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/28 08:13:34 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*find_path(char *cmd, char **arge)
 	char	*part_path;
 
 	i = 0;
+	if (!cmd || !cmd[0])
+		return (NULL);
 	while (ft_strnstr(arge[i], "PATH", 4) == 0)
 		i++;
 	paths = ft_split(arge[i] + 5, ':');
@@ -64,10 +66,7 @@ char	*find_path(char *cmd, char **arge)
 		free(path);
 		i++;
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
+	free_argv(paths);
 	return (NULL);
 }
 
@@ -87,13 +86,12 @@ int	execute(t_cmd *ptr_cmds, char **arge)
 		free(cmd);
 	}
 	else if (res == -1)
-		ft_error("msh: no such file or directory: ", ptr_cmds->argv[0], 127);
+		ft_error("no such file or directory: ", ptr_cmds->argv[0], 127);
 	else
 		path = find_path(ptr_cmds->argv[0], arge);
 	if (!path)
 		ft_error("command not found: ", ptr_cmds->argv[0], 127);
 	execve(path, ptr_cmds->argv, arge);
-	//ft_error("command execution error: ", ptr_cmds->argv[0], 127);
 	free_everything(get_msh(1, NULL));
 	exit (127);
 }

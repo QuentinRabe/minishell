@@ -10,6 +10,7 @@
 		"stat.h": "c",
 		"wait.h": "c",
 		"pipex.h": "c",
-		"data.h": "c"
+		"data.h": "c",
+		"header.h": "c"
 	}
 }

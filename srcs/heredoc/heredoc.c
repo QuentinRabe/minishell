@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 16:13:09 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:02:52 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ static void	fake_heredoc(char *eof, t_msh *msh)
 	char	*line;
 
 	pid = fork();
+	signal(SIGINT, reset_sig);
 	if (pid == 0)
 	{
 		while (1)
 		{
+			signal(SIGINT, hd_signal_handle);
 			line = readline("here_doc: ");
 			if (!line || !ft_strcmp(line, eof))
 			{
@@ -43,6 +45,8 @@ static void	heredoc_proccess(char *eof, t_msh *msh, int fd[2], bool expand)
 	close(fd[0]);
 	while (1)
 	{
+		msh->fd_write_hd = fd[1];
+		signal(SIGINT, hd_signal_handle);
 		line = readline("here_doc: ");
 		if (!line || !ft_strcmp(line, eof))
 		{
@@ -56,6 +60,7 @@ static void	heredoc_proccess(char *eof, t_msh *msh, int fd[2], bool expand)
 		free(line);
 	}
 	close(fd[1]);
+	msh->fd_write_hd = -1;
 	free_everything(msh);
 	exit(EXIT_SUCCESS);
 }
@@ -66,6 +71,7 @@ static void	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 
 	if (pipe(fd) == -1)
 		perror("pipe");
+	signal(SIGINT, reset_sig);
 	pid = fork();
 	if (pid == 0)
 		heredoc_proccess(eof, msh, fd, expand);
@@ -75,18 +81,14 @@ static void	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 
 static void	heredoc(t_redir *list, t_msh *msh)
 {
-	static int	i = 1;
-
 	if (!list->is_last)
 	{
 		fake_heredoc(list->filename, msh);
-		i++;
 		return ;
 	}
 	else
 	{
 		real_heredoc(list->filename, msh, list->heredoc_fd, list->expand);
-		i = 1;
 		return ;
 	}
 }

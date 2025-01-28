@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/28 08:13:34 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:37:46 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ char	*find_path(char *cmd, char **arge)
 	i = 0;
 	if (!cmd || !cmd[0])
 		return (NULL);
-	while (ft_strnstr(arge[i], "PATH", 4) == 0)
+	while (arge[i] && ft_strnstr(arge[i], "PATH", 4) == 0)
 		i++;
+	if (!arge[i])
+		return (NULL);
 	paths = ft_split(arge[i] + 5, ':');
 	i = 0;
 	while (paths[i])

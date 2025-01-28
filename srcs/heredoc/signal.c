@@ -6,11 +6,28 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 08:43:49 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/28 09:01:01 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:31:21 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	hd_signal_handle_fake(int sig)
+{
+	t_msh	*msh;
+
+	msh = get_msh(1, NULL);
+	if (sig == 2)
+	{
+		msh->status = sig + 128;
+		free_env(msh->env);
+		free_env(msh->exp);
+		clean_all(msh);
+		write(1,"\n", 1);
+		close(STDIN_FILENO);
+		exit(msh->status);
+	}
+}
 
 void	hd_signal_handle(int sig)
 {
@@ -19,13 +36,12 @@ void	hd_signal_handle(int sig)
 	msh = get_msh(1, NULL);
 	if (sig == 2)
 	{
-		close(1);
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
 		msh->status = sig + 128;
-		free_everything(msh);
+		free_env(msh->env);
+		free_env(msh->exp);
+		clean_all(msh);
+		close(STDIN_FILENO);
+		write(1,"\n", 1);
 		exit (msh->status);
 	}
 }

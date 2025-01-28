@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/28 07:55:14 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/28 08:24:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	main(int ac, char **av, char **env)
 
 	envp = NULL;
 	init_env(&msh, env);
+	msh.status = 0;
 	get_msh(0, &msh);
 	(void) ac,
 	(void) av;

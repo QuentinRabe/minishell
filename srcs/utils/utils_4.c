@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:43:07 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/28 07:45:18 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/28 08:29:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,21 @@ void	clean_all(t_msh *msh)
 
 void	signal_handler(int sig)
 {
-	if (sig)
+	t_msh	*msh;
+
+	if (sig == 2)
 	{
+		msh = get_msh(1, NULL);
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+	msh->status = sig + 128;
 }
 
 void	init_signal(void)
 {
 	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
 }

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 10:52:42 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 09:26:10 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	execute_echo(t_cmd *cmds, int fd)
 	char	**cmd;
 	int		line;
 	int		idx;
+	t_msh	*msh;
 
 	idx = 0;
 	line = 1;
@@ -78,4 +79,6 @@ void	execute_echo(t_cmd *cmds, int fd)
 	}
 	if (line == 1)
 		write(fd, "\n", 1);
+	msh = get_msh(1, NULL);
+	msh->status = 0;
 }

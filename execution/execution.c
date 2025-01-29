@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:08 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 14:33:55 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 08:17:23 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	ft_execution(t_msh *msh, char **env)
 		{
 			config_sig();
 			child_first_process(msh, ptr_cmds, &pipex, env);
-			exit(0);
+			exit(status);
 		}
 		pipex.idx++;
 		ptr_cmds = ptr_cmds->next;

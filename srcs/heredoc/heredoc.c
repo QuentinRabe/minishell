@@ -6,16 +6,17 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/28 13:27:09 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 09:21:44 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	fake_heredoc(char *eof, t_msh *msh)
+static int	fake_heredoc(char *eof, t_msh *msh)
 {
 	char	*line;
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
 	signal(SIGINT, reset_sig);
@@ -38,7 +39,16 @@ static void	fake_heredoc(char *eof, t_msh *msh)
 		exit(EXIT_SUCCESS);
 	}
 	else
-		wait(NULL);
+	{
+		waitpid(pid, &status, 0);
+		if (((status >> 8) & 0xFF) == 130)
+		{
+			msh->status = 130;
+			ft_putendl_fd("Exit", 1);
+			return (-1);
+		}
+	}
+	return (0);
 }
 
 static void	heredoc_proccess(char *eof, t_msh *msh, int fd[2], bool expand)
@@ -68,9 +78,10 @@ static void	heredoc_proccess(char *eof, t_msh *msh, int fd[2], bool expand)
 	exit(EXIT_SUCCESS);
 }
 
-static void	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
+static int	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 {
 	pid_t	pid;
+	int		status;
 
 	if (pipe(fd) == -1)
 		perror("pipe");
@@ -78,20 +89,34 @@ static void	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 	signal(SIGINT, reset_sig);
 	if (pid == 0)
 		heredoc_proccess(eof, msh, fd, expand);
+	init_signal();
 	close(fd[1]);
-	wait(NULL);
+	waitpid(pid, &status, 0);
+	if (((status >> 8) & 0xFF) == 130)
+	{
+		msh->status = 130;
+		ft_putendl_fd("Exit", 1);
+		return (-1);
+	}
+	return (0);
 }
 
-static void	heredoc(t_redir *list, t_msh *msh)
+static int	heredoc(t_redir *list, t_msh *msh)
 {
 	if (!list->is_last)
-		fake_heredoc(list->filename, msh);
+	{
+		if (fake_heredoc(list->filename, msh) == -1)
+			return (-1);
+	}
 	else
-		real_heredoc(list->filename, msh, list->heredoc_fd, list->expand);
-	init_signal();
+	{
+		if (real_heredoc(list->filename, msh, list->heredoc_fd, list->expand))
+			return (-1);
+	}
+	return (0);
 }
 
-void	check_heredoc(t_msh	*msh)
+int	check_heredoc(t_msh	*msh)
 {
 	t_cmd	*cmd;
 	t_redir	*list;
@@ -105,10 +130,12 @@ void	check_heredoc(t_msh	*msh)
 			while (list)
 			{
 				if (list->type == HEREDOC)
-					heredoc(list, msh);
+					if (heredoc(list, msh) == -1)
+						return (-1);
 				list = list->next;
 			}
 		}
 		cmd = cmd->next;
 	}
+	return (0);
 }

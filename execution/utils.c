@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 14:25:50 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 08:20:53 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,13 @@ int	ft_strlen_argv(t_cmd *cmds)
 
 void	ft_wait(t_ppx *pipex, int *status)
 {
-	int	i;
+	int		i;
+	t_msh	*msh;
 
 	i = 0;
+	msh = get_msh(1, NULL);
 	waitpid(pipex->pid, status, 0);
+	msh->status = (*status >> 8) & 0xFF;
 	while (i < pipex->nb_cmd)
 	{
 		wait(NULL);

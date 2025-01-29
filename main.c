@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/28 08:54:59 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 09:20:11 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ static void	msh_process(char *input, t_msh *msh, char **envp)
 		expand_variables(OUTFILE, msh->cmds, msh->env);
 		remove_quotes(msh);
 		build_redir_list(msh);
-		check_heredoc(msh);
+		if (check_heredoc(msh) == -1)
+		{
+			clean_all(msh);
+			return ;
+		}
 		build_argv(msh);
 		envp = get_env_arr(msh->env);
 		get_arr(0, envp);

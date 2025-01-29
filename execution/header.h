@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/28 09:31:17 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 09:53:35 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void	ft_open_file(t_cmd *ptr_cmds, t_ppx *pipex, int *input, int *output);
 void	print_env(t_var_env *env, int fd);
 void	execute_env(t_cmd *cmds, t_var_env *env);
 void	execute_unset(t_cmd *cmds);
+t_ppx	*get_pipex(int i, t_ppx *pipex);
 #endif

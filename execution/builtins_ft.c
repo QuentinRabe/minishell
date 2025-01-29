@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/29 09:26:10 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 10:36:29 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,42 @@
 
 void	execute_cd(char **command)
 {
+	char	*dir;
+	t_msh	*msh;
+
+	msh = get_msh(1, NULL);
 	if (command[1] == NULL || strcmp(command[1], "~") == 0)
-		chdir(getenv("HOME"));
+	{
+		dir = get_env(msh->env, "HOME");
+		chdir(dir);
+		free(dir);
+	}
 	else if (chdir(command[1]) == -1)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", 2);
 		ft_putstr_fd(command[1], 2);
 		write(1, "\n", 1);
+		msh->status = 127;
 	}
 }
 
 void	execute_pwd(t_cmd *cmds, int fd)
 {
 	char	cwd[1024];
+	t_msh	*msh;
 
+	msh = get_msh(1, NULL);
 	if (fd < 0)
 	{
 		fd = 1;
 		ft_redir_fd(cmds, 0, &fd);
 	}
 	if (cmds->argv[1] != NULL)
-		ft_putendl_fd("clear: too many arguments", 2);
+	{
+		ft_putendl_fd("pwd: too many arguments", 2);
+		msh->status = 1;
+		return ;
+	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		ft_putendl_fd(cwd, fd);
 	else

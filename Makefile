@@ -69,5 +69,5 @@ fclean	:	clean
 		@sleep 0.5
 
 msh_val	:	all
-		@valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+		@valgrind --suppressions=readline.supp --track-fds=yes --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
 re		:	fclean all

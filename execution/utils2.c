@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:11:16 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/27 14:09:01 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 10:06:06 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ int	ft_herdoc(t_cmd *ptr_cmds, char **env)
 		{
 			dup2(redir->heredoc_fd[0], STDIN_FILENO);
 			dup2(redir->heredoc_fd[1], STDOUT_FILENO);
-			close(redir->heredoc_fd[0]);
-			close(redir->heredoc_fd[1]);
+			if (redir->heredoc_fd[0] != -1)
+				close(redir->heredoc_fd[0]);
+			if (redir->heredoc_fd[1] != -1)
+				close(redir->heredoc_fd[1]);
 			execute(ptr_cmds, env);
 			return (1);
 		}

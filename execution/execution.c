@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:08 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/29 08:17:23 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/29 10:27:40 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	init_pipex(t_ppx *pipex, t_cmd	*cmds)
 		if (pipex->fd == NULL)
 			exit(1);
 	}
-	//pipex->pid = (pid_t *)malloc(sizeof(pid_t) * pipex->nb_cmd);
 }
 
 int	**create_pipe(t_ppx *pipex)
@@ -103,12 +102,22 @@ void	config_sig(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
+t_ppx	*get_pipex(int i, t_ppx *pipex)
+{
+	static t_ppx	*ptr;
+
+	if (i == 0)
+		ptr = pipex;
+	return (ptr);
+}
+
 int	ft_execution(t_msh *msh, char **env)
 {
 	t_cmd	*ptr_cmds;
 	t_ppx	pipex;
 	int		status;
 
+	get_pipex(0, &pipex);
 	ptr_cmds = msh->cmds;
 	init_pipex(&pipex, msh->cmds);
 	pipex.fd = create_pipe(&pipex);
@@ -120,7 +129,7 @@ int	ft_execution(t_msh *msh, char **env)
 		{
 			config_sig();
 			child_first_process(msh, ptr_cmds, &pipex, env);
-			exit(status);
+			exit(0);
 		}
 		pipex.idx++;
 		ptr_cmds = ptr_cmds->next;

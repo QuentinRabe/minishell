@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:11:16 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/29 10:06:06 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:42:54 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,24 @@ void	ft_redir_fd(t_cmd *ptr_cmds, int *input, int *output)
 	while (redir)
 	{
 		if (redir->type == REDIR_IN)
-			*input = open(redir->filename, O_RDONLY);
-		else if (redir->type == APPEND)
-			*output = open(redir->filename, O_RDWR | O_APPEND | O_CREAT, 0777);
-		else if (redir->type == TRUNC)
-			*output = open(redir->filename, O_WRONLY | O_TRUNC | O_CREAT, 0777);
-		redir = redir->next;
-		if (redir)
 		{
-			if (redir->type == REDIR_IN)
+			if (*input >= 0)
 				close(*input);
-			if (redir->type == APPEND || redir->type == TRUNC)
-				close(*output);
+			*input = open(redir->filename, O_RDONLY);
 		}
+		else if (redir->type == APPEND)
+		{
+			if (*output >= 0)
+				close(*output);
+			*output = open(redir->filename, O_RDWR | O_APPEND | O_CREAT, 0777);
+		}
+		else if (redir->type == TRUNC)
+		{
+			if (*output >= 0)
+				close(*output);
+			*output = open(redir->filename, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+		}
+		redir = redir->next;
 	}
 }
 

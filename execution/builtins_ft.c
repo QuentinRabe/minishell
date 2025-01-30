@@ -6,17 +6,19 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/29 10:36:29 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:26:12 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	execute_cd(char **command)
+int	execute_cd(char **command)
 {
 	char	*dir;
 	t_msh	*msh;
+	t_ppx	*pipex;
 
+	pipex = get_pipex(1, NULL);
 	msh = get_msh(1, NULL);
 	if (command[1] == NULL || strcmp(command[1], "~") == 0)
 	{
@@ -29,16 +31,19 @@ void	execute_cd(char **command)
 		ft_putstr_fd("cd: no such file or directory: ", 2);
 		ft_putstr_fd(command[1], 2);
 		write(1, "\n", 1);
-		msh->status = 127;
+		if (pipex && pipex->nb_cmd != 1)
+			exit(1);
+		return (1);
 	}
+	return (0);
 }
 
-void	execute_pwd(t_cmd *cmds, int fd)
+int	execute_pwd(t_cmd *cmds, int fd)
 {
 	char	cwd[1024];
-	t_msh	*msh;
+	t_ppx	*pipex;
 
-	msh = get_msh(1, NULL);
+	pipex = get_pipex(1, NULL);
 	if (fd < 0)
 	{
 		fd = 1;
@@ -47,13 +52,15 @@ void	execute_pwd(t_cmd *cmds, int fd)
 	if (cmds->argv[1] != NULL)
 	{
 		ft_putendl_fd("pwd: too many arguments", 2);
-		msh->status = 1;
-		return ;
+		if (pipex && pipex->nb_cmd != 1)
+			exit(1);
+		return (1);
 	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		ft_putendl_fd(cwd, fd);
 	else
 		perror("pwd");
+	return (0);
 }
 
 void	ft_exit(char **argv, int fd)
@@ -61,12 +68,21 @@ void	ft_exit(char **argv, int fd)
 	if (fd < 0)
 		fd = 1;
 	ft_putendl_fd("exit", fd);
-	if (argv[1] != NULL)
+	if (argv[2] != NULL)
+	{
+		ft_putstr_fd("msh: ", 2);
+		ft_putendl_fd("exit : too many argument", 2);
+		exit(1);
+	}
+	else if (argv[1] && !is_only(DIGITS, argv[1]))
 	{
 		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(argv[1], 2);
 		ft_putendl_fd(" : numeric argument required", 2);
+		exit(2);
 	}
+	else if (argv[1] && is_only(DIGITS, argv[1]))
+		exit(ft_atoi(argv[1]) % 256);
 	exit(0);
 }
 

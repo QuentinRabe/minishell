@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/29 08:20:53 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:56:36 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,32 @@ void	ft_wait(t_ppx *pipex, int *status)
 		wait(NULL);
 		i++;
 	}
+}
+
+bool	is_only(char *set, char *str)
+{
+	int		i;
+	int		j;
+	size_t	count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		j = 0;
+		while (set[j])
+		{
+			if (str[i] == set[j])
+			{
+				count++;
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (count == ft_strlen(str))
+		return (true);
+	else
+		return (false);
 }

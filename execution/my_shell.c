@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/29 08:03:24 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:26:34 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int	minishell(t_msh *msh, char **env)
 	if (size == 1 && ft_strcmp(msh->cmds->argv[0], "exit") == 0)
 		ft_exit(msh->cmds->argv, -1);
 	else if (size == 1 && ft_strcmp(msh->cmds->argv[0], "cd") == 0)
-		execute_cd(msh->cmds->argv);
+		msh->status = execute_cd(msh->cmds->argv);
 	else if (size == 1 && ft_strcmp(msh->cmds->argv[0], "pwd") == 0)
-		execute_pwd(msh->cmds, -1);
+		msh->status = execute_pwd(msh->cmds, -1);
 	else if (size == 1 && ft_strcmp(msh->cmds->argv[0], "echo") == 0)
 		execute_echo(msh->cmds, -1);
 	else if (size == 1 && ft_strcmp(msh->cmds->argv[0], "export") == 0)

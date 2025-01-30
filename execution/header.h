@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/29 09:53:35 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:26:19 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include <readline/readline.h>
 
 void	ft_exit(char **argv, int fd);
-void	execute_pwd(t_cmd *cmds, int fd);
-void	execute_cd(char **command);
+int		execute_pwd(t_cmd *cmds, int fd);
+int		execute_cd(char **command);
 void	execute_echo(t_cmd *cmds, int fd);
 void	execute_export(t_msh *msh, int fd);
 

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:28:20 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/19 09:04:39 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:29:51 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,10 @@ bool	has_obvious_syntax_error(char *str)
 {
 	char	*trim;
 	bool	result;
+	t_msh	*msh;
 
 	result = false;
+	msh = get_msh(1, NULL);
 	if (ft_strlen(str))
 	{
 		trim = ft_strtrim(str, SPACES);
@@ -99,6 +101,7 @@ bool	has_obvious_syntax_error(char *str)
 			|| has_consecutive_opps_arrows(trim)
 			|| has_redir_without_filname(trim))
 		{
+			msh->status = 2;
 			add_history(str);
 			result = !result;
 		}

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/28 08:54:39 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:57:08 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define DATA_H
 # define SPACES "\t\n\v\f\r "
 # define PIPENCO ">|<"
+# define DIGITS "0123456789"
 
 typedef struct s_var_env	t_var_env;
 typedef struct s_token		t_token;

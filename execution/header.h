@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 11:26:19 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:44:40 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 void	ft_exit(char **argv, int fd);
 int		execute_pwd(t_cmd *cmds, int fd);
 int		execute_cd(char **command);
-void	execute_echo(t_cmd *cmds, int fd);
-void	execute_export(t_msh *msh, int fd);
+int		execute_echo(t_cmd *cmds, int fd);
+int		execute_export(t_cmd *cmd, int fd);
 
 int		ft_builtins(t_msh *msh, t_cmd *ptr_cmd, char **env, int fd);
 int		minishell(t_msh *msh, char **env);
@@ -42,7 +42,7 @@ int		ft_execution(t_msh *msh, char **env);
 int		execute(t_cmd *ptr_cmds, char **arge);
 char	*find_path(char *cmd, char **arge);
 
-void	close_pipe(t_ppx *pipex);
+int	close_pipe(t_ppx *pipex);
 void	cleanup_pipex(t_ppx *pipex);
 void	free_array(int **array, int rows);
 void	close_unused_pipes(t_ppx *pipex, int idx);
@@ -59,4 +59,5 @@ void	print_env(t_var_env *env, int fd);
 void	execute_env(t_cmd *cmds, t_var_env *env);
 void	execute_unset(t_cmd *cmds);
 t_ppx	*get_pipex(int i, t_ppx *pipex);
+void	free_child(void);
 #endif

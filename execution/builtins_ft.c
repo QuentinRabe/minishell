@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 11:26:12 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:52:37 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int	execute_cd(char **command)
 	else if (chdir(command[1]) == -1)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putstr_fd(command[1], 2);
-		write(1, "\n", 1);
+		ft_putendl_fd(command[1], 2);
 		if (pipex && pipex->nb_cmd != 1)
 			exit(1);
 		return (1);
@@ -68,7 +67,7 @@ void	ft_exit(char **argv, int fd)
 	if (fd < 0)
 		fd = 1;
 	ft_putendl_fd("exit", fd);
-	if (argv[2] != NULL)
+	if (argv[1] && argv[2])
 	{
 		ft_putstr_fd("msh: ", 2);
 		ft_putendl_fd("exit : too many argument", 2);
@@ -86,12 +85,11 @@ void	ft_exit(char **argv, int fd)
 	exit(0);
 }
 
-void	execute_echo(t_cmd *cmds, int fd)
+int	execute_echo(t_cmd *cmds, int fd)
 {
 	char	**cmd;
 	int		line;
 	int		idx;
-	t_msh	*msh;
 
 	idx = 0;
 	line = 1;
@@ -110,6 +108,5 @@ void	execute_echo(t_cmd *cmds, int fd)
 	}
 	if (line == 1)
 		write(fd, "\n", 1);
-	msh = get_msh(1, NULL);
-	msh->status = 0;
+	return (0);
 }

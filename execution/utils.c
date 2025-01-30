@@ -6,11 +6,22 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 10:56:36 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:32:18 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+void	free_child(void)
+{
+	t_msh	*msh;
+	t_ppx	*pipex;
+
+	msh = get_msh(1, NULL);
+	pipex = get_pipex(1, NULL);
+	cleanup_pipex(pipex);
+	free_everything(msh);
+}
 
 int	ft_strlen_argv(t_cmd *cmds)
 {

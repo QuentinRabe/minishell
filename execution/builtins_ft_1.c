@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/27 14:11:13 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:44:25 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,24 +92,31 @@ char	*var_name(char *str)
 	return (name);
 }
 
-void	export_process(char **argv, t_var_env *env, t_var_env *exp)
+bool	export_process(char **argv, t_var_env *env, t_var_env *exp)
 {
 	char	*key;
 	char	*value;
 	int	i;
+	bool	error;
 
 	i = 0;
+	error = false;
 	while (argv[++i])
 	{
 		key = var_name(argv[i]);
 		if (!key)
+		{
+			if (!error)
+				error = true;
 			continue ;
+		}
 		value = var_value(argv[i]);
 		if (value)
 			add_new_env(env, key, value);
 		else
 			add_new_env(exp, key, NULL);
 	}
+	return (error);
 }
 
 void	print_env(t_var_env *env, int fd)
@@ -123,19 +130,35 @@ void	print_env(t_var_env *env, int fd)
 	}
 }
 
-void	execute_export(t_msh *msh, int fd)
+int	execute_export(t_cmd *cmd, int fd)
 {
+	bool	error;
+	t_ppx	*pipex;
+	t_msh	*msh;
+
+	error = false;
+	pipex = get_pipex(1, NULL);
+	msh = get_msh(1, NULL);
 	if (fd < 0)
 	{
 		fd = 1;
-		ft_redir_fd(msh->cmds, 0, &fd);
+		ft_redir_fd(cmd, 0, &fd);
 	}
-	if (!msh->cmds->argv[1])
+	if (!cmd->argv[1])
 	{
 		print_env(msh->exp, fd);
 		if (fd != 1)
 			close(fd);
 	}
 	else
-		export_process(msh->cmds->argv, msh->env, msh->exp);
+		error = export_process(cmd->argv, msh->env, msh->exp);
+	if (error && pipex && pipex->nb_cmd != 1)
+	{
+		printf("FREE\n");
+		free_child();
+		exit(1);
+	}
+	if (error)
+		return (1);
+	return (0);
 }

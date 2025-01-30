@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 10:28:20 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/30 11:29:51 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:09:57 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ bool	has_obvious_syntax_error(char *str)
 	bool	result;
 	t_msh	*msh;
 
+	if (is_only(SPACES, str))
+		return (true);
 	result = false;
 	msh = get_msh(1, NULL);
 	if (ft_strlen(str))

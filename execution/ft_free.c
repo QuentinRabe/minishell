@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:05:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/28 07:58:29 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:27:10 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	cleanup_pipex(t_ppx *pipex)
 		free_array(pipex->fd, pipex->nb_cmd - 1);
 }
 
-void	close_pipe(t_ppx *pipex)
+int	close_pipe(t_ppx *pipex)
 {
 	int	i;
 
@@ -57,4 +57,5 @@ void	close_pipe(t_ppx *pipex)
 		close(pipex->fd[i][0]);
 		i++;
 	}
+	return (1);
 }

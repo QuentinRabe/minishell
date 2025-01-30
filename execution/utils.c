@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 12:32:18 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:55:59 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ void	free_child(void)
 
 	msh = get_msh(1, NULL);
 	pipex = get_pipex(1, NULL);
-	cleanup_pipex(pipex);
-	free_everything(msh);
+	if (ft_strlen_argv(msh->cmds) != 1)
+	{
+		close_pipe(pipex);
+		cleanup_pipex(pipex);
+		free_everything(msh);
+	}
 }
 
 int	ft_strlen_argv(t_cmd *cmds)
@@ -81,4 +85,17 @@ bool	is_only(char *set, char *str)
 		return (true);
 	else
 		return (false);
+}
+
+void	child_exit_process(t_ppx *pipex, int status)
+{
+	t_msh	*msh;
+
+	(void) pipex;
+	msh = get_msh(1, NULL);
+	if (ft_strlen_argv(msh->cmds) != 1)
+	{
+		free_child();
+		exit(status);
+	}
 }

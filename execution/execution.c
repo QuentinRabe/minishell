@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:08 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 12:48:09 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:43:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ void	child_first_process(t_msh *msh, t_cmd *ptr_cmds, t_ppx *pipex, char **env)
 		close(output);
 	close_unused_pipes(pipex, pipex->idx);
 	if (ft_builtins(msh, ptr_cmds, env, STDOUT_FILENO))
-	{
-		close_pipe(pipex);
 		return ;
-	}
 	execute(ptr_cmds, env);
 }
 
@@ -47,7 +44,7 @@ int	**allocate_array(int rows, int cols)
 	int	i;
 
 	i = 0;
-	array = (int **)malloc(sizeof(int *) * rows + 1);
+	array = (int **)malloc(sizeof(int *) * (rows + 1));
 	if (array == NULL)
 	{
 		perror("Erreur d'allocation pour les lignes");

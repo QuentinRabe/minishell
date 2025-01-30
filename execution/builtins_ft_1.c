@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/30 12:44:25 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:35:58 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,11 @@ int	execute_export(t_cmd *cmd, int fd)
 	}
 	else
 		error = export_process(cmd->argv, msh->env, msh->exp);
-	if (error && pipex && pipex->nb_cmd != 1)
-	{
-		printf("FREE\n");
-		free_child();
-		exit(1);
-	}
 	if (error)
+	{
+		child_exit_process(pipex, 1);
 		return (1);
+	}
+	child_exit_process(pipex, 0);
 	return (0);
 }

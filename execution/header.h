@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 12:44:40 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:28:29 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ int		ft_herdoc(t_cmd *ptr_cmds, char **env);
 void	ft_open_file(t_cmd *ptr_cmds, t_ppx *pipex, int *input, int *output);
 
 void	print_env(t_var_env *env, int fd);
-void	execute_env(t_cmd *cmds, t_var_env *env);
-void	execute_unset(t_cmd *cmds);
+int		execute_env(t_cmd *cmds, t_var_env *env);
+int		execute_unset(t_cmd *cmds);
 t_ppx	*get_pipex(int i, t_ppx *pipex);
 void	free_child(void);
+void	child_exit_process(t_ppx *pipex, int status);
 #endif

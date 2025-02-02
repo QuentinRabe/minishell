@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:24:11 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/02 09:17:08 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:46:49 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int	remove_var(t_var_env *env, char *key)
 	{
 		if (!ft_strcmp(env->key, key))
 		{
-			printf("Yo\n");
 			tmp = env->next;
 			free(env->key);
 			free(env->value);
@@ -39,10 +38,15 @@ static int	remove_var(t_var_env *env, char *key)
 static void	unset_process(char **argv, t_var_env *env)
 {
 	int			i;
+	t_msh		*msh;
 
 	i = 0;
+	msh = get_msh(1, NULL);
 	while (argv[++i])
+	{
 		remove_var(env, argv[i]);
+		remove_var(msh->exp, argv[i]);
+	}
 }
 
 int	execute_unset(t_cmd *cmds)

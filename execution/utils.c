@@ -6,26 +6,11 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 13:55:59 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/02 08:07:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-void	free_child(void)
-{
-	t_msh	*msh;
-	t_ppx	*pipex;
-
-	msh = get_msh(1, NULL);
-	pipex = get_pipex(1, NULL);
-	if (ft_strlen_argv(msh->cmds) != 1)
-	{
-		close_pipe(pipex);
-		cleanup_pipex(pipex);
-		free_everything(msh);
-	}
-}
 
 int	ft_strlen_argv(t_cmd *cmds)
 {
@@ -97,5 +82,39 @@ void	child_exit_process(t_ppx *pipex, int status)
 	{
 		free_child();
 		exit(status);
+	}
+	else if (ft_strlen_argv(msh->cmds) == 1)
+	{
+		if (ft_strcmp(msh->cmds->argv[0], "exit") == 0)
+		{
+			free_everything(msh);
+			if (msh->cmds->argv[2] == NULL)
+				exit(status);
+		}
+	}
+}
+
+void	ft_redir_out(t_cmd *ptr_cmds, int *output)
+{
+	t_redir		*redir;
+
+	redir = ptr_cmds->redir_list;
+	while (redir)
+	{
+		if (redir->type == APPEND)
+		{
+			if (*output >= 0)
+				close(*output);
+			*output = open(redir->filename, O_RDWR | O_APPEND | O_CREAT, 0644);
+		}
+		else if (redir->type == TRUNC)
+		{
+			if (*output >= 0)
+				close(*output);
+			*output = open(redir->filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		}
+		if ((redir->type == APPEND || redir->type == TRUNC) && *output < 0)
+			ft_error("Permission denied: ", redir->filename, 1);
+		redir = redir->next;
 	}
 }

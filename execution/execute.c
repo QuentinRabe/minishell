@@ -57,8 +57,8 @@ char	*find_path(char *cmd, char **arge)
 	if (!arge[i])
 		return (NULL);
 	paths = ft_split(arge[i] + 5, ':');
-	i = 0;
-	while (paths[i])
+	i = -1;
+	while (paths[++i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(part_path, cmd);
@@ -66,7 +66,6 @@ char	*find_path(char *cmd, char **arge)
 		if (access(path, F_OK) == 0)
 			return (path);
 		free(path);
-		i++;
 	}
 	free_argv(paths);
 	return (NULL);

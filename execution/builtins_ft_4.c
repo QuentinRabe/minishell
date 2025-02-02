@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_ft_3.c                                    :+:      :+:    :+:   */
+/*   builtins_ft_4.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 09:24:11 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/02 09:17:08 by arabefam         ###   ########.fr       */
+/*   Created: 2025/02/02 08:56:18 by arabefam          #+#    #+#             */
+/*   Updated: 2025/02/02 09:26:44 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static int	remove_var(t_var_env *env, char *key)
+bool	export_valid_varname(char *name)
+{
+	int	i;
+
+	i = 1;
+	while (name[i])
+	{
+		if(!ft_isalnum(name[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+int	remove_var_exp(t_var_env *env, char *key, char *value)
 {
 	t_var_env	*tmp;
 	t_var_env	*prev;
 
 	while (env)
 	{
-		if (!ft_strcmp(env->key, key))
+		if (!ft_strcmp(env->key, key) && value)
 		{
-			printf("Yo\n");
 			tmp = env->next;
 			free(env->key);
 			free(env->value);
@@ -33,33 +46,5 @@ static int	remove_var(t_var_env *env, char *key)
 		prev = env;
 		env = env->next;
 	}
-	return (0);
-}
-
-static void	unset_process(char **argv, t_var_env *env)
-{
-	int			i;
-
-	i = 0;
-	while (argv[++i])
-		remove_var(env, argv[i]);
-}
-
-int	execute_unset(t_cmd *cmds)
-{
-	t_msh	*msh;
-	t_ppx	*pipex;
-
-	pipex = get_pipex(1, NULL);
-	msh = get_msh(1, NULL);
-	if (!cmds->argv[1])
-	{
-		ft_putendl_fd("msh: not enough arguments", 2);
-		child_exit_process(pipex, 1);
-		return (1);
-	}
-	else
-		unset_process(cmds->argv, msh->env);
-	child_exit_process(pipex, 0);
 	return (0);
 }

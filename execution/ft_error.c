@@ -26,7 +26,28 @@ int	ft_error(char *msg, char *cause, int stat)
 		write (2, cause, len);
 	write (2, "\n", 2);
 	pipex = get_pipex(1, NULL);
+	close_pipe(pipex);
 	cleanup_pipex(pipex);
 	free_everything(get_msh(1, NULL));
 	exit (stat);
+}
+
+void	sig_handle(int sig)
+{
+	(void) sig;
+}
+
+void	config_sig(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+t_ppx	*get_pipex(int i, t_ppx *pipex)
+{
+	static t_ppx	*ptr;
+
+	if (i == 0)
+		ptr = pipex;
+	return (ptr);
 }

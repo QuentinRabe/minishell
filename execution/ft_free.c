@@ -12,6 +12,21 @@
 
 #include "header.h"
 
+void	free_child(void)
+{
+	t_msh	*msh;
+	t_ppx	*pipex;
+
+	msh = get_msh(1, NULL);
+	pipex = get_pipex(1, NULL);
+	if (ft_strlen_argv(msh->cmds) != 1)
+	{
+		close_pipe(pipex);
+		cleanup_pipex(pipex);
+		free_everything(msh);
+	}
+}
+
 void	free_array(int **array, int rows)
 {
 	int	i;
@@ -53,8 +68,10 @@ int	close_pipe(t_ppx *pipex)
 	i = 0;
 	while (i < pipex->nb_cmd - 1)
 	{
-		close(pipex->fd[i][1]);
-		close(pipex->fd[i][0]);
+		if (pipex->fd[i][1] >= 0)
+			close(pipex->fd[i][1]);
+		if (pipex->fd[i][0] >= 0)
+			close(pipex->fd[i][0]);
 		i++;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/29 09:20:11 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 14:16:46 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	main(int ac, char **av, char **env)
 	get_msh(0, &msh);
 	(void) ac,
 	(void) av;
-	(void) env;
 	while (1)
 	{
 		init_signal();

@@ -12,7 +12,8 @@
 
 #include "header.h"
 
-void	child_first_process(t_msh *msh, t_cmd *ptr_cmds, t_ppx *pipex, char **env)
+void	child_first_process(t_msh *msh, t_cmd *ptr_cmds \
+, t_ppx *pipex, char **env)
 {
 	int	input;
 	int	output;
@@ -90,26 +91,6 @@ int	**create_pipe(t_ppx *pipex)
 	}
 	return (pipex->fd);
 }
-void	sig_handle(int sig)
-{
-	(void) sig;
-}
-
-
-void	config_sig(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
-
-t_ppx	*get_pipex(int i, t_ppx *pipex)
-{
-	static t_ppx	*ptr;
-
-	if (i == 0)
-		ptr = pipex;
-	return (ptr);
-}
 
 int	ft_execution(t_msh *msh, char **env)
 {
@@ -124,8 +105,8 @@ int	ft_execution(t_msh *msh, char **env)
 	signal(SIGINT, sig_handle);
 	while (ptr_cmds)
 	{
-		pipex.pid/*[pipex.idx]*/ = fork();
-		if (pipex.pid/*[pipex.idx]*/ == 0)
+		pipex.pid = fork();
+		if (pipex.pid == 0)
 		{
 			config_sig();
 			child_first_process(msh, ptr_cmds, &pipex, env);

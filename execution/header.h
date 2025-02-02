@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 13:28:29 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:23:45 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,20 @@ int		ft_execution(t_msh *msh, char **env);
 int		execute(t_cmd *ptr_cmds, char **arge);
 char	*find_path(char *cmd, char **arge);
 
-int	close_pipe(t_ppx *pipex);
+int		close_pipe(t_ppx *pipex);
 void	cleanup_pipex(t_ppx *pipex);
 void	free_array(int **array, int rows);
 void	close_unused_pipes(t_ppx *pipex, int idx);
 
 int		ft_error(char *msg, char *cause, int stat);
+void	sig_handle(int sig);
+void	config_sig(void);
+t_ppx	*get_pipex(int i, t_ppx *pipex);
 
 int		ft_check(char *command);
 int		ft_valid_option(char **command, int *idx);
-void	ft_redir_fd(t_cmd *ptr_cmds, int *input, int *output);
+void	ft_redir_in(t_cmd *ptr_cmd, int *input);
+void	ft_redir_out(t_cmd *ptr_cmd, int *output);
 int		ft_herdoc(t_cmd *ptr_cmds, char **env);
 void	ft_open_file(t_cmd *ptr_cmds, t_ppx *pipex, int *input, int *output);
 
@@ -61,4 +65,6 @@ int		execute_unset(t_cmd *cmds);
 t_ppx	*get_pipex(int i, t_ppx *pipex);
 void	free_child(void);
 void	child_exit_process(t_ppx *pipex, int status);
+int		remove_var_exp(t_var_env *env, char *key, char *value);
+bool	export_valid_varname(char *name);
 #endif

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/30 13:35:58 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:25:16 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void	add_new_env(t_var_env *env, char *key, char *value)
 		return ;
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(value);
-	free(key);
-	free(value);
 	new->next = NULL;
 	last->next = new;
 }
@@ -74,14 +72,17 @@ char	*var_value(char *str)
 	return (NULL);
 }
 
-char	*var_name(char *str)
+char	*var_name(char *str, bool *eq)
 {
 	char	*name;
 	int		len;
 
 	len = ft_strlen_set(str, '=');
+	if (str[len] && str[len] == '=')
+		*eq = true;
 	name = ft_substr(str, 0, len);
-	if (!ft_isalpha(name[0]) && name[0] != '_')
+	if ((!ft_isalpha(name[0]) && name[0] != '_')
+		|| !export_valid_varname(name))
 	{
 		ft_putstr_fd("msh: export: `", 2);
 		ft_putstr_fd(name, 2);
@@ -96,25 +97,31 @@ bool	export_process(char **argv, t_var_env *env, t_var_env *exp)
 {
 	char	*key;
 	char	*value;
-	int	i;
+	int		i;
 	bool	error;
+	bool	eq;
+	int		rm;
 
 	i = 0;
 	error = false;
 	while (argv[++i])
 	{
-		key = var_name(argv[i]);
-		if (!key)
+		eq = false;
+		key = var_name(argv[i], &eq);
+		if (!key && !eq)
 		{
 			if (!error)
 				error = true;
 			continue ;
 		}
 		value = var_value(argv[i]);
-		if (value)
+		rm = remove_var_exp(exp, key, value);
+		if (value || (!value && eq))
 			add_new_env(env, key, value);
-		else
+		if (!value && !rm)
 			add_new_env(exp, key, NULL);
+		free(key);
+		free(value);
 	}
 	return (error);
 }
@@ -142,7 +149,7 @@ int	execute_export(t_cmd *cmd, int fd)
 	if (fd < 0)
 	{
 		fd = 1;
-		ft_redir_fd(cmd, 0, &fd);
+		ft_redir_out(cmd, &fd);
 	}
 	if (!cmd->argv[1])
 	{

@@ -14,7 +14,7 @@
 
 int	execute_env(t_cmd *cmds, t_var_env *env)
 {
-	int	fd;
+	int		fd;
 	t_ppx	*pipex;
 
 	fd = 1;
@@ -25,7 +25,7 @@ int	execute_env(t_cmd *cmds, t_var_env *env)
 		child_exit_process(pipex, 2);
 		return (1);
 	}
-	ft_redir_fd(cmds, 0, &fd);
+	ft_redir_out(cmds, &fd);
 	print_env(env, fd);
 	if (fd != 1)
 		close(fd);

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 13:41:32 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/01/30 14:06:35 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	execute_pwd(t_cmd *cmds, int fd)
 	if (fd < 0)
 	{
 		fd = 1;
-		ft_redir_fd(cmds, 0, &fd);
+		ft_redir_out(cmds, &fd);
 	}
 	if (cmds->argv[1] != NULL)
 	{
@@ -57,7 +57,10 @@ int	execute_pwd(t_cmd *cmds, int fd)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		ft_putendl_fd(cwd, fd);
 	else
+	{
+		close_pipe(pipex);
 		perror("pwd");
+	}
 	child_exit_process(pipex, 0);
 	return (0);
 }
@@ -71,22 +74,21 @@ void	ft_exit(char **argv, int fd)
 		fd = 1;
 	ft_putendl_fd("exit", fd);
 	if (argv[1] && argv[2])
+		ft_putendl_fd("msh: exit : too many argument", 2);
+	else
 	{
-		ft_putstr_fd("msh: ", 2);
-		ft_putendl_fd("exit : too many argument", 2);
-		child_exit_process(pipex, 1);
+		if (argv[1] && !is_only(DIGITS, argv[1]))
+		{
+			ft_putstr_fd("exit: ", 2);
+			ft_putstr_fd(argv[1], 2);
+			ft_putendl_fd(" : numeric argument required", 2);
+			child_exit_process(pipex, 2);
+		}
+		else if (argv[1] && is_only(DIGITS, argv[1]))
+			child_exit_process(pipex, ft_atoi(argv[1]) % 256);
+		child_exit_process(pipex, 0);
+		exit(0);
 	}
-	else if (argv[1] && !is_only(DIGITS, argv[1]))
-	{
-		ft_putstr_fd("exit: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putendl_fd(" : numeric argument required", 2);
-		child_exit_process(pipex, 2);
-	}
-	else if (argv[1] && is_only(DIGITS, argv[1]))
-		child_exit_process(pipex, ft_atoi(argv[1]) % 256);
-	child_exit_process(pipex, 0);
-	exit(0);
 }
 
 int	execute_echo(t_cmd *cmds, int fd)
@@ -101,7 +103,7 @@ int	execute_echo(t_cmd *cmds, int fd)
 	if (fd < 0)
 	{
 		fd = 1;
-		ft_redir_fd(cmds, 0, &fd);
+		ft_redir_out(cmds, &fd);
 	}
 	if (ft_valid_option(cmd, &idx) == 1)
 		line = 0;

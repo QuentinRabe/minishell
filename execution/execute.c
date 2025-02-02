@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/02 09:41:59 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/02 10:04:19 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,26 @@ int	check_absolute_path(char *path, char **cmd)
 	return (1);
 }
 
+char	*check_in_cwd(char *cmd)
+{
+	t_msh	*msh;
+	char	*cwd;
+	char	*path;
+	char	*tmp;
+
+	msh = get_msh(1, NULL);
+	cwd = get_env(msh->env, "PWD");
+	if (cwd)
+	{
+		path = ft_strjoin(cwd, "/");
+		tmp = ft_strdup(path);
+		free(path);
+		path = ft_strjoin(tmp, cmd);
+		if (access(path, F_OK) == 0)
+			return (free(cwd), free(tmp), path);
+	}
+	return (free(cwd), free(tmp), free(path), NULL);
+}
 
 char	*find_path(char *cmd, char **arge)
 {
@@ -61,10 +81,14 @@ char	*find_path(char *cmd, char **arge)
 	char	**paths;
 	char	*path;
 	char	*part_path;
+	char	*cwd;
 
 	i = 0;
 	if (!cmd || !cmd[0])
 		return (NULL);
+	cwd = check_in_cwd(cmd);
+	if (cwd)
+		return (cwd);
 	while (arge[i] && ft_strnstr(arge[i], "PATH", 4) == 0)
 		i++;
 	if (!arge[i])

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/28 09:37:46 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:34:28 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,24 @@ char	*get_cmd(char *path)
 	return (result);
 }
 
+int is_directory(const char *path) {
+	struct stat path_stat;
+
+	if (stat(path, &path_stat) != 0) {
+		perror("stat");
+		return 0;
+	}
+	return S_ISDIR(path_stat.st_mode);
+}
+
 int	check_absolute_path(char *path, char **cmd)
 {
 	if (is_in(path, '/', NULL))
 	{
 		if (access(path, F_OK) == 0)
 		{
+			if (is_directory(path))
+				return (-2);
 			*cmd = get_cmd(path);
 			return (0);
 		}
@@ -41,6 +53,7 @@ int	check_absolute_path(char *path, char **cmd)
 	}
 	return (1);
 }
+
 
 char	*find_path(char *cmd, char **arge)
 {
@@ -88,6 +101,8 @@ int	execute(t_cmd *ptr_cmds, char **arge)
 	}
 	else if (res == -1)
 		ft_error("no such file or directory: ", ptr_cmds->argv[0], 127);
+	else if (res == -2)
+		ft_error("is a directory: ", ptr_cmds->argv[0], 126);
 	else
 		path = find_path(ptr_cmds->argv[0], arge);
 	if (!path)

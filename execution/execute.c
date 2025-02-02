@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/02 09:34:28 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:41:59 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ int	execute(t_cmd *ptr_cmds, char **arge)
 		path = find_path(ptr_cmds->argv[0], arge);
 	if (!path)
 		ft_error("command not found: ", ptr_cmds->argv[0], 127);
+	else if (access(path, X_OK) != 0)
+	{
+		free(path);
+		ft_error("permission denied: ", ptr_cmds->argv[0], 126);
+	}
 	execve(path, ptr_cmds->argv, arge);
 	free_everything(get_msh(1, NULL));
 	exit (127);

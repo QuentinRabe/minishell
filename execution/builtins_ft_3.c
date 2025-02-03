@@ -52,18 +52,18 @@ static void	unset_process(char **argv, t_var_env *env)
 int	execute_unset(t_cmd *cmds)
 {
 	t_msh	*msh;
-	t_ppx	*pipex;
+	t_ppx	*data;
 
-	pipex = get_pipex(1, NULL);
+	data = get_data(1, NULL);
 	msh = get_msh(1, NULL);
 	if (!cmds->argv[1])
 	{
 		ft_putendl_fd("msh: not enough arguments", 2);
-		child_exit_process(pipex, 1);
+		child_exit_process(data, 1);
 		return (1);
 	}
 	else
 		unset_process(cmds->argv, msh->env);
-	child_exit_process(pipex, 0);
+	child_exit_process(data, 0);
 	return (0);
 }

@@ -16,7 +16,7 @@ int	ft_error(char *msg, char *cause, int stat)
 {
 	int		size;
 	int		len;
-	t_ppx	*pipex;
+	t_ppx	*data;
 
 	len = ft_strlen(cause);
 	size = ft_strlen(msg);
@@ -25,9 +25,9 @@ int	ft_error(char *msg, char *cause, int stat)
 	if (cause != NULL)
 		write (2, cause, len);
 	write (2, "\n", 2);
-	pipex = get_pipex(1, NULL);
-	close_pipe(pipex);
-	cleanup_pipex(pipex);
+	data = get_data(1, NULL);
+	close_pipe(data);
+	cleanup_data(data);
 	free_everything(get_msh(1, NULL));
 	exit (stat);
 }
@@ -43,11 +43,11 @@ void	config_sig(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
-t_ppx	*get_pipex(int i, t_ppx *pipex)
+t_ppx	*get_data(int i, t_ppx *data)
 {
 	static t_ppx	*ptr;
 
 	if (i == 0)
-		ptr = pipex;
+		ptr = data;
 	return (ptr);
 }

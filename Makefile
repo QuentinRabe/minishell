@@ -43,6 +43,7 @@ execution/builtins_ft_1.c\
 execution/execution.c\
 execution/ft_free.c\
 execution/utils2.c\
+execution/utils3.c\
 execution/ft_error.c\
 execution/builtins_ft_2.c\
 execution/builtins_ft.c\

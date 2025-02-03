@@ -142,17 +142,17 @@ void	print_env(t_var_env *env, int fd)
 int	execute_export(t_cmd *cmd, int fd)
 {
 	bool	error;
-	t_ppx	*pipex;
+	t_ppx	*data;
 	t_msh	*msh;
 
 	error = false;
-	pipex = get_pipex(1, NULL);
+	data = get_data(1, NULL);
 	msh = get_msh(1, NULL);
-	if (fd < 0)
+	/*if (fd < 0)
 	{
 		fd = 1;
 		ft_redir_out(cmd, &fd);
-	}
+	}*/
 	if (!cmd->argv[1])
 	{
 		print_env(msh->exp, fd);
@@ -163,9 +163,9 @@ int	execute_export(t_cmd *cmd, int fd)
 		error = export_process(cmd->argv, msh->env, msh->exp);
 	if (error)
 	{
-		child_exit_process(pipex, 1);
+		child_exit_process(data, 1);
 		return (1);
 	}
-	child_exit_process(pipex, 0);
+	child_exit_process(data, 0);
 	return (0);
 }

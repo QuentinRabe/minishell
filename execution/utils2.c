@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
+/*   By: rravelom <rravelom@student.42antanana      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/18 10:11:16 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 07:29:13 by arabefam         ###   ########.fr       */
+/*   Created: 2025/02/03 11:48:54 by rravelom          #+#    #+#             */
+/*   Updated: 2025/02/03 11:48:56 by rravelom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,49 +53,44 @@ int	ft_valid_option(char **command, int *idx)
 void	ft_redir_in(t_cmd *ptr_cmds, int *input)
 {
 	t_redir		*redir;
-	t_ppx		*pipex;
 
-	pipex = get_pipex(1, NULL);
 	redir = ptr_cmds->redir_list;
 	while (redir)
 	{
+		if (redir->type == REDIR_IN && *input >= 0)
+			close(*input);
 		if (redir->type == REDIR_IN)
 		{
 			if (access(redir->filename, F_OK) != 0)
-			{
-				close_pipe(pipex);
 				ft_error("No such file or directory: ", redir->filename, 1);
-			}
-			*input = open(redir->filename, O_RDONLY);
-			if (*input < 0)
+			else
 			{
-				close_pipe(pipex);
-				ft_error("Permission denied: ", redir->filename, 1);
+				*input = open(redir->filename, O_RDONLY);
+				if (*input < 0)
+					ft_error("Permission denied: ", redir->filename, 1);
 			}
 		}
 		redir = redir->next;
-		if (redir && redir->type == REDIR_IN && *input >= 0)
-			close(*input);
 	}
 }
 
-void	ft_open_file(t_cmd *ptr_cmds, t_ppx *pipex, int *input, int *output)
+void	ft_open_file(t_cmd *ptr_cmds, t_ppx *data, int *input, int *output)
 {
-	if (pipex->nb_cmd > 1)
+	if (data->nb_cmd > 1)
 	{
-		if (pipex->idx > 0 && pipex->idx < pipex->nb_cmd - 1)
+		if (data->idx > 0 && data->idx < data->nb_cmd - 1)
 		{
-			ft_redir_in(ptr_cmds, &pipex->fd[pipex->idx - 1][0]);
-			ft_redir_out(ptr_cmds, &pipex->fd[pipex->idx][1]);
+			ft_redir_in(ptr_cmds, &data->fd[data->idx - 1][0]);
+			ft_redir_out(ptr_cmds, &data->fd[data->idx][1]);
 		}
-		else if (pipex->idx == 0)
+		else if (data->idx == 0)
 		{
 			ft_redir_in(ptr_cmds, input);
-			ft_redir_out(ptr_cmds, &pipex->fd[pipex->idx][1]);
+			ft_redir_out(ptr_cmds, &data->fd[data->idx][1]);
 		}
-		else if (pipex->idx == pipex->nb_cmd - 1)
+		else if (data->idx == data->nb_cmd - 1)
 		{
-			ft_redir_in(ptr_cmds, &pipex->fd[pipex->idx - 1][0]);
+			ft_redir_in(ptr_cmds, &data->fd[data->idx - 1][0]);
 			ft_redir_out(ptr_cmds, output);
 		}
 	}
@@ -117,9 +112,9 @@ int	ft_herdoc(t_cmd *ptr_cmds, char **env)
 		{
 			dup2(redir->heredoc_fd[0], STDIN_FILENO);
 			dup2(redir->heredoc_fd[1], STDOUT_FILENO);
-			if (redir->heredoc_fd[0] != -1)
+			if (redir->heredoc_fd[0] >= 0)
 				close(redir->heredoc_fd[0]);
-			if (redir->heredoc_fd[1] != -1)
+			if (redir->heredoc_fd[1] >= 0)
 				close(redir->heredoc_fd[1]);
 			execute(ptr_cmds, env);
 			return (1);

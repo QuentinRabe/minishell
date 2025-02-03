@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_ft_2.c                                    :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 11:47:33 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/30 13:34:44 by arabefam         ###   ########.fr       */
+/*   Created: 2025/02/03 09:00:02 by arabefam          #+#    #+#             */
+/*   Updated: 2025/02/03 09:02:22 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int	execute_env(t_cmd *cmds, t_var_env *env)
+void	close_heredoc_fd(t_cmd *ptr_cmd)
 {
-	int		fd;
-	t_ppx	*data;
+	t_redir	*redir;
 
-	fd = 1;
-	data = get_data(1, NULL);
-	if (cmds->argv[1])
+	redir = ptr_cmd->redir_list;
+	while (redir)
 	{
-		ft_putendl_fd("msh: too many arguments", 2);
-		child_exit_process(data, 2);
-		return (1);
+		if (redir->type == HEREDOC && redir->is_last)
+		{
+			if (redir->heredoc_fd[0] >= 0)
+				close(redir->heredoc_fd[0]);
+			if (redir->heredoc_fd[1] >= 0)
+				close(redir->heredoc_fd[1]);
+		}
+		redir = redir->next;
 	}
-	ft_redir_out(cmds, &fd);
-	print_env(env, fd);
-	if (fd != 1)
-		close(fd);
-	child_exit_process(data, 2);
-	return (1);
 }

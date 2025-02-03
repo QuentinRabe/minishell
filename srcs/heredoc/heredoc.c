@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 07:18:13 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 08:50:44 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ static int	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 	if (((status >> 8) & 0xFF) == 130)
 	{
 		msh->status = 130;
-		ft_putendl_fd("Exit", 1);
 		return (-1);
 	}
 	return (0);

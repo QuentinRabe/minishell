@@ -27,7 +27,7 @@ bool	export_valid_varname(char *name)
 	i = 1;
 	while (name[i])
 	{
-		if(!ft_isalnum(name[i]))
+		if (!ft_isalnum(name[i]))
 			return (false);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 09:19:17 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:04:01 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,7 @@ int		remove_var_exp(t_var_env *env, char *key, char *value);
 bool	export_valid_varname(char *name);
 void	sort_new_exp(t_var_env *exp);
 void	close_heredoc_fd(t_cmd *ptr_cmd);
+void	print_env(t_var_env *env, int fd);
+char	*var_value(char *str);
+void	free_existent_key(char *key, t_var_env *env, t_var_env **prev);
 #endif

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:11:16 by rravelom          #+#    #+#             */
-/*   Updated: 2025/01/30 14:35:47 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 07:29:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ void	ft_redir_in(t_cmd *ptr_cmds, int *input)
 	{
 		if (redir->type == REDIR_IN)
 		{
+			if (access(redir->filename, F_OK) != 0)
+			{
+				close_pipe(pipex);
+				ft_error("No such file or directory: ", redir->filename, 1);
+			}
 			*input = open(redir->filename, O_RDONLY);
 			if (*input < 0)
 			{

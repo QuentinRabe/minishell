@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/29 09:21:44 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 07:18:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	fake_heredoc(char *eof, t_msh *msh)
 		while (1)
 		{
 			signal(SIGINT, hd_signal_handle_fake);
+			signal(SIGQUIT, SIG_IGN);
 			line = readline("here_doc: ");
 			if (!line || !ft_strcmp(line, eof))
 			{
@@ -59,6 +60,7 @@ static void	heredoc_proccess(char *eof, t_msh *msh, int fd[2], bool expand)
 	while (1)
 	{
 		signal(SIGINT, hd_signal_handle);
+		signal(SIGQUIT, SIG_IGN);
 		line = readline("here_doc: ");
 		if (!line || !ft_strcmp(line, eof))
 		{

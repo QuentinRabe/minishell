@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:08 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 12:42:09 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:55:06 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int	ft_execution(t_msh *msh, char **env)
 	ptr_cmds = msh->cmds;
 	init_data(&data, msh->cmds);
 	signal(SIGINT, sig_handle);
-	signal(SIGQUIT, SIG_IGN);
 	while (ptr_cmds)
 	{
 		data.pid = fork();
@@ -119,5 +118,5 @@ int	ft_execution(t_msh *msh, char **env)
 	}
 	ft_wait(&data, &status);
 	cleanup_data(&data);
- 	return (1);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 07:05:10 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:08:04 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,17 @@ static void	init_env(t_msh *msh, char **env)
 	sort_list_env(&msh->exp);
 }
 
+static void	free_and_exit(t_var_env *env, t_var_env *exp)
+{
+	free_env(env);
+	free_env(exp);
+	exit(0);
+}
+
 static void	msh_process(char *input, t_msh *msh, char **envp)
 {
 	if (!input)
-	{
-		free_env(msh->env);
-		free_env(msh->exp);
-		exit(0);
-	}
+		free_and_exit(msh->env, msh->exp);
 	if (!has_obvious_syntax_error(input))
 	{
 		format_input(&input);
@@ -40,10 +43,7 @@ static void	msh_process(char *input, t_msh *msh, char **envp)
 		remove_quotes(msh);
 		build_redir_list(msh);
 		if (check_heredoc(msh) == -1)
-		{
-			clean_all(msh);
-			return ;
-		}
+			return (clean_all(msh));
 		build_argv(msh);
 		envp = get_env_arr(msh->env);
 		get_arr(0, envp);
@@ -51,15 +51,6 @@ static void	msh_process(char *input, t_msh *msh, char **envp)
 		free_argv(envp);
 		clean_all(msh);
 	}
-}
-
-t_msh	*get_msh(int i, t_msh *msh)
-{
-	static t_msh	*ptr = NULL;
-
-	if (i == 0)
-		ptr = msh;
-	return (ptr);
 }
 
 char	**get_arr(int i, char **arr)

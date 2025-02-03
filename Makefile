@@ -6,13 +6,13 @@
 #    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/03 12:48:11 by arabefam          #+#    #+#              #
-#    Updated: 2025/02/03 13:32:21 by arabefam         ###   ########.fr        #
+#    Updated: 2025/02/03 15:00:17 by arabefam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -I./includes -I./libft
+CFLAGS	=	-Wall -Werror -Wextra -I./includes -I./libft -g
 LDFLAGS	=	-L./libft -lft -lreadline
 SRCS	=	srcs/heredoc/signal.c\
 srcs/heredoc/utils.c\
@@ -65,6 +65,8 @@ execution/utils.c\
 execution/my_shell.c\
 execution/builtins_ft_4.c\
 execution/export_utils.c\
+execution/exit_utils.c\
+execution/execute_utils.c\
 ./main.c
 
 O_DIR	=	objs_dir

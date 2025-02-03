@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 13:04:22 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:09:28 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	free_msh(t_msh *msh);
 t_msh	*get_msh(int i, t_msh *msh);
 char	**get_arr(int i, char **arr);
 bool	is_only(char *set, char *str);
+t_msh	*get_msh(int i, t_msh *msh);
 // ==============HEREDOC==============
 int		check_heredoc(t_msh	*msh);
 bool	is_there_heredoc(t_redir *list);

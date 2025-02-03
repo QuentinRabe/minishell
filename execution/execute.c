@@ -6,55 +6,11 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/02 10:04:19 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:57:20 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-char	*get_cmd(char *path)
-{
-	char	**splitted;
-	int		i;
-	char	*result;
-
-	splitted = ft_split(path, '/');
-	i = -1;
-	while (splitted[++i])
-		;
-	result = ft_strdup(splitted[i - 1]);
-	free_argv(splitted);
-	return (result);
-}
-
-int	is_directory(const char *path)
-{
-	struct stat	path_stat;
-
-	if (stat(path, &path_stat) != 0)
-	{
-		perror("stat");
-		return (0);
-	}
-	return (S_ISDIR(path_stat.st_mode));
-}
-
-int	check_absolute_path(char *path, char **cmd)
-{
-	if (is_in(path, '/', NULL))
-	{
-		if (access(path, F_OK) == 0)
-		{
-			if (is_directory(path))
-				return (-2);
-			*cmd = get_cmd(path);
-			return (0);
-		}
-		else
-			return (-1);
-	}
-	return (1);
-}
 
 char	*check_in_cwd(char *cmd)
 {

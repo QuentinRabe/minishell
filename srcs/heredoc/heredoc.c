@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 08:50:44 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:05:39 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,19 @@
 
 static int	fake_heredoc(char *eof, t_msh *msh)
 {
-	char	*line;
 	pid_t	pid;
 	int		status;
 
 	pid = fork();
 	signal(SIGINT, reset_sig);
 	if (pid == 0)
-	{
-		while (1)
-		{
-			signal(SIGINT, hd_signal_handle_fake);
-			signal(SIGQUIT, SIG_IGN);
-			line = readline("here_doc: ");
-			if (!line || !ft_strcmp(line, eof))
-			{
-				free(line);
-				break ;
-			}
-			free(line);
-		}
-		free_env(msh->env);
-		free_env(msh->exp);
-		clean_all(msh);
-		exit(EXIT_SUCCESS);
-	}
+		fake_redoc_process(eof, msh);
 	else
 	{
 		waitpid(pid, &status, 0);
 		if (((status >> 8) & 0xFF) == 130)
 		{
 			msh->status = 130;
-			ft_putendl_fd("Exit", 1);
 			return (-1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 08:38:29 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/23 16:41:49 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:00:26 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ bool	count_if_quote_case(char *token, int *count)
 	char	quote;
 
 	i = 0;
-	//printf("quote case\n");
 	if (token[i] == '\'' || token[i] == '"')
 	{
 		quote = token[i++];

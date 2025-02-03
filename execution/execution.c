@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:08 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 09:53:37 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 12:42:09 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,5 @@ int	ft_execution(t_msh *msh, char **env)
 	}
 	ft_wait(&data, &status);
 	cleanup_data(&data);
-	return (1);
+ 	return (1);
 }

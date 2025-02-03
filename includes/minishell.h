@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/30 10:56:49 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:04:22 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ bool	is_there_heredoc(t_redir *list);
 void	reset_sig(int sig);
 void	hd_signal_handle(int sig);
 void	hd_signal_handle_fake(int sig);
+void	fake_redoc_process(char *eof, t_msh *msh);
 // ==============ARGV==============
 void	build_argv(t_msh *msh);
 void	remove_quotes(t_msh *msh);

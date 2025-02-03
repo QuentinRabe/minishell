@@ -1,9 +1,22 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/02/03 12:48:11 by arabefam          #+#    #+#              #
+#    Updated: 2025/02/03 13:04:52 by arabefam         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME	=	minishell
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -g -I./includes -I./libft
+CFLAGS	=	-Wall -Werror -Wextra -I./includes -I./libft
 LDFLAGS	=	-L./libft -lft -lreadline
 SRCS	=	srcs/heredoc/signal.c\
 srcs/heredoc/utils.c\
+srcs/heredoc/utils_1.c\
 srcs/heredoc/heredoc.c\
 srcs/redir/build_1.c\
 srcs/redir/build.c\
@@ -54,69 +67,25 @@ execution/builtins_ft_4.c\
 ./main.c
 
 O_DIR	=	objs_dir
+
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
-
-DIR		=	$(wildcard $(O_DIR))
-FILE	=	$(wildcard $(NAME))
-
-BLUE	=	\033[1;36m
-RED		=	\033[0;31m
-NC		=	\033[0m
-MAX_MESSAGE_LEN		:=	100
-
-define compilation_progress
-	@$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
-	@printf "$(BLUE)[Minishell] Compiling sources⏳$(NC)";
-	@printf "%*s" $(MAX_MESSAGE_LEN) "";
-	@printf "\r";
-endef
-
-define clean
-	@if [ -z "$(DIR)" ]; then \
-		printf "$(BLUE)[Minishell] No objects to remove$(NC)";\
-		printf "%*s" $(MAX_MESSAGE_LEN) "";\
-		printf "\n";\
-	else \
-		printf "$(BLUE)[Minishell] Objects removed✅$(NC)";\
-		printf "%*s" $(MAX_MESSAGE_LEN) "";\
-		printf "\n";\
-		rm -rf $(O_DIR);\
-	fi
-endef
-
-define fclean
-	@if [ -z "$(FILE)" ]; then \
-		printf "$(BLUE)[Minishell] No executable to remove$(NC)";\
-		printf "%*s" $(MAX_MESSAGE_LEN) "";\
-		printf "\n";\
-	else \
-		printf "$(BLUE)[Minishell] Executable removed✅$(NC)";\
-		printf "%*s" $(MAX_MESSAGE_LEN) "";\
-		printf "\n";\
-		rm -f $(NAME);\
-	fi
-endef
 
 $(O_DIR)/%.o		:	%.c
 		@mkdir -p $(dir $@)
-		$(compilation_progress)
+		$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 
 all		:	$(NAME)
 
 $(NAME)	:	$(OBJS)
-		@make -sC ./libft
-		@$(CC) $(CFLAGS)  $(SRCS) -o $(NAME) -L./libft -lft -lreadline && printf "$(BLUE)[Minishell] Success✅$(NC)" || printf "$(RED)[Minishell] Failure😩$(NC)"
-		@printf "\n";
+		make -C ./libft
+		$(CC) $(CFLAGS)  $(SRCS) -o $(NAME) $(LDFLAGS)
 
 clean	:
-		@make clean -sC ./libft
-		$(clean)
-		@sleep 0.5
-
+		make clean -C ./libft
+		rm -rf $(O_DIR)
 fclean	:	clean
-		@make fclean -sC ./libft
-		$(fclean)
-		@sleep 0.5
+		make fclean -C ./libft
+		rm -f $(NAME)
 
 msh_val	:	all
 		@valgrind --suppressions=readline.supp --track-fds=yes --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)

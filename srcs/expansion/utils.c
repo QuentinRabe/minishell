@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 08:38:29 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 13:00:26 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:30:57 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ char	*get_varname(char *token, int i)
 	char	*varname;
 	int		varlen;
 	int		j;
+	char	quote;
 
 	varlen = get_varlen(token + i);
 	if (token[i] && (token[i] == '"'
 			|| token[i] == '\''))
-		return (ft_strdup(&token[i]));
+	{
+		quote = token[i];
+		return (ft_strdup(&quote));
+	}
 	varname = (char *) malloc((varlen + 1) * sizeof(char));
 	if (!varname)
 		return (NULL);

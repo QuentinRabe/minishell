@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/30 10:57:08 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 07:06:47 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ struct s_var_env
 {
 	char		*key;
 	char		*value;
+	bool		is_new;
 	t_var_env	*next;
 };
 

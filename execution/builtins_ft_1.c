@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/02 09:25:16 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 07:11:02 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	add_new_env(t_var_env *env, char *key, char *value)
 		return ;
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(value);
+	new->is_new = true;
 	new->next = NULL;
 	last->next = new;
 }
@@ -120,6 +121,7 @@ bool	export_process(char **argv, t_var_env *env, t_var_env *exp)
 			add_new_env(env, key, value);
 		if (!value && !rm)
 			add_new_env(exp, key, NULL);
+		sort_new_exp(exp);
 		free(key);
 		free(value);
 	}

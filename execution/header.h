@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/02 09:32:04 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 07:10:42 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ void	free_child(void);
 void	child_exit_process(t_ppx *pipex, int status);
 int		remove_var_exp(t_var_env *env, char *key, char *value);
 bool	export_valid_varname(char *name);
+void	sort_new_exp(t_var_env *exp);
 #endif

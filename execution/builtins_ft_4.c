@@ -6,11 +6,19 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 08:56:18 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/02 09:26:44 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 07:09:47 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+void	sort_new_exp(t_var_env *exp)
+{
+	while (exp && !exp->is_new)
+		exp = exp->next;
+	if (exp)
+		sort_list_env(&exp);
+}
 
 bool	export_valid_varname(char *name)
 {

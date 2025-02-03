@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/05 14:29:46 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/05 18:09:39 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/03 07:07:29 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	add_to_list(t_var_env **env, char *arg)
 		return ;
 	new->key = get_key(arg);
 	new->value = get_value(arg);
+	new->is_new = false;
 	new->next = NULL;
 	if (*env == NULL)
 		*env = new;

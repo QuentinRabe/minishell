@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 08:10:06 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 09:18:27 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@
 # include <readline/readline.h>
 
 int		ft_exit(char **argv, int fd);
-int		execute_pwd(t_cmd *cmds, int fd);
+int		execute_pwd(t_cmd *cmds, int fd_in, int fd_out);
 int		execute_cd(char **command);
 int		execute_echo(t_cmd *cmds, int fd);
 int		execute_export(t_cmd *cmd, int fd);
 
 int		ft_builtins(t_msh *msh, t_cmd *ptr_cmd, char **env, int fd);
 int		minishell(t_msh *msh, char **env);
+int		is_builtins(void);
 
 int		ft_strlen_argv(t_cmd *cmds);
 void	ft_wait(t_ppx *data, int *status);
@@ -55,7 +56,7 @@ t_ppx	*get_data(int i, t_ppx *data);
 
 int		ft_check(char *command);
 int		ft_valid_option(char **command, int *idx);
-void	ft_redir_in(t_cmd *ptr_cmd, int *input);
+void	ft_redir_in(t_cmd *ptr_cmd, int *input, bool *std);
 void	ft_redir_out(t_cmd *ptr_cmd, int *output, bool *std);
 int		ft_herdoc(t_cmd *ptr_cmds, char **env);
 void	ft_open_file(t_cmd *ptr_cmds, t_ppx *data, int *input, int *output);

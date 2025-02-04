@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:03:31 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 08:29:57 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 09:19:04 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ int	ft_error(char *msg, char *cause, int stat)
 		write (2, cause, len);
 	write (2, "\n", 2);
 	data = get_data(1, NULL);
-	if (ft_strlen_argv(msh->cmds) != 1)
+	if (!is_builtins())
 	{
 		close_pipe(data);
 		cleanup_data(data);
+		free_everything(get_msh(1, NULL));
 	}
-	free_everything(get_msh(1, NULL));
+	else
+		return (msh->status = stat, stat);
 	exit (stat);
 }
 

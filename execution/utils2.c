@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:48:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 08:14:35 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 09:11:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_valid_option(char **command, int *idx)
 	return (1);
 }
 
-void	ft_redir_in(t_cmd *ptr_cmds, int *input)
+void	ft_redir_in(t_cmd *ptr_cmds, int *input, bool *std)
 {
 	t_redir		*redir;
 
@@ -62,12 +62,18 @@ void	ft_redir_in(t_cmd *ptr_cmds, int *input)
 		if (redir->type == REDIR_IN)
 		{
 			if (access(redir->filename, F_OK) != 0)
-				ft_error("No such file or directory: ", redir->filename, 1);
+			{
+				if (ft_error("No such file or directory: ", redir->filename, 1) == 1)
+					break ;
+			}
 			else
 			{
 				*input = open(redir->filename, O_RDONLY);
+				if (*input >= 0)
+					*std = true;
 				if (*input < 0)
-					ft_error("Permission denied: ", redir->filename, 1);
+					if (ft_error("Permission denied: ", redir->filename, 1) == 1)
+						break ;
 			}
 		}
 		redir = redir->next;
@@ -80,23 +86,23 @@ void	ft_open_file(t_cmd *ptr_cmds, t_ppx *data, int *input, int *output)
 	{
 		if (data->idx > 0 && data->idx < data->nb_cmd - 1)
 		{
-			ft_redir_in(ptr_cmds, &data->fd[data->idx - 1][0]);
+			ft_redir_in(ptr_cmds, &data->fd[data->idx - 1][0], NULL);
 			ft_redir_out(ptr_cmds, &data->fd[data->idx][1], NULL);
 		}
 		else if (data->idx == 0)
 		{
-			ft_redir_in(ptr_cmds, input);
+			ft_redir_in(ptr_cmds, input, NULL);
 			ft_redir_out(ptr_cmds, &data->fd[data->idx][1], NULL);
 		}
 		else if (data->idx == data->nb_cmd - 1)
 		{
-			ft_redir_in(ptr_cmds, &data->fd[data->idx - 1][0]);
+			ft_redir_in(ptr_cmds, &data->fd[data->idx - 1][0], NULL);
 			ft_redir_out(ptr_cmds, output, NULL);
 		}
 	}
 	else
 	{
-		ft_redir_in(ptr_cmds, input);
+		ft_redir_in(ptr_cmds, input, NULL);
 		ft_redir_out(ptr_cmds, output, NULL);
 	}
 }

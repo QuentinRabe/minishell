@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 08:22:17 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 09:10:07 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,36 @@ int	execute_cd(char **command)
 	child_exit_process(data, 0);
 	return (0);
 }
+int	check_fd(int *fd_in, int *fd_out, bool std[2])
+{
+	t_msh	*msh;
 
-int	execute_pwd(t_cmd *cmds, int fd)
+	msh = get_msh(1, NULL);
+	if (ft_strlen_argv(msh->cmds) == 1)
+	{
+		ft_redir_out(msh->cmds, fd_out, &std[1]);
+		if (!std[1])
+			*fd_out = 1;
+		ft_redir_in(msh->cmds, fd_in, &std[0]);
+		if (std[0])
+			close(*fd_in);
+		if (msh->status == 1)
+			return (1);
+	}
+	return (0);
+}
+
+int	execute_pwd(t_cmd *cmds, int fd_in, int fd_out)
 {
 	char	cwd[1024];
 	t_ppx	*data;
-	bool	std;
+	bool	std[2];
 
-	std = false;
+	std[0] = false;
+	std[1] = false;
 	data = get_data(1, NULL);
-	if (ft_strlen_argv(cmds) == 1)
-	{
-		ft_redir_out(cmds, &fd, &std);
-		if (!std)
-			fd = 1;
-	}
+	if (check_fd(&fd_in, &fd_out, std) == 1)
+		return (1);
 	if (cmds->argv[1] != NULL)
 	{
 		ft_putendl_fd("pwd: too many arguments", 2);
@@ -58,14 +73,14 @@ int	execute_pwd(t_cmd *cmds, int fd)
 		return (1);
 	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
-		ft_putendl_fd(cwd, fd);
+		ft_putendl_fd(cwd, fd_out);
 	else
 	{
 		close_pipe(data);
 		perror("pwd");
 	}
-	if (ft_strlen_argv(cmds) == 1 && std)
-		close(fd);
+	if (ft_strlen_argv(cmds) == 1 && std[1])
+		close(fd_out);
 	child_exit_process(data, 0);
 	return (0);
 }

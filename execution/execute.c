@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 14:57:20 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 07:30:28 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ char	*check_in_cwd(char *cmd)
 	char	*cwd;
 	char	*path;
 	char	*tmp;
+	char	*env_path;
 
 	msh = get_msh(1, NULL);
+	path = NULL;
+	tmp = NULL;
 	cwd = get_env(msh->env, "PWD");
-	if (cwd)
+	env_path = get_env(msh->env, "PATH");
+	ft_putstr_fd(env_path, 2);
+	if (env_path == NULL)
 	{
 		path = ft_strjoin(cwd, "/");
 		tmp = ft_strdup(path);
@@ -30,7 +35,8 @@ char	*check_in_cwd(char *cmd)
 		if (access(path, F_OK) == 0)
 			return (free(cwd), free(tmp), path);
 	}
-	return (free(cwd), free(tmp), free(path), NULL);
+	free(env_path);
+	return (free(cwd), free(tmp), free(tmp), NULL);
 }
 
 char	*finding_process(char **paths, char *cmd)
@@ -63,9 +69,6 @@ char	*find_path(char *cmd, char **arge)
 	i = 0;
 	if (!cmd || !cmd[0])
 		return (NULL);
-	cwd = check_in_cwd(cmd);
-	if (cwd)
-		return (cwd);
 	while (arge[i] && ft_strnstr(arge[i], "PATH", 4) == 0)
 		i++;
 	if (!arge[i])
@@ -74,6 +77,9 @@ char	*find_path(char *cmd, char **arge)
 	path = finding_process(paths, cmd);
 	if (path)
 		return (path);
+	cwd = check_in_cwd(cmd);
+	if (cwd)
+		return (cwd);
 	free_argv(paths);
 	return (NULL);
 }

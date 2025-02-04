@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 14:51:51 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 08:22:17 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,15 @@ int	execute_pwd(t_cmd *cmds, int fd)
 {
 	char	cwd[1024];
 	t_ppx	*data;
+	bool	std;
 
+	std = false;
 	data = get_data(1, NULL);
-	if (fd < 0)
+	if (ft_strlen_argv(cmds) == 1)
 	{
-		fd = 1;
-		ft_redir_out(cmds, &fd);
+		ft_redir_out(cmds, &fd, &std);
+		if (!std)
+			fd = 1;
 	}
 	if (cmds->argv[1] != NULL)
 	{
@@ -61,6 +64,8 @@ int	execute_pwd(t_cmd *cmds, int fd)
 		close_pipe(data);
 		perror("pwd");
 	}
+	if (ft_strlen_argv(cmds) == 1 && std)
+		close(fd);
 	child_exit_process(data, 0);
 	return (0);
 }
@@ -72,8 +77,13 @@ int	ft_exit(char **argv, int fd)
 
 	data = get_data(1, NULL);
 	msh = get_msh(1, NULL);
-	if (fd < 0)
+	if (ft_strlen_argv(msh->cmds) == 1)
+	{
+		ft_redir_out(msh->cmds, &fd, NULL);
+		if (fd >= 0)
+			close(fd);
 		fd = 1;
+	}
 	ft_putendl_fd("exit", fd);
 	if (argv[1] && argv[2])
 	{
@@ -96,16 +106,19 @@ int	ft_exit(char **argv, int fd)
 int	execute_echo(t_cmd *cmds, int fd)
 {
 	char	**cmd;
+	bool	std;
 	int		line;
 	int		idx;
 
 	idx = 0;
 	line = 1;
+	std = false;
 	cmd = cmds->argv + 1;
-	if (fd < 0)
+	if (ft_strlen_argv(cmds) == 1)
 	{
-		fd = 1;
-		ft_redir_out(cmds, &fd);
+		ft_redir_out(cmds, &fd, &std);
+		if (!std)
+			fd = 1;
 	}
 	if (ft_valid_option(cmd, &idx) == 1)
 		line = 0;
@@ -116,6 +129,8 @@ int	execute_echo(t_cmd *cmds, int fd)
 	}
 	if (line == 1)
 		write(fd, "\n", 1);
+	if (ft_strlen_argv(cmds) == 1 && std)
+		close(fd);
 	free_child();
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rravelom <rravelom@student.42antanana      +#+  +:+       +#+        */
+/*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:48:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 11:48:56 by rravelom         ###   ########.fr       */
+/*   Updated: 2025/02/04 08:14:35 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,23 @@ void	ft_open_file(t_cmd *ptr_cmds, t_ppx *data, int *input, int *output)
 		if (data->idx > 0 && data->idx < data->nb_cmd - 1)
 		{
 			ft_redir_in(ptr_cmds, &data->fd[data->idx - 1][0]);
-			ft_redir_out(ptr_cmds, &data->fd[data->idx][1]);
+			ft_redir_out(ptr_cmds, &data->fd[data->idx][1], NULL);
 		}
 		else if (data->idx == 0)
 		{
 			ft_redir_in(ptr_cmds, input);
-			ft_redir_out(ptr_cmds, &data->fd[data->idx][1]);
+			ft_redir_out(ptr_cmds, &data->fd[data->idx][1], NULL);
 		}
 		else if (data->idx == data->nb_cmd - 1)
 		{
 			ft_redir_in(ptr_cmds, &data->fd[data->idx - 1][0]);
-			ft_redir_out(ptr_cmds, output);
+			ft_redir_out(ptr_cmds, output, NULL);
 		}
 	}
 	else
 	{
 		ft_redir_in(ptr_cmds, input);
-		ft_redir_out(ptr_cmds, output);
+		ft_redir_out(ptr_cmds, output, NULL);
 	}
 }
 

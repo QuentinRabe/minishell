@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 14:04:22 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 08:13:45 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,21 @@ int	execute_export(t_cmd *cmd, int fd)
 	bool	error;
 	t_ppx	*data;
 	t_msh	*msh;
+	bool	std;
 
+	std = false;
 	error = false;
 	data = get_data(1, NULL);
 	msh = get_msh(1, NULL);
 	if (fd < 0)
 	{
 		fd = 1;
-		ft_redir_out(cmd, &fd);
+		ft_redir_out(cmd, &fd, &std);
 	}
 	if (!cmd->argv[1])
 	{
 		print_env(msh->exp, fd);
-		if (fd != 1)
+		if (ft_strlen_argv(cmd) == 1 && std)
 			close(fd);
 	}
 	else

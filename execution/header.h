@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 14:57:55 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 08:10:06 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_ppx	*get_data(int i, t_ppx *data);
 int		ft_check(char *command);
 int		ft_valid_option(char **command, int *idx);
 void	ft_redir_in(t_cmd *ptr_cmd, int *input);
-void	ft_redir_out(t_cmd *ptr_cmd, int *output);
+void	ft_redir_out(t_cmd *ptr_cmd, int *output, bool *std);
 int		ft_herdoc(t_cmd *ptr_cmds, char **env);
 void	ft_open_file(t_cmd *ptr_cmds, t_ppx *data, int *input, int *output);
 

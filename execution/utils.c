@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/03 10:01:37 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 08:15:07 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	child_exit_process(t_ppx *data, int status)
 	}
 }
 
-void	ft_redir_out(t_cmd *ptr_cmds, int *output)
+void	ft_redir_out(t_cmd *ptr_cmds, int *output, bool *std)
 {
 	t_redir		*redir;
 
@@ -111,6 +111,8 @@ void	ft_redir_out(t_cmd *ptr_cmds, int *output)
 			*output = open(redir->filename, O_RDWR | O_APPEND | O_CREAT, 0644);
 		else if (redir->type == TRUNC)
 			*output = open(redir->filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		if ((redir->type == APPEND || redir->type == TRUNC) && *output >= 0 && std)
+			*std = true;
 		if ((redir->type == APPEND || redir->type == TRUNC) && *output < 0)
 			ft_error("Permission denied: ", redir->filename, 1);
 		redir = redir->next;

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:10:57 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:34:54 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 
 int		ft_exit(char **argv, int fd_in, int fd_out);
 int		execute_pwd(t_cmd *cmds, int fd_in, int fd_out);
-int		execute_cd(char **command);
-int		execute_echo(t_cmd *cmds, int fd);
+int		execute_cd(char **command, int fd_in, int fd_out);
+int		execute_echo(t_cmd *cmds, int fd_in, int fd_out);
 int		execute_export(t_cmd *cmd, int fd);
 
 int		ft_builtins(t_msh *msh, t_cmd *ptr_cmd, char **env, int fd);
@@ -79,4 +79,5 @@ int		is_directory(const char *path);
 int		check_absolute_path(char *path, char **cmd);
 char	*get_cmd(char *path);
 void	init_stds(bool *std_in, bool *std_out);
+int		check_fd(int *fd_in, int *fd_out, bool *std_in, bool *std_out);
 #endif

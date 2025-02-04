@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:55:37 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 14:57:31 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:55:55 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,10 @@ int	is_directory(const char *path)
 		return (0);
 	}
 	return (S_ISDIR(path_stat.st_mode));
+}
+
+void	free_and_error_path(char *path, char *msg, char *cmd, int stat)
+{
+	free(path);
+	ft_error(msg, cmd, stat);
 }

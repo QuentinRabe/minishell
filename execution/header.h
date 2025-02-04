@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:53:57 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:53:20 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,6 @@ int		check_absolute_path(char *path, char **cmd);
 char	*get_cmd(char *path);
 void	init_stds(bool *std_in, bool *std_out);
 int		check_fd(int *fd_in, int *fd_out, bool *std_in, bool *std_out);
+void	add_new_env(t_var_env *env, char *key, char *value);
+void	free_and_error_path(char *path, char *msg, char *cmd, int stat);
 #endif

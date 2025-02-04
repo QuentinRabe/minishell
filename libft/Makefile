@@ -12,7 +12,7 @@
 
 NAME	=	libft.a
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -g
+CFLAGS	=	-Wall -Werror -Wextra
 SRCS	=	./ft_strdup.c\
 ./ft_putstr_fd.c\
 ./ft_split.c\
@@ -78,3 +78,5 @@ fclean	:	clean
 		rm -f $(NAME)
 
 re		:	fclean all
+
+.PHONY	:	all fclean clean re

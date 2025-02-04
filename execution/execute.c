@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 11:13:17 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:57:22 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ char	*check_in_cwd(char *cmd)
 		tmp = ft_strdup(path);
 		free(path);
 		path = ft_strjoin(tmp, cmd);
-		if (access(path, F_OK) == 0)
-			return (free(cwd), free(tmp), path);
+		return (free(cwd), free(tmp), path);
 	}
-	return (free(cwd), free(tmp), free(tmp), NULL);
+	return (free(cwd), free(tmp), free(path), NULL);
 }
 
 char	*finding_process(char **paths, char *cmd)
@@ -60,6 +59,7 @@ char	*find_path(char *cmd, char **arge)
 	int		i;
 	char	**paths;
 	char	*path;
+	char	*cwd;
 
 	i = 0;
 	if (!cmd || !cmd[0])
@@ -67,7 +67,12 @@ char	*find_path(char *cmd, char **arge)
 	while (arge[i] && ft_strnstr(arge[i], "PATH", 4) == 0)
 		i++;
 	if (!arge[i])
+	{
+		cwd = check_in_cwd(cmd);
+		if (cwd)
+			return (cwd);
 		return (NULL);
+	}
 	paths = ft_split(arge[i] + 5, ':');
 	path = finding_process(paths, cmd);
 	if (path)
@@ -107,11 +112,14 @@ int	execute(t_cmd *ptr_cmds, char **arge)
 	path = check_path_error(res, ptr_cmds, arge, cmd);
 	if (!path)
 		ft_error("command not found: ", ptr_cmds->argv[0], 127);
+	else if (is_directory(path))
+		free_and_error_path(path, "is a directory: ", ptr_cmds->argv[0], 126);
+	else if (access(path, F_OK) != 0)
+		free_and_error_path(path, "no such file or directory: ", \
+		ptr_cmds->argv[0], 127);
 	else if (access(path, X_OK) != 0)
-	{
-		free(path);
-		ft_error("permission denied: ", ptr_cmds->argv[0], 126);
-	}
+		free_and_error_path(path, "permission denied: ", \
+		ptr_cmds->argv[0], 126);
 	execve(path, ptr_cmds->argv, arge);
 	return (1);
 }

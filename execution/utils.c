@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:55:26 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:48:11 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,15 @@ void	ft_wait(t_ppx *data, int *status)
 	close_pipe(data);
 	msh = get_msh(1, NULL);
 	waitpid(data->pid, status, 0);
-	msh->status = (*status >> 8) & 0xFF;
+	if (WIFSIGNALED(*status))
+	{
+		msh->status = WTERMSIG(*status) + 128;
+		if (WTERMSIG(*status) == SIGQUIT)
+			ft_putstr_fd("quit", 1);
+		ft_putstr_fd("\n", 1);
+	}
+	else
+		msh->status = (*status >> 8) & 0xFF;
 	while (i < data->nb_cmd)
 	{
 		wait(NULL);
@@ -89,6 +97,7 @@ void	child_exit_process(t_ppx *data, int status)
 		close_heredoc_fd(msh->cmds);
 		if (ft_strcmp(msh->cmds->argv[0], "exit") == 0)
 		{
+			close(msh->historic_fd);
 			if (status != -42)
 			{
 				free_everything(msh);

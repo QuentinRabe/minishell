@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:03:31 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 11:21:13 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:12:54 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_error(char *msg, char *cause, int stat)
 	}
 	else
 		return (msh->status = stat, stat);
+	close(msh->historic_fd);
 	exit (stat);
 }
 
@@ -47,6 +48,7 @@ void	sig_handle(int sig)
 void	config_sig(void)
 {
 	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 t_ppx	*get_data(int i, t_ppx *data)

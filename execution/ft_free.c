@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:05:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 08:27:42 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:48:27 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	free_child(void)
 	data = get_data(1, NULL);
 	if (ft_strlen_argv(msh->cmds) != 1)
 	{
+		close(msh->historic_fd);
 		close_pipe(data);
 		cleanup_data(data);
 		free_everything(msh);

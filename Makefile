@@ -6,7 +6,7 @@
 #    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/03 12:48:11 by arabefam          #+#    #+#              #
-#    Updated: 2025/02/03 15:00:17 by arabefam         ###   ########.fr        #
+#    Updated: 2025/02/04 14:50:11 by arabefam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ srcs/input_handlers/error_1.c\
 srcs/input_handlers/formating.c\
 srcs/input_handlers/token_multi_input.c\
 srcs/input_handlers/token_single_input.c\
+srcs/history/history.c\
 srcs/utils/utils_4.c\
 srcs/utils/utils_3.c\
 srcs/utils/utils_1.c\
@@ -74,6 +75,7 @@ O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
 $(O_DIR)/%.o		:	%.c
+		@touch .mshrc
 		@mkdir -p $(dir $@)
 		$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 
@@ -86,10 +88,13 @@ $(NAME)	:	$(OBJS)
 clean	:
 		make clean -C ./libft
 		rm -rf $(O_DIR)
+		rm -f .mshrc
 fclean	:	clean
 		make fclean -C ./libft
 		rm -f $(NAME)
 
 msh_val	:	all
-		@valgrind --suppressions=readline.supp --track-fds=yes --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+		@valgrind --suppressions=readline.supp --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes ./$(NAME)
 re		:	fclean all
+
+.PHONY	:	all fclean clean re msh_val

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:38:37 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 14:52:15 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:46:58 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	exit_process(char *arg1, char *arg2, t_ppx *data, t_msh *msh)
 {
-	(void) msh;
-	if (arg1 && arg2)
+	if (arg1 && arg2 && is_only(DIGITS, arg1))
 	{
 		ft_putendl_fd("msh: exit : too many argument", 2);
 		return (child_exit_process(data, -42), 1);
 	}
 	else
 	{
+		close(msh->historic_fd);
 		if (arg1 && !is_only(DIGITS, arg1))
 		{
 			ft_putstr_fd("exit: ", 2);

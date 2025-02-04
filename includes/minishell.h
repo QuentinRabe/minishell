@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:57:17 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/04 11:15:38 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:38:43 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,5 @@ int		count_redir(t_token *token_list);
 int		heredoc_delimiter_len(char *str);
 void	check_last_redir(t_redir *list);
 void	create_delimiter(char *new, char *old);
+void	load_history(void);
 #endif

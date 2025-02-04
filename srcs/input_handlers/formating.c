@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 21:44:13 by arabefam          #+#    #+#             */
-/*   Updated: 2025/01/19 09:04:52 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:44:25 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,11 @@ void	trim(char **str)
 
 void	format_input(char **str)
 {
+	t_msh	*msh;
+
+	msh = get_msh(1, NULL);
 	add_history(*str);
+	ft_putendl_fd(*str, msh->historic_fd);
 	trim(str);
 	add_spaces_around(str);
 }

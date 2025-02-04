@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/04 08:13:45 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:42:32 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,30 +91,25 @@ bool	export_process(char **argv, t_var_env *env, t_var_env *exp)
 	return (error);
 }
 
-int	execute_export(t_cmd *cmd, int fd)
+int	execute_export(t_cmd *cmd, int fd_in, int fd_out)
 {
 	bool	error;
 	t_ppx	*data;
 	t_msh	*msh;
-	bool	std;
+	bool	std[2];
 
-	std = false;
 	error = false;
-	data = get_data(1, NULL);
 	msh = get_msh(1, NULL);
-	if (fd < 0)
-	{
-		fd = 1;
-		ft_redir_out(cmd, &fd, &std);
-	}
+	init_stds(&std[0], &std[1]);
+	data = get_data(1, NULL);
+	if (check_fd(&fd_in, &fd_out, &std[0], &std[1]) == 1)
+		return (1);
 	if (!cmd->argv[1])
-	{
-		print_env(msh->exp, fd);
-		if (ft_strlen_argv(cmd) == 1 && std)
-			close(fd);
-	}
+		print_env(msh->exp, fd_out);
 	else
 		error = export_process(cmd->argv, msh->env, msh->exp);
+	if (ft_strlen_argv(msh->cmds) == 1 && std[1])
+		close(fd_out);
 	if (error)
 		return (child_exit_process(data, 1), 1);
 	return (child_exit_process(data, 0), 0);

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:34:54 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:40:01 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		ft_exit(char **argv, int fd_in, int fd_out);
 int		execute_pwd(t_cmd *cmds, int fd_in, int fd_out);
 int		execute_cd(char **command, int fd_in, int fd_out);
 int		execute_echo(t_cmd *cmds, int fd_in, int fd_out);
-int		execute_export(t_cmd *cmd, int fd);
+int		execute_export(t_cmd *cmd, int fd_in, int fd_out);
 
 int		ft_builtins(t_msh *msh, t_cmd *ptr_cmd, char **env, int fd);
 int		minishell(t_msh *msh, char **env);

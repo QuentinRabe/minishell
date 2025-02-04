@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:48:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:21:40 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:57:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,15 @@ void	ft_redir_in(t_cmd *ptr_cmds, int *input, bool *std)
 		if (redir->type == REDIR_IN)
 		{
 			if (access(redir->filename, F_OK) != 0)
-			{
-				if (ft_error("No such file or directory: ", redir->filename, 1) == 1)
+				if (ft_error("No such file or directory: ", \
+				redir->filename, 1) == 1)
 					return ;
-			}
-			else
-			{
-				*input = open(redir->filename, O_RDONLY);
-				if (!redir->next && *input >= 0)
-					*std = true;
-				if (*input < 0)
-					if (ft_error("Permission denied: ", redir->filename, 1) == 1)
-						return ;
-			}
+			*input = open(redir->filename, O_RDONLY);
+			if (!redir->next && *input >= 0)
+				*std = true;
+			if (*input < 0)
+				if (ft_error("Permission denied: ", redir->filename, 1) == 1)
+					return ;
 		}
 		redir = redir->next;
 	}

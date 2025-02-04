@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:47:23 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:53:57 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_open_file(t_cmd *ptr_cmds, t_ppx *data, int *input, int *output);
 
 void	print_env(t_var_env *env, int fd);
 int		execute_env(t_cmd *cmds, t_var_env *env, int fd_in, int fd_out);
-int		execute_unset(t_cmd *cmds);
+int		execute_unset(t_cmd *cmds, int fd_in, int fd_out);
 t_ppx	*get_data(int i, t_ppx *data);
 void	free_child(void);
 void	child_exit_process(t_ppx *data, int status);

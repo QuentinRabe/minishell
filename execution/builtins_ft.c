@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:34:33 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:00:00 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,8 @@ int	ft_exit(char **argv, int fd_in, int fd_out)
 	if (ft_strlen_argv(msh->cmds) == 1 && std[1])
 		close(fd_out);
 	ft_putendl_fd("exit", 1);
-	if (argv[1] && argv[2])
-	{
-		if (exit_process(argv[1], argv[2], data, msh) == 1)
-			return (1);
-	}
+	if (argv[1] && argv[2] && exit_process(argv[1], argv[2], data, msh) == 1)
+		return (1);
 	else if (argv[1] && !argv[2])
 	{
 		if (exit_process(argv[1], NULL, data, msh) == 1)

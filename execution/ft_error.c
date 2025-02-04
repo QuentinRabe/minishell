@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 10:03:31 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 09:19:04 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 11:21:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	sig_handle(int sig)
 void	config_sig(void)
 {
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 }
 
 t_ppx	*get_data(int i, t_ppx *data)

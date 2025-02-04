@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 09:10:07 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 09:59:16 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ int	execute_cd(char **command)
 	child_exit_process(data, 0);
 	return (0);
 }
-int	check_fd(int *fd_in, int *fd_out, bool std[2])
+int	check_fd(int *fd_in, int *fd_out, bool *std_in, bool *std_out)
 {
 	t_msh	*msh;
 
 	msh = get_msh(1, NULL);
 	if (ft_strlen_argv(msh->cmds) == 1)
 	{
-		ft_redir_out(msh->cmds, fd_out, &std[1]);
-		if (!std[1])
+		ft_redir_out(msh->cmds, fd_out, std_out);
+		if (!*std_out)
 			*fd_out = 1;
-		ft_redir_in(msh->cmds, fd_in, &std[0]);
-		if (std[0])
+		ft_redir_in(msh->cmds, fd_in, std_in);
+		if (*std_in)
 			close(*fd_in);
 		if (msh->status == 1)
 			return (1);
@@ -64,7 +64,7 @@ int	execute_pwd(t_cmd *cmds, int fd_in, int fd_out)
 	std[0] = false;
 	std[1] = false;
 	data = get_data(1, NULL);
-	if (check_fd(&fd_in, &fd_out, std) == 1)
+	if (check_fd(&fd_in, &fd_out, &std[0], &std[1]) == 1)
 		return (1);
 	if (cmds->argv[1] != NULL)
 	{

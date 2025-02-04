@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 09:18:27 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:10:57 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include "../includes/minishell.h"
 # include <readline/readline.h>
 
-int		ft_exit(char **argv, int fd);
+int		ft_exit(char **argv, int fd_in, int fd_out);
 int		execute_pwd(t_cmd *cmds, int fd_in, int fd_out);
 int		execute_cd(char **command);
 int		execute_echo(t_cmd *cmds, int fd);
@@ -78,4 +78,5 @@ int		exit_process(char *arg1, char *arg2, t_ppx *data, t_msh *msh);
 int		is_directory(const char *path);
 int		check_absolute_path(char *path, char **cmd);
 char	*get_cmd(char *path);
+void	init_stds(bool *std_in, bool *std_out);
 #endif

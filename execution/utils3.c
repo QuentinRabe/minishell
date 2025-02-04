@@ -6,11 +6,17 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 09:00:02 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 09:02:22 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:05:28 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+void	init_stds(bool *std_in, bool *std_out)
+{
+	*std_in = false;
+	*std_out = false;
+}
 
 void	close_heredoc_fd(t_cmd *ptr_cmd)
 {

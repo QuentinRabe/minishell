@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:48:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:01:54 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:21:40 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ft_valid_option(char **command, int *idx)
 void	ft_redir_in(t_cmd *ptr_cmds, int *input, bool *std)
 {
 	t_redir		*redir;
+	t_msh		*msh;
 
 	redir = ptr_cmds->redir_list;
 	while (redir)
@@ -64,7 +65,7 @@ void	ft_redir_in(t_cmd *ptr_cmds, int *input, bool *std)
 			if (access(redir->filename, F_OK) != 0)
 			{
 				if (ft_error("No such file or directory: ", redir->filename, 1) == 1)
-					break ;
+					return ;
 			}
 			else
 			{
@@ -73,11 +74,13 @@ void	ft_redir_in(t_cmd *ptr_cmds, int *input, bool *std)
 					*std = true;
 				if (*input < 0)
 					if (ft_error("Permission denied: ", redir->filename, 1) == 1)
-						break ;
+						return ;
 			}
 		}
 		redir = redir->next;
 	}
+	msh = get_msh(1, NULL);
+	msh->status = 0;
 }
 
 void	ft_open_file(t_cmd *ptr_cmds, t_ppx *data, int *input, int *output)

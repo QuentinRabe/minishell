@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 09:59:16 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/04 10:16:54 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	execute_pwd(t_cmd *cmds, int fd_in, int fd_out)
 	t_ppx	*data;
 	bool	std[2];
 
-	std[0] = false;
-	std[1] = false;
+	init_stds(&std[0], &std[1]);
 	data = get_data(1, NULL);
 	if (check_fd(&fd_in, &fd_out, &std[0], &std[1]) == 1)
 		return (1);
@@ -85,21 +84,20 @@ int	execute_pwd(t_cmd *cmds, int fd_in, int fd_out)
 	return (0);
 }
 
-int	ft_exit(char **argv, int fd)
+int	ft_exit(char **argv, int fd_in, int fd_out)
 {
 	t_ppx	*data;
 	t_msh	*msh;
+	bool	std[2];
 
-	data = get_data(1, NULL);
 	msh = get_msh(1, NULL);
-	if (ft_strlen_argv(msh->cmds) == 1)
-	{
-		ft_redir_out(msh->cmds, &fd, NULL);
-		if (fd >= 0)
-			close(fd);
-		fd = 1;
-	}
-	ft_putendl_fd("exit", fd);
+	init_stds(&std[0], &std[1]);
+	data = get_data(1, NULL);
+	if (check_fd(&fd_in, &fd_out, &std[0], &std[1]) == 1)
+		return (1);
+	if (ft_strlen_argv(msh->cmds) == 1 && std[1])
+		close(fd_out);
+	ft_putendl_fd("exit", 1);
 	if (argv[1] && argv[2])
 	{
 		if (exit_process(argv[1], argv[2], data, msh) == 1)
@@ -115,6 +113,7 @@ int	ft_exit(char **argv, int fd)
 		child_exit_process(data, msh->status);
 		exit(msh->status);
 	}
+	ft_putstr_fd("Ato ah\n", 2);
 	return (0);
 }
 

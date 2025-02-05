@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:02:06 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 13:03:45 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:29:42 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	fake_redoc_process(char *eof, t_msh *msh)
 		line = readline("here_doc: ");
 		if (!line || !ft_strcmp(line, eof))
 		{
+			close(msh->historic_fd);
 			free(line);
 			break ;
 		}

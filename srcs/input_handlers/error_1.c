@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 20:29:11 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/04 14:25:14 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:26:53 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	print_arrow_error(char arrow)
 {
 	ft_putstr_fd(ERRSYNT"`", 2);
 	write(2, &arrow, 1);
-	ft_putendl_fd("'\n", 2);
+	ft_putendl_fd("", 2);
 }
 
 bool	has_consecutive_opps_arrows(char *str)

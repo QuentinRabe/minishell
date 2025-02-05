@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 13:05:39 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:29:11 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	heredoc_proccess(char *eof, t_msh *msh, int fd[2], bool expand)
 		line = readline("here_doc: ");
 		if (!line || !ft_strcmp(line, eof))
 		{
+			close(msh->historic_fd);
 			free(line);
 			break ;
 		}

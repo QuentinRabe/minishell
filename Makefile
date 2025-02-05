@@ -6,13 +6,13 @@
 #    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/03 12:48:11 by arabefam          #+#    #+#              #
-#    Updated: 2025/02/05 08:42:49 by arabefam         ###   ########.fr        #
+#    Updated: 2025/02/05 12:48:32 by arabefam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	minishell
 CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra -I./includes -I./libft -g
+CFLAGS	=	-Wall -Werror -Wextra -I./includes -I./libft
 LDFLAGS	=	-L./libft -lft -lreadline
 SRCS	=	srcs/heredoc/signal.c\
 srcs/heredoc/utils.c\

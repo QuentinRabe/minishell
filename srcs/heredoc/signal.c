@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 08:43:49 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 13:00:56 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:27:56 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	hd_signal_handle_fake(int sig)
 	{
 		free_env(msh->env);
 		free_env(msh->exp);
+		close(msh->historic_fd);
 		clean_all(msh);
 		close(STDIN_FILENO);
 		write(1, "\n", 1);
@@ -37,6 +38,7 @@ void	hd_signal_handle(int sig)
 	{
 		free_env(msh->env);
 		free_env(msh->exp);
+		close(msh->historic_fd);
 		clean_all(msh);
 		close(STDIN_FILENO);
 		write(1, "\n", 1);

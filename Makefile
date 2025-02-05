@@ -6,7 +6,7 @@
 #    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/03 12:48:11 by arabefam          #+#    #+#              #
-#    Updated: 2025/02/05 07:33:04 by arabefam         ###   ########.fr        #
+#    Updated: 2025/02/05 07:39:04 by arabefam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,7 @@ $(NAME)	:	$(OBJS)
 clean	:
 		make clean -C ./libft
 		rm -rf $(O_DIR)
-		rm -f .mshrc
+		rm -f .msh_history
 fclean	:	clean
 		make fclean -C ./libft
 		rm -f $(NAME)

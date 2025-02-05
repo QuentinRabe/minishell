@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 14:33:13 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/04 14:49:04 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:11:46 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	load_history(void)
 	char	*trimed;
 	t_msh	*msh;
 
-	fd = open(".mshrc", O_RDWR | O_APPEND | O_CREAT);
+	fd = open(".msh_history", O_RDWR | O_APPEND | O_CREAT);
 	if (fd < 0)
 		perror("open");
 	line = get_next_line(fd);

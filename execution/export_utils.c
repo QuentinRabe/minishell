@@ -6,13 +6,13 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:28:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/05 07:28:42 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:17:16 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	free_existent_key(char *key, t_var_env *env, t_var_env **prev, char *value)
+void	free_existent_key(char *key, t_var_env *env, t_var_env **prev, char *value, t_var_env **next)
 {
 	t_var_env	*tmp;
 
@@ -24,7 +24,7 @@ void	free_existent_key(char *key, t_var_env *env, t_var_env **prev, char *value)
 			free(env->key);
 			free(env->value);
 			free(env);
-			(*prev)->next = tmp;
+			*next = tmp;
 			env = tmp;
 			break ;
 		}

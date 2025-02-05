@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/05 07:28:16 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:19:20 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	sort_new_exp(t_var_env *exp);
 void	close_heredoc_fd(t_cmd *ptr_cmd);
 void	print_env(t_var_env *env, int fd);
 char	*var_value(char *str);
-void	free_existent_key(char *key, t_var_env *env, t_var_env **prev, char *value);
+void	free_existent_key(char *key, t_var_env *env, t_var_env **prev, char *value, t_var_env **next);
 int		exit_process(char *arg1, char *arg2, t_ppx *data, t_msh *msh);
 int		is_directory(const char *path);
 int		check_absolute_path(char *path, char **cmd);

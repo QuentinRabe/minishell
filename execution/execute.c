@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:07:17 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 15:57:22 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 06:55:35 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ int	execute(t_cmd *ptr_cmds, char **arge)
 	res = check_absolute_path(ptr_cmds->argv[0], &cmd);
 	path = check_path_error(res, ptr_cmds, arge, cmd);
 	if (!path)
-		ft_error("command not found: ", ptr_cmds->argv[0], 127);
-	else if (is_directory(path))
+		free_and_error_path(path, "command not found: ", ptr_cmds->argv[0], 127);
+	else if (is_directory(path) != 0)
 		free_and_error_path(path, "is a directory: ", ptr_cmds->argv[0], 126);
 	else if (access(path, F_OK) != 0)
 		free_and_error_path(path, "no such file or directory: ", \

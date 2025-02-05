@@ -6,7 +6,7 @@
 #    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/03 12:48:11 by arabefam          #+#    #+#              #
-#    Updated: 2025/02/04 14:50:11 by arabefam         ###   ########.fr        #
+#    Updated: 2025/02/05 07:33:04 by arabefam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,7 @@ O_DIR	=	objs_dir
 OBJS	=	$(addprefix $(O_DIR)/, $(SRCS:.c=.o))
 
 $(O_DIR)/%.o		:	%.c
-		@touch .mshrc
+		@touch .msh_history
 		@mkdir -p $(dir $@)
 		$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 

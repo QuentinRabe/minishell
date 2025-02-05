@@ -6,19 +6,19 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:28:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/03 14:03:46 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 07:28:42 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	free_existent_key(char *key, t_var_env *env, t_var_env **prev)
+void	free_existent_key(char *key, t_var_env *env, t_var_env **prev, char *value)
 {
 	t_var_env	*tmp;
 
 	while (env)
 	{
-		if (!ft_strcmp(env->key, key))
+		if (!ft_strcmp(env->key, key) && value)
 		{
 			tmp = env->next;
 			free(env->key);

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:55:37 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/04 15:55:55 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 06:46:01 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int	is_directory(const char *path)
 	struct stat	path_stat;
 
 	if (stat(path, &path_stat) != 0)
-	{
-		perror("stat");
 		return (0);
-	}
 	return (S_ISDIR(path_stat.st_mode));
 }
 

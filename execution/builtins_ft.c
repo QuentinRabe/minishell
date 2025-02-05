@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 15:45:54 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 07:03:49 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	execute_cd(char **command, int fd_in, int fd_out)
 		add_new_env(msh->exp, "PWD", dir);
 		add_new_env(msh->env, "PWD", dir);
 		free(dir);
+		return (child_exit_process(data, 0), 0);
 	}
 	else if (chdir(command[1]) == -1)
 	{

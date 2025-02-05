@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/05 07:03:49 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:53:19 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int	execute_cd(char **command, int fd_in, int fd_out)
 {
-	char	*dir;
 	t_msh	*msh;
 	t_ppx	*data;
 	bool	std[2];
-	char	cwd[1024];
 
 	msh = get_msh(1, NULL);
 	init_stds(&std[0], &std[1]);
@@ -27,26 +25,8 @@ int	execute_cd(char **command, int fd_in, int fd_out)
 		return (1);
 	if (ft_strlen_argv(msh->cmds) == 1 && std[1])
 		close(fd_out);
-	if (command[1] == NULL || ft_strcmp(command[1], "~") == 0)
-	{
-		dir = get_env(msh->env, "HOME");
-		chdir(dir);
-		add_new_env(msh->exp, "PWD", dir);
-		add_new_env(msh->env, "PWD", dir);
-		free(dir);
-		return (child_exit_process(data, 0), 0);
-	}
-	else if (chdir(command[1]) == -1)
-	{
-		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putendl_fd(command[1], 2);
+	if (change_dir(command[1], msh, data) == 1)
 		return (child_exit_process(data, 1), 1);
-	}
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		add_new_env(msh->exp, "PWD", cwd);
-		add_new_env(msh->env, "PWD", cwd);
-	}
 	return (child_exit_process(data, 0), 0);
 }
 

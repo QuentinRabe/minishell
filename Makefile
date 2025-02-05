@@ -6,7 +6,7 @@
 #    By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/03 12:48:11 by arabefam          #+#    #+#              #
-#    Updated: 2025/02/05 07:39:04 by arabefam         ###   ########.fr        #
+#    Updated: 2025/02/05 08:42:49 by arabefam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ execution/builtins_ft_4.c\
 execution/export_utils.c\
 execution/exit_utils.c\
 execution/execute_utils.c\
+execution/cd_utils.c\
 ./main.c
 
 O_DIR	=	objs_dir

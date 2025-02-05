@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 22:54:26 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/05 08:18:32 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:34:10 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ void	add_new_env(t_var_env *env, char *key, char *value)
 	t_var_env	*next;
 
 	prev = env;
-	next = NULL;
-	free_existent_key(key, env, &prev, value, &next);
+	next = free_existent_key(key, env, &prev, value);
 	if (prev && !prev->next && !value)
 		return ;
 	new = (t_var_env *) malloc(sizeof(t_var_env));

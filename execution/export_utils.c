@@ -6,16 +6,19 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:28:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/05 08:17:16 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 08:36:09 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	free_existent_key(char *key, t_var_env *env, t_var_env **prev, char *value, t_var_env **next)
+t_var_env	*free_existent_key(char *key, t_var_env *env, \
+t_var_env **prev, char *value)
 {
 	t_var_env	*tmp;
+	t_var_env	*next;
 
+	next = NULL;
 	while (env)
 	{
 		if (!ft_strcmp(env->key, key) && value)
@@ -24,13 +27,14 @@ void	free_existent_key(char *key, t_var_env *env, t_var_env **prev, char *value,
 			free(env->key);
 			free(env->value);
 			free(env);
-			*next = tmp;
+			next = tmp;
 			env = tmp;
 			break ;
 		}
 		*prev = env;
 		env = env->next;
 	}
+	return (next);
 }
 
 char	*var_value(char *str)

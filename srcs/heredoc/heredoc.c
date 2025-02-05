@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/05 12:29:11 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:23:24 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 		heredoc_proccess(eof, msh, fd, expand);
 	init_signal();
 	close(fd[1]);
+	fd[1] = -1;
 	waitpid(pid, &status, 0);
 	if (((status >> 8) & 0xFF) == 130)
 	{

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:40:39 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/06 06:40:52 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:13:18 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ struct s_msh
 	t_var_env	*env;
 	t_var_env	*exp;
 	int			hd_fd_write;
+	int			hd_fd_read;
 	int			status;
 	int			historic_fd;
 };

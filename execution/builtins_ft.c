@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/06 07:31:07 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:21:25 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,9 @@ int	execute_pwd(t_cmd *cmds, int fd_in, int fd_out)
 	data = get_data(1, NULL);
 	if (check_fd(&fd_in, &fd_out, &std[0], &std[1]) == 1)
 		return (1);
-	if (cmds->argv[1] != NULL)
-	{
-		ft_putendl_fd("pwd: too many arguments", 2);
-		child_exit_process(data, 1);
-		return (1);
-	}
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 		ft_putendl_fd(cwd, fd_out);
-	else
+	else if(ft_strlen_argv(cmds) > 1)
 	{
 		close_pipe(data);
 		perror("pwd");
@@ -125,11 +119,13 @@ int	execute_echo(t_cmd *cmds, int fd_in, int fd_out)
 	while (cmd[idx])
 	{
 		ft_putstr_fd(cmd[idx], fd_out);
+		if (cmd[idx + 1])
+			ft_putchar_fd(' ', fd_out);
 		idx++;
 	}
 	if (line == 1)
 		write(fd_out, "\n", 1);
 	if (ft_strlen_argv(cmds) == 1 && std[1])
 		close(fd_out);
-	return (free_child(), 0);
+	return (close_heredoc_fd(cmds), free_child(), 0);
 }

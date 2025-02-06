@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/04 10:53:42 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:06:36 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	is_builtins(void)
 
 int	ft_builtins(t_msh *msh, t_cmd *ptr_cmd, char **env, int fd)
 {
+	get_ptr_cmd(0, ptr_cmd);
 	if (ft_strcmp(ptr_cmd->argv[0], "exit") == 0)
 		return (ft_exit(ptr_cmd->argv, -1, fd), 1);
 	else if (ft_strcmp(ptr_cmd->argv[0], "cd") == 0)

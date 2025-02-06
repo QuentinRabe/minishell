@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:55:37 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/05 06:46:01 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:06:13 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,13 @@ void	free_and_error_path(char *path, char *msg, char *cmd, int stat)
 {
 	free(path);
 	ft_error(msg, cmd, stat);
+}
+
+t_cmd	*get_ptr_cmd(int i, t_cmd *cmd)
+{
+	static t_cmd	*ptr = NULL;
+
+	if (i == 0)
+		ptr = cmd;
+	return (ptr);
 }

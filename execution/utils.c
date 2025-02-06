@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 07:46:46 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/05 07:21:25 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:06:27 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,14 @@ bool	is_only(char *set, char *str)
 void	child_exit_process(t_ppx *data, int status)
 {
 	t_msh	*msh;
+	t_cmd	*cmd;
 
 	(void) data;
+	cmd = get_ptr_cmd(1, NULL);
 	msh = get_msh(1, NULL);
 	if (ft_strlen_argv(msh->cmds) != 1)
 	{
+		close_heredoc_fd(cmd);
 		free_child();
 		exit(status);
 	}

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 10:06:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/05 08:51:51 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:06:21 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <string.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
@@ -84,4 +83,5 @@ int			check_fd(int *fd_in, int *fd_out, bool *std_in, bool *std_out);
 void		add_new_env(t_var_env *env, char *key, char *value);
 void		free_and_error_path(char *path, char *msg, char *cmd, int stat);
 int			change_dir(char *dir, t_msh *msh, t_ppx *data);
+t_cmd		*get_ptr_cmd(int i, t_cmd *cmd);
 #endif

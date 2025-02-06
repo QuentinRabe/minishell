@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/06 07:21:43 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:22:59 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static int	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 	if (pipe(fd) == -1)
 		perror("pipe");
 	pid = fork();
-	msh->hd_fd_write = fd[1];
+	msh->hd_fd_write = fd[0];
+	msh->hd_fd_read = fd[1];
 	signal(SIGINT, reset_sig);
 	if (pid == 0)
 		heredoc_proccess(eof, msh, fd, expand);
@@ -80,13 +81,12 @@ static int	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 	waitpid(pid, &status, 0);
 	if (((status >> 8) & 0xFF) == 130)
 	{
-		msh->status = 130;
 		if (msh->hd_fd_write >= 0)
 		{
 			close(msh->hd_fd_write);
 			msh->hd_fd_write = -1;
 		}
-		return (-1);
+		return (msh->status = 130, -1);
 	}
 	return (0);
 }

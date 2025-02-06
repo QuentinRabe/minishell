@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 15:09:09 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/06 06:41:10 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:26:22 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ static void	free_and_exit(t_var_env *env, t_var_env *exp)
 	t_msh	*msh;
 
 	msh = get_msh(1, NULL);
+	ft_putstr_fd("exit\n", 1);
 	close(msh->historic_fd);
 	free_env(env);
 	free_env(exp);
-	exit(0);
+	exit(msh->status);
 }
 
 static void	msh_process(char *input, t_msh *msh, char **envp)
@@ -76,6 +77,7 @@ int	main(int ac, char **av, char **env)
 	init_env(&msh, env);
 	msh.status = 0;
 	msh.hd_fd_write = -1;
+	msh.hd_fd_read = -1;
 	get_msh(0, &msh);
 	(void) ac,
 	(void) av;

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 08:43:49 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/06 06:43:55 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:14:36 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	hd_signal_handle(int sig)
 		{
 			close(msh->hd_fd_write);
 			msh->hd_fd_write = -1;
+		}
+		if (msh->hd_fd_read >= 0)
+		{
+			close(msh->hd_fd_read);
+			msh->hd_fd_read = -1;
 		}
 		close(msh->historic_fd);
 		clean_all(msh);

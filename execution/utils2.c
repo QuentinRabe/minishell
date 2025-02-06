@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 11:48:54 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/05 12:41:08 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 06:43:22 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ void	ft_open_file(t_cmd *ptr_cmds, t_ppx *data, int *input, int *output)
 int	ft_herdoc(t_cmd *ptr_cmds, char **env)
 {
 	t_redir	*redir;
+	t_msh	*msh;
 
+	msh = get_msh(1, NULL);
 	redir = ptr_cmds->redir_list;
 	while (redir)
 	{
@@ -118,7 +120,10 @@ int	ft_herdoc(t_cmd *ptr_cmds, char **env)
 			dup2(redir->heredoc_fd[0], STDIN_FILENO);
 			dup2(redir->heredoc_fd[1], STDOUT_FILENO);
 			if (redir->heredoc_fd[0] >= 0)
+			{
 				close(redir->heredoc_fd[0]);
+				msh->hd_fd_write = -1;
+			}
 			if (redir->heredoc_fd[1] >= 0)
 				close(redir->heredoc_fd[1]);
 			execute(ptr_cmds, env);

@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 08:22:21 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/06 06:54:39 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 07:21:43 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ static int	real_heredoc(char *eof, t_msh *msh, int fd[2], bool expand)
 	if (((status >> 8) & 0xFF) == 130)
 	{
 		msh->status = 130;
+		if (msh->hd_fd_write >= 0)
+		{
+			close(msh->hd_fd_write);
+			msh->hd_fd_write = -1;
+		}
 		return (-1);
 	}
 	return (0);

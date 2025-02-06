@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:43:07 by arabefam          #+#    #+#             */
-/*   Updated: 2025/02/05 07:14:03 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 07:35:12 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,4 @@ void	init_signal(void)
 {
 	signal(SIGINT, signal_handler);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGABRT, signal_handler);
 }

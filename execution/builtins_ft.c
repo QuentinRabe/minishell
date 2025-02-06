@@ -6,7 +6,7 @@
 /*   By: arabefam <arabefam@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:32:39 by rravelom          #+#    #+#             */
-/*   Updated: 2025/02/05 08:53:19 by arabefam         ###   ########.fr       */
+/*   Updated: 2025/02/06 07:31:07 by arabefam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,5 @@ int	execute_echo(t_cmd *cmds, int fd_in, int fd_out)
 		write(fd_out, "\n", 1);
 	if (ft_strlen_argv(cmds) == 1 && std[1])
 		close(fd_out);
-	free_child();
-	return (0);
+	return (free_child(), 0);
 }
